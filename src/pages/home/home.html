@@ -1,0 +1,141 @@
+<!--<ion-header>
+  ---
+</ion-header>
+
+<ion-content padding>
+  <ion-item *ngFor="let item of hisdata | async">
+    {{item | json}}
+  </ion-item>
+  <ion-item *ngFor="let item of items | async">
+    {{item | json}}
+  </ion-item>
+  <h1 *ngIf="authService.user | async">Welcome {{ (authService.user | async)?.email }}!</h1>
+
+<div *ngIf="!(authService.user | async)">
+  <ion-input type="text" [(ngModel)]="email" placeholder="email"></ion-input>
+  <ion-input type="password" [(ngModel)]="password" placeholder="password"></ion-input>
+
+  <button (click)="signup()" [disabled]="!email || !password">
+    Signup
+  </button>
+
+  <button (click)="login()" [disabled]="!email || !password">
+    Login
+  </button>
+</div>
+
+<button (click)="logout()" *ngIf="authService.user | async">
+  Logout
+</button>
+</ion-content>
+-->
+
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Home
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding id="page2">
+    <h1 *ngIf="authService.user | async">Welcome {{ (authService.user | async)?.email }}!</h1>
+    <div *ngIf="!(authService.user | async)">
+        <button (click)="signup()" >
+            Signup
+          </button>
+        
+          <button (click)="login()" >
+            Login
+          </button>
+
+    </div>
+    <button (click)="logout()" *ngIf="authService.user | async">
+        Logout
+      </button>
+  <form id="home-form1">
+    <ion-searchbar placeholder="Search" name="" id="home-search1"></ion-searchbar>
+  </form>
+  <ion-slides autoplay="500" loop="true" speed="3000" pager = "true" paginationType="bullets">
+  <ion-slide>
+      <img src="assets/imgs/a.jpg" style="display:block;width:auto;height:auto;margin-left:0%;margin-right:auto;margin-block-end: 0%;margin-block-start: 0%;" />
+  </ion-slide>
+  <ion-slide>
+      <img src="assets/imgs/a.jpg" style="display:block;width:auto;height:auto;margin-left:0%to;margin-right:auto;margin-block-end: 0%;" />
+  </ion-slide>
+  <ion-slide>
+      <img src="assets/imgs/a.jpg" style="display:block;width:auto;height:auto;margin-left:0%;margin-right:auto;margin-block-end: 0%;" />
+  </ion-slide>
+  </ion-slides>
+  
+  <div id="home-container1">
+    <ion-list id="home-list8">
+      <ion-item color="none" id="home-list-item7">
+        Find Your Home by
+      </ion-item>
+      <button id="home-button2" ion-button color="light" style="border-radius:46px 46px 46px 46px;">
+        <div>
+        <div>
+          <ion-icon name="pricetag"></ion-icon> 
+        </div>
+        
+        <div>Price</div>
+        </div>
+      </button>
+      <button id="home-button4" ion-button color="light" style="border-radius:46px 46px 46px 46px;">
+          <div>
+              <div>
+                <ion-icon name="locate"></ion-icon> 
+              </div>
+              
+              <div>Location</div>
+          </div>
+      </button>
+      <button id="home-button5" ion-button color="light" style="border-radius:46px 46px 46px 46px;">
+          <div>
+              <div>
+                <ion-icon name="resize"></ion-icon> 
+              </div>
+              
+              <div>Size</div>
+              </div>
+        </button>
+    </ion-list>
+</div>
+
+ 
+  <button id="home-button8" ion-button color="light" style="border-radius:46px 46px 46px 46px;">
+    <ion-icon name="create"></ion-icon>
+    Post Home
+  </button>
+  <button id="home-button6" ion-button color="light" style="color:#EC1094;border-radius:46px 46px 46px 46px;">
+    <ion-icon name="people"></ion-icon>
+    Find Roommate
+  </button>
+  <button id="home-button7" ion-button color="light" style="border-radius:46px 46px 46px 46px;">
+    <ion-icon name="people"></ion-icon>
+    Find Tenants
+  </button>
+  <ion-list id="home-list9">
+    <ion-item id="home-list-item-container2">
+      <div id="home-markdown4" class="show-list-numbers-and-dots">
+        <p style="margin-top:0px;color:#000000;">
+          History
+        </p>
+        <ion-item *ngFor="let item of hisdata | async">
+           
+              <ion-avatar item-left>
+              <img src="assets/imgs/a.jpg" style="display:block;width:50px;height:50px;margin-left:0%;margin-right:auto;margin-block-end: 0%;" />
+              </ion-avatar >
+              <h2>{{item.displaytext}}</h2>
+              <p>Rent: {{item.price}}</p>
+             
+            
+          
+          </ion-item>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding id="page5">
+  <!--<form id="login-form2">-->
+    <ion-list id="login-list4">
+      <ion-item id="login-input1">
+        <ion-label>
+          Email
+        </ion-label>
+        <ion-input type="email" [(ngModel)]="email" placeholder=""></ion-input>
+      </ion-item>
+      <ion-item id="login-input2">
+        <ion-label>
+          Password
+        </ion-label>
+        <ion-input type="password" [(ngModel)]="password" placeholder=""></ion-input>
+      </ion-item>
+      <div *ngIf="errorMessage!= Null">
+        Incorrect Email/Password
+        Hide thiss!!!!!
+        {{errorMessage}}
+      </div>
+    </ion-list>
+    <div class="spacer" style="height:40px;" id="login-spacer2"></div>
+    <button id="login-button10" ion-button color="stable" block [disabled]="!email || !password" (click)="login()" >
+      Log in
+    </button>
+    <!--<button id="login-button14" ion-button color="positive" block>
+      Login with Facebook
+    </button>
+  -->
+    <button id="login-button11" ion-button clear color="positive" block (click)="gotoSignup()">
+      Or create an account
+    </button>
+    <button id="login-button12" ion-button clear color="stable" block style="border-radius:99px 99px 99px 99px;" (click)="goToHome()">
+      Skip for now
+    </button>
+  <!--</form>-->
+</ion-content>
