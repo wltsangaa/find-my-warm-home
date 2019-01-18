@@ -14,6 +14,7 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { LoginPage } from '../login/login';
 import { DatePipe } from '@angular/common';
 import { PropertyDetailPage } from '../property-detail/property-detail';
+import { PostpropertyPage } from '../postproperty/postproperty';
 
 interface Property {
   displayText: string;
@@ -88,6 +89,9 @@ gotoPropertyDetail(event, item:Observable<any[]>){
   this.navCtrl.push(PropertyDetailPage,{item:item});
 }
 
+gotopostproperty(){
+  this.navCtrl.push(PostpropertyPage);
+}
 signup() {
   this.navCtrl.push(SignupPage);
 

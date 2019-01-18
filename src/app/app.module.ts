@@ -21,6 +21,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { firebaseConfig } from '../environment';
 import { AuthService } from '../pages/services/auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { PostpropertyPage } from '../pages/postproperty/postproperty';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
   LoginPage,
   SignupPage,
   PropertyDetailPage,
+  PostpropertyPage,
 	
   ],
   imports: [
@@ -51,7 +53,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
   LoginPage,
   SignupPage,
   PropertyDetailPage,
-  
+  PostpropertyPage,
   ],
   providers: [
     StatusBar,
