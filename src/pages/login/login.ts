@@ -68,7 +68,7 @@ gotoSignup() {
   
   goToHome(params){
     if (!params) params = {};
-    this.navCtrl.push(HomePage);
+    this.navCtrl.push(TabsPage);
     //this.navCtrl.setRoot
   }
 }

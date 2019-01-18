@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
+import { PropertyDetailPage } from '../pages/property-detail/property-detail';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -29,7 +30,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
     HomePage,
     TabsPage,
   LoginPage,
-  SignupPage
+  SignupPage,
+  PropertyDetailPage,
 	
   ],
   imports: [
@@ -47,7 +49,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
     HomePage,
     TabsPage,
   LoginPage,
-  SignupPage
+  SignupPage,
+  PropertyDetailPage,
   
   ],
   providers: [

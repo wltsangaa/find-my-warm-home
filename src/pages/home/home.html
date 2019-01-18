@@ -56,49 +56,53 @@
   <form id="home-form4">
     <ion-searchbar placeholder="Search Home" name="searchBar" id="home-search2"></ion-searchbar>
   </form>
-  <img src="assets/imgs/a.jpg" style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;" />
+
+  <ion-slides pager style="height: 150px">
+      <ion-slide>
+        <img src="assets/imgs/a.jpg"/>
+      </ion-slide>
+      <ion-slide>
+          <img src="assets/imgs/a.jpg"/>
+      </ion-slide>
+      <ion-slide>
+          <img src="assets/imgs/a.jpg"/>
+      </ion-slide>
+    </ion-slides>
+
+  <hr style="margin: 16px 0"/>
+
   <div id="home-container1">
     <h4 id="home-heading6" style="color:#000000;font-weight:300;">
       Find Home
     </h4>
   </div>
-  <button id="home-button8" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;">
+  <button id="home-button8" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;" ion-button block>
     <ion-icon name="create"></ion-icon>
     Find Home
   </button>
-  <button id="home-button18" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;">
+  <button id="home-button18" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;" ion-button block>
     <ion-icon name="create"></ion-icon>
     Post Home
   </button>
-  <button id="home-button6" ion-button color="light" icon-left style="font-weight:300;color:#EC1094;border-radius:46px 46px 46px 46px;">
+  <button id="home-button6" ion-button color="light" icon-left style="font-weight:300;color:#EC1094;border-radius:46px 46px 46px 46px;" ion-button block>
     <ion-icon name="people"></ion-icon>
     Find Roommate
   </button>
-  <button id="home-button7" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;">
+  <button id="home-button7" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;" ion-button block>
     <ion-icon name="people"></ion-icon>
     Find Tenants
   </button>
-  <div id="home-container2">
-    <h4 id="home-heading4" style="color:#000000;font-weight:300;">
-      Recommended For You
-    </h4>
-    <ion-list id="home-list14">
-      <ion-item color="none" id="home-list-item35">
-        <ion-thumbnail item-left>
-          <img src="assets/imgs/a.jpg" />
-        </ion-thumbnail>
-        <h2>
-          TKO Plaza
-        </h2>
-      </ion-item>
-    </ion-list>
-  </div>
+
+  <hr style="margin: 16px 0"/>
 
   <ion-grid>
+      <h4 id="home-heading4" style="color:#000000;font-weight:300;">
+        Recent Posts
+      </h4>
     <ion-row>
           <ion-col *ngFor="let item of properties | async">
               <div>
-                  <ion-card>
+                  <ion-card (click)="gotoPropertyDetail($event, item)">
                       <img src="{{item.thumbnail}}">
                       <ion-card-content>
                         <ion-item>
@@ -118,7 +122,7 @@
                       <ion-row>
                         <ion-col center text-center>
                           <ion-note>
-                            Timestamp: {{item.attachments[0].name}}
+                            Timestamp: {{convert2Date(item.dateCreated)}}
                           </ion-note>
                         </ion-col>
                       </ion-row>

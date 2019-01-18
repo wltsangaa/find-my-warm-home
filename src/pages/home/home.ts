@@ -13,6 +13,7 @@ import 'rxjs/add/operator/map';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { LoginPage } from '../login/login';
 import { DatePipe } from '@angular/common';
+import { PropertyDetailPage } from '../property-detail/property-detail';
 
 interface Property {
   displayText: string;
@@ -59,7 +60,7 @@ export class HomePage {
     // this.propertysCol = this.db.collection('historical_price', ref => ref.where('totalFloors', '==', floor));
 
     // search filter -- timestamp(desc)
-    this.propertysCol = this.db.collection('historical_price', ref => ref.orderBy('price', 'desc').limit(2));
+    this.propertysCol = this.db.collection('historical_price', ref => ref.orderBy('dateCreated', 'desc').limit(5));
 
     this.properties = this.propertysCol.valueChanges();
   }
@@ -71,18 +72,20 @@ getPropertyList(){
 convert2Date(time:any){
   let newDate = new Date(+time);
   //const myFormattedDate = newDate.toDateString();
-  return JSON.stringify(newDate);
-  // 636736255693017525
-  // 636724110235344872
+  return newDate; // JSON.stringify(newDate)
 }
 
 postTags(postTagsArray:any){
   for (let i = 0; i < postTagsArray.length; i++){
-    if(postTagsArray[i].includes("校網") || postTagsArray[i].includes("indoor")){
+    if(postTagsArray[i].includes("校網") || postTagsArray[i].includes("indoor") || postTagsArray[i].includes("私人住宅")){
       postTagsArray.splice(i, 1);
     }
   }
   return postTagsArray;
+}
+
+gotoPropertyDetail(event, item:Observable<any[]>){
+  this.navCtrl.push(PropertyDetailPage,{item:item});
 }
 
 signup() {
