@@ -22,6 +22,10 @@ import { firebaseConfig } from '../environment';
 import { AuthService } from '../pages/services/auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { PostpropertyPage } from '../pages/postproperty/postproperty';
+//import { FileChooser } from '@ionic-native/file-chooser';
+//import { File } from '@ionic-native/file';
+import { AngularFireStorageModule  } from '@angular/fire/storage';
+import { FindPropertyPage } from '../pages/find-property/find-property';
 
 @NgModule({
   declarations: [
@@ -34,14 +38,16 @@ import { PostpropertyPage } from '../pages/postproperty/postproperty';
   SignupPage,
   PropertyDetailPage,
   PostpropertyPage,
-	
+  FindPropertyPage,
+  
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
 	AngularFireModule.initializeApp(firebaseConfig),
 	AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireStorageModule, 
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -54,6 +60,7 @@ import { PostpropertyPage } from '../pages/postproperty/postproperty';
   SignupPage,
   PropertyDetailPage,
   PostpropertyPage,
+  FindPropertyPage,
   ],
   providers: [
     StatusBar,
@@ -61,6 +68,7 @@ import { PostpropertyPage } from '../pages/postproperty/postproperty';
 	AngularFireDatabase,
   AuthService,
   AngularFirestore,
+  //FileChooser,File,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

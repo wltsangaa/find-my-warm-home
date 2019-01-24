@@ -1,0 +1,59 @@
+<!--
+  Generated template for the FindPropertyPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Find Home</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-searchbar placeholder="Search Home" name="searchBar" id="home-search2" (ionInput)="findProperty($event)" autocomplete></ion-searchbar>
+  <ion-list>
+      <ion-item *ngFor="let item of items">
+        {{ item }}
+      </ion-item>
+    </ion-list>
+  <ion-grid>
+      <h4 id="home-heading4" style="color:#000000;font-weight:300;">
+        Result
+      </h4>
+    <ion-row>
+          <ion-col *ngFor="let item of properties | async">
+              <div>
+                  <ion-card (click)="gotoPropertyDetail($event, item)">
+                      <img src="{{item.thumbnail}}">
+                      <ion-card-content>
+                        <ion-item>
+                            <ion-icon name="home" item-start medium></ion-icon>
+                            <h2>{{item.publicLocationNamesHk[4]}}</h2>
+                            <p>{{item.publicLocationNamesHk[3]}}</p>
+                        </ion-item>
+                        <ion-item>
+                          <ion-icon name="logo-usd" item-start medium></ion-icon>
+                          <h2>HKD: {{item.price}}</h2>
+                        </ion-item>
+                      <ion-row>
+                          <ion-col>
+                            <ion-badge *ngFor="let number of postTags(item.postTags)" color="light" class="badges">{{number}}</ion-badge>
+                          </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col center text-center>
+                          <ion-note>
+                            Timestamp: {{convert2Date(item.dateCreated)}}
+                          </ion-note>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                    </ion-card>
+              </div>
+            </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

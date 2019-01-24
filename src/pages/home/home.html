@@ -39,7 +39,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page2" class="card-background-page">
-    <h1 *ngIf="authService.user | async">Welcome {{ (authService.user | async)?.email }}!</h1>
+    <h1 *ngIf="authService.user | async">Welcome {{ (authService.user | async)?.displayName }}!</h1>
     <div *ngIf="!(authService.user | async)">
         <button (click)="signup()" >
             Signup
@@ -52,10 +52,6 @@
     <button (click)="logout()" *ngIf="authService.user | async">
         Logout
     </button>
-
-  <form id="home-form4">
-    <ion-searchbar placeholder="Search Home" name="searchBar" id="home-search2"></ion-searchbar>
-  </form>
 
   <ion-slides pager style="height: 150px">
       <ion-slide>
@@ -76,7 +72,7 @@
       Find Home
     </h4>
   </div>
-  <button id="home-button8" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;" ion-button block>
+  <button id="home-button8" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;" (click)="gotoFindProperty()" ion-button block>
     <ion-icon name="create"></ion-icon>
     Find Home
   </button>

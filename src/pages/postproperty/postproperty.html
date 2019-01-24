@@ -14,5 +14,28 @@
 
 
 <ion-content padding>
-
+    <form id="postform3" [formGroup]="validations_form"   (ngSubmit)="onSubmit(validations_form.value)">
+      <ion-list *ngFor="let detail of details">
+      <ion-item  >
+    <ion-label>
+      <!--uppercase the first character-->
+      {{detail.charAt(0).toUpperCase() + detail.slice(1)}}
+    </ion-label>
+    <ion-input type="text" placeholder="" formControlName="{{detail}}" required></ion-input>
+  </ion-item>
+</ion-list>
+  <!--
+  <div class="validation-errors">
+    <ng-container >
+      <div class="error-message" *ngIf="validations_form.get(detail).hasError(validation.type) && (validations_form.get({{detail}}).dirty || validations_form.get({{detail}}).touched)">
+        {{ validation.message }}
+      </div>
+    </ng-container>
+  </div>
+-->
+<button  ion-button color="stable" block type ="submit" [disabled]="!validations_form.valid">
+    Sign up
+  </button>
+  </form>
+  
 </ion-content>

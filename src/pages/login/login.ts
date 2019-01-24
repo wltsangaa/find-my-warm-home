@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { HomePage } from '../home/home';
 
 //import { AngularFireDatabase } from '@angular/fire/database';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../services/auth.service';
 
-import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import {  FormGroup } from '@angular/forms';
 import { TabsPage } from '../tabs/tabs';
 import { SignupPage } from '../signup/signup';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-login',
@@ -66,8 +66,8 @@ gotoSignup() {
     this.authService.logout();
   }
   
-  goToHome(params){
-    if (!params) params = {};
+  goToHome(){
+    
     this.navCtrl.push(TabsPage);
     //this.navCtrl.setRoot
   }

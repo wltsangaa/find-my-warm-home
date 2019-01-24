@@ -14,7 +14,8 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { LoginPage } from '../login/login';
 import { DatePipe } from '@angular/common';
 import { PropertyDetailPage } from '../property-detail/property-detail';
-import { PostpropertyPage } from '../postproperty/postproperty';
+import { FindPropertyPage } from '../find-property/find-property';
+import { PostpropertyPage} from '../postproperty/postproperty';
 
 interface Property {
   displayText: string;
@@ -89,9 +90,10 @@ gotoPropertyDetail(event, item:Observable<any[]>){
   this.navCtrl.push(PropertyDetailPage,{item:item});
 }
 
-gotopostproperty(){
-  this.navCtrl.push(PostpropertyPage);
+gotoFindProperty() {
+  this.navCtrl.push(FindPropertyPage);
 }
+
 signup() {
   this.navCtrl.push(SignupPage);
 
@@ -105,6 +107,9 @@ signup() {
     this.authService.logout();
   }
 
+  gotopostproperty(){
+    this.navCtrl.push(PostpropertyPage);
+  }
   
   // this.router.navigate(['/detail/'+newInfo.key]);
   // this.ref

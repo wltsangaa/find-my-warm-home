@@ -19,15 +19,17 @@ export class SignupPage {
 
   validations_form: FormGroup;
   errorMessage: any;
-  userProfileCollection: any;
+ // userProfileCollection: any;
+  //userProfileCollectionemailname: any;
+  id: string;
   
 
   constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public authService: AuthService,
-    public fireStore: AngularFirestore) {
+    ) {
 
-      this.userProfileCollection = this.fireStore.collection<any>('userProfile');
+      //this.userProfileCollection = this.fireStore.collection<any>('userProfile');
 
-
+     
     
   }
 
@@ -49,14 +51,15 @@ export class SignupPage {
     if (this.validations_form.value['house']== "tenant")
     { 
       //remove the wrong email if clam as a tenant
-      this.validations_form.value['emailother'] ='';
-      console.log('hkust student');
+      this.validations_form.controls['emailother'].setValue(null);
+      
+      //console.log('hkust student');
       return true;
     }
     else {
       
-      this.validations_form.value['emailhkustonly'] ='';
-      console.log('not hkust student');
+      this.validations_form.controls['emailhkustonly'].setValue(null);
+      //console.log('not hkust student');
       return false;}
   }
 
@@ -107,7 +110,7 @@ export class SignupPage {
     Validators.required
     ),
       //matching_passwords: this.matching_passwords_group,
-
+      email:new FormControl(),
       //can be added for privacy later
       terms: new FormControl(true, Validators.pattern('true'))
     });
@@ -153,21 +156,45 @@ export class SignupPage {
 
   }
 
-  onSubmit(values){
+  onSubmit(){
     if(this.notnullemail()==true){
-
+      
     console.log('!!before send to authorization!!!');
     
-    console.log(values);
+    console.log(this.validations_form.value);
     //this.firebase.database().ref('songs')
     //.push({ songName, artistName, userAge });
 
+    //setting a universal email field
+    if(this.validations_form.value['house'] =="tenant")
+    {this.validations_form.controls['email'].setValue(this.validations_form.value['emailhkustonly']);}
+    else{
+      this.validations_form.controls['email'].setValue(this.validations_form.value['emailother']);
+    }
+    //using email as idd
+    //this.userProfileCollectionemailname = this.fireStore.doc<any>('userProfile/'+ this.validations_form.value['email'].toString());
+    
+    console.log("aftermodifyyy");
+    
+    console.log(this.validations_form.value);
+    
     //save the email and password
-    this.authService.signup(this.validations_form).then(res => {
+    this.authService.signup(this.validations_form).then((res) => {
+     /*
       console.log('!!remove passwd before save to db!!!');
-      delete values.password;
-      this.userProfileCollection.add(values);
+      delete this.validations_form.value['password'];
+      //this.authService.sendEmailVerification();
+      //get user uid of auth
+      console.log("signup.ts");
+      console.log(res.user.uid);
+      /*
+      this.userProfileCollectionemailname = this.fireStore.doc<any>('userProfile/'+ res.toString());
 
+      //generate id version
+      //this.userProfileCollection.add(this.validations_form.value);
+      this.userProfileCollectionemailname.set(this.validations_form.value);
+      */
+      console.log("signup.ts");
       this.navCtrl.setRoot(TabsPage);
 
     }, err => {
