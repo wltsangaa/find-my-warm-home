@@ -70,7 +70,7 @@ export class FindPropertyPage {
       // this.filtereditems=this.items.filter((item) => {
       //   return item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
       // }); 
-      this.propertysCol = this.db.collection('historical_price', ref => ref.where("publicLocationNamesHk", "array-contains", val));
+      this.propertysCol = this.db.collection('historical_price', ref => ref.where("displayText", ">=", val).orderBy("displayText").startAt(val).endAt(val + "\uf8ff"));
       this.properties = this.propertysCol.valueChanges();
     }
   }
