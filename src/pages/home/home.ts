@@ -38,6 +38,8 @@ export class HomePage {
   items:any;
   propertysCol: AngularFirestoreCollection<Property>;
   properties: Observable<Property[]>;
+  ownpropertys: AngularFirestoreCollection<{}>;
+  ownproperties: Observable<{}>;
   
   constructor(
     //public db: AngularFireDatabase,
@@ -60,7 +62,9 @@ export class HomePage {
     
     // testing
     // this.propertysCol = this.db.collection('historical_price', ref => ref.where('totalFloors', '==', floor));
-
+    this.ownpropertys = this.db.collection('propertyProfile');
+    this.ownproperties = this.ownpropertys.valueChanges();
+    
     // search filter -- timestamp(desc)
     this.propertysCol = this.db.collection('historical_price', ref => ref.orderBy('dateCreated', 'desc').limit(5));
 

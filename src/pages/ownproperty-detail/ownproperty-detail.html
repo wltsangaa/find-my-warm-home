@@ -91,7 +91,7 @@
   </ion-list>
   
   </ng-container >
-  <ion-slides  *ngIf="!fromlandlord()" autoplay="500" loop="true" speed="3000" pager = "true" paginationType="bullets">
+  <ion-slides autoplay="500" loop="true" speed="3000" pager = "true" paginationType="bullets">
   <ng-container *ngFor="let pic of value?.attachments">
   
   <ion-slide>
@@ -102,39 +102,17 @@
    </ion-slides>
  <ion-list >
 
-<ion-item color="none" >{{value?.publicLocationNamesEn}}</ion-item>
-<ion-item color="none" >${{value?.price}}</ion-item>
-<ion-item *ngIf="!fromlandlord()" color="none" >no. of rooms: {{value?.room}}</ion-item>
-<ion-item *ngIf="!fromlandlord()" color="none" >{{value?.postTags[0]}}</ion-item>
-<ion-item *ngIf="!fromlandlord()" color="none" >{{value?.postTags[1]}}</ion-item>
-<ion-item *ngIf="!fromlandlord()" color="none" >{{value?.postTags[2]}}</ion-item>
+<ion-item color="none" >{{value.publicLocationNamesEn}}</ion-item>
+<ion-item color="none" >${{value.price}}</ion-item>
+<ion-item color="none" >no. of rooms: {{value?.room}}</ion-item>
+<ion-item color="none" >{{value?.postTags[0]}}</ion-item>
+<ion-item color="none" >{{value?.postTags[1]}}</ion-item>
+<ion-item color="none" >{{value?.postTags[2]}}</ion-item>
 <!--
 <ion-item color="none" ><h2>{{value.publicLocationNamesEn"}}</h2></ion-item>
 <ion-item color="none" ><h2>{{value.price"}}</h2></ion-item>
 <ion-item color="none" ><h2>{{value.room"}}</h2></ion-item>
 <ion-item color="none" ><h2>{{value.postTags"}}</h2></ion-item>-->
-
-<div *ngIf="fromlandlord()"><!--not history record-->
-<ion-list *ngFor="let people of peoplelist | slice:1; let i = index;">
-  <!--show only the name-->
-    <ion-item>{{people.who[1]}}</ion-item>
-    
-</ion-list>
-</div>
-<div *ngIf="fromlandlord()&&logged()">
-<ion-label>Comment</ion-label>
-<ion-list *ngFor="let cc of comment | slice:1; let i = index;">
-    <!--show only the name and comment-->
-      <ion-item>{{cc.who[1]}}</ion-item>
-      <ion-item>{{cc.message}}</ion-item>
-  </ion-list>
-<ion-input type="text" [(ngModel)] = "newmessage" ></ion-input>
-<button (click)="addcomment()">add comment</button>
-
-</div>
-<div *ngIf="fromlandlord()&&isstudent()&&logged()"> 
-<button (click)="joinroom()">Join this room</button>
-</div>
 
 </ion-list>
   <h5 id="propertyDetail-heading9" style="color:#000000;font-weight:300;text-align:center;">

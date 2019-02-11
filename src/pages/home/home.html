@@ -128,4 +128,23 @@
             </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-grid>
+    <h4 id="home-heading4" style="color:#000000;font-weight:300;">
+      Recent Posts
+    </h4>
+  <ion-row>
+        <ion-col *ngFor="let item of ownproperties | async">
+            <div>
+                <ion-card (click)="gotoPropertyDetail($event, item)">
+                    <ion-card-content>
+                        <ion-item>
+                            <h2>{{item.publicLocationNamesEn}}</h2>
+                          </ion-item>
+                    </ion-card-content>
+                  </ion-card>  
+                  </div>
+                  </ion-col>
+                  </ion-row>
+                  </ion-grid>
 </ion-content>

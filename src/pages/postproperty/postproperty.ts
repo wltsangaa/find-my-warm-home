@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 //import { FileChooser } from '@ionic-native/file-chooser';
 //import { File } from '@ionic-native/file';
 import { AngularFireStorage, AngularFireUploadTask  } from '@angular/fire/storage';
-
+//import { ImagePicker } from '@ionic-native/image-picker/ngx';
 /**
  * Generated class for the PostpropertyPage page.
  *
@@ -24,7 +24,7 @@ uid:string;}
 })
 
 export class PostpropertyPage {
-  properityProfileCollection:any;
+  propertyProfileCollection:any;
   validations_form: FormGroup;
   localprofile:User;
   details=["price", "publicLocationNamesEn", "address", "area", "layout"];
@@ -61,12 +61,18 @@ export class PostpropertyPage {
   image: string;
   task: AngularFireUploadTask;
   progress: any;
-  //private fileChooser: FileChooser,private file:File
-  //  ,
+  pid: string;
+  propertyrofileCollectionemailname: any;
+  peoplelist:any[];
+
   constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public authService: AuthService,
-    public fireStore: AngularFirestore,private storage: AngularFireStorage) {
-      this.properityProfileCollection = this.fireStore.collection<any>('properityProfile');
-      
+    public fireStore: AngularFirestore,
+    //private fileChooser: FileChooser,private file:File,
+    private storage: AngularFireStorage,
+   // private imagePicker: ImagePicker,
+    ) {
+      this.propertyProfileCollection = this.fireStore.collection<any>('propertyProfile');
+      this.pid = this.fireStore.createId();
     }
 //using willlll herere
     ionViewWillLoad() {
@@ -101,11 +107,13 @@ export class PostpropertyPage {
       ])),
       
       email:new FormControl(),
-      uid:new FormControl()
+      uid:new FormControl(),
+      agreementId:new FormControl(),
     });
-    this.authService.user.subscribe(user=>{this.localprofile=user;});
+    this.authService.user.subscribe(user=>{if(user){this.localprofile=user;}});
     
   }
+
   ionViewDidLoad() {
     console.log(this.localprofile);
     
@@ -115,11 +123,17 @@ export class PostpropertyPage {
    // this.properityProfileCollection.add(values);
    this.validations_form.controls['email'].setValue(this.localprofile.email);
    this.validations_form.controls['uid'].setValue(this.localprofile.uid);
+   this.validations_form.controls['agreementId'].setValue(this.pid);
    console.log(this.validations_form.value);
-
+   this.propertyrofileCollectionemailname = this.fireStore.doc<any>('propertyProfile/'+ this.pid.toString());
    //this.userProfileCollectionemailname = this.fireStore.doc<any>('userProfile/'+ this.localprofile.uid.toString());
-    this.properityProfileCollection.add(this.validations_form.value);
+    //this.propertyProfileCollection.add(this.validations_form.value);
+    this.propertyrofileCollectionemailname.set(this.validations_form.value);
+    //this.peoplelist.push({ who: new String("add"), when: + new Date() });
+    this.propertyrofileCollectionemailname.update({peoplelist:[{ who: ["email", "name"], when: new Date().getTime() }] });
+    this.propertyrofileCollectionemailname.update({comments:[{ who: ["email", "name"], when: new Date().getTime(), message:"message" }] }); 
   }
+  
 
   /*fchoose(){
 
