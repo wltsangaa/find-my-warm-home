@@ -81,9 +81,9 @@ export class SignupPage {
       password:new FormControl('', 
       Validators.minLength(6)),
       
-      emailhkustonly: new FormControl('',
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@connect\.ust\.hk$')
-      ),
+      // emailhkustonly: new FormControl('',
+      //   Validators.pattern('^[a-zA-Z0-9_.+-]+@connect\.ust\.hk$')
+      // ),
       
       emailother: new FormControl('', 
         //Validators.required,
@@ -97,11 +97,12 @@ export class SignupPage {
         Validators.pattern('^[1-9][0-9]*$')
       ])),
 
-      interest:new FormControl('', Validators.compose([
+      interest:new FormControl('', 
+      //Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9,.]+$')
-      ])),
-
+        //Validators.pattern('^[a-zA-Z0-9,.]+$')
+      //])),
+      ),
      gender:new FormControl('', 
       Validators.required
     ),
@@ -126,9 +127,9 @@ export class SignupPage {
       { type: 'validUsername', message: 'Your username has already been taken.' }
     ],
 
-    'emailhkustonly': [
+    'emailother': [
       { type: 'required', message: 'Email is required.' },
-      { type: 'pattern', message: 'Your email must be hkust email (for tenant)' }
+      { type: 'pattern', message: 'Your email must be a real email' }
       
     ],
 
@@ -140,7 +141,7 @@ export class SignupPage {
 
     'interest':[
       { type: 'required', message: 'Interest is required.' },
-      { type: 'pattern', message: 'Only characters and numbers are accepted.' }
+      //{ type: 'pattern', message: 'Only characters and numbers are accepted.' }
       
     ],
 
@@ -157,7 +158,7 @@ export class SignupPage {
   }
 
   onSubmit(){
-    if(this.notnullemail()==true){
+    //if(this.notnullemail()==true){
       
     console.log('!!before send to authorization!!!');
     
@@ -166,11 +167,12 @@ export class SignupPage {
     //.push({ songName, artistName, userAge });
 
     //setting a universal email field
-    if(this.validations_form.value['house'] =="tenant")
-    {this.validations_form.controls['email'].setValue(this.validations_form.value['emailhkustonly']);}
-    else{
+    // if(this.validations_form.value['house'] =="tenant")
+    // {this.validations_form.controls['email'].setValue(this.validations_form.value['emailhkustonly']);}
+    // else{
       this.validations_form.controls['email'].setValue(this.validations_form.value['emailother']);
-    }
+      delete this.validations_form.value['emailother'];
+    // }
     //using email as idd
     //this.userProfileCollectionemailname = this.fireStore.doc<any>('userProfile/'+ this.validations_form.value['email'].toString());
     
@@ -207,5 +209,5 @@ export class SignupPage {
     
     }
   
-  }
+  //}
 }
