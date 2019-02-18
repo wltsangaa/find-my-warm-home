@@ -54,19 +54,19 @@
           Email
         </ion-label>
 
-        <ion-input *ngIf= "!emailtype()" type="text" placeholder="" formControlName="emailother" class="form-controll"  ></ion-input>
-        <ion-input *ngIf= "emailtype()" type="text" placeholder="" formControlName="emailhkustonly" class="form-controll"  ></ion-input>
+        <ion-input  type="text" placeholder="" formControlName="emailother" class="form-controll"  ></ion-input>
+        
         <!--
         <ion-input *ngIf= "emailtype()" type="text" placeholder="" formControlName="emailhkustonly" class="form-controll"  required></ion-input>
         -->
       </ion-item>
       <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.emailhkustonly">
-          <div class="error-message" *ngIf="validations_form.get('emailhkustonly').hasError(validation.type) && (validations_form.get('emailhkustonly').dirty || validations_form.get('emailhkustonly').touched)">
-            {{ validation.message }}
-          </div>
-        </ng-container>
-      </div>
+          <ng-container *ngFor="let validation of validation_messages.emailother">
+            <div class="error-message" *ngIf="validations_form.get('emailother').hasError(validation.type) && (validations_form.get('emailother').dirty || validations_form.get('emailother').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
 
       <ion-item id="signup-select1" >
         <ion-label>
@@ -92,7 +92,7 @@
       </ion-item>
       <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.price">
-          <div class="error-message" *ngIf="validations_form.get('price').hasError(validation.type) && (validations_form.get('price').dirty || validations_form.get('emailhkustonly').touched)">
+          <div class="error-message" *ngIf="validations_form.get('price').hasError(validation.type) && (validations_form.get('price').dirty || validations_form.get('price').touched)">
             {{ validation.message }}
           </div>
         </ng-container>
@@ -102,11 +102,19 @@
         <ion-label>
           Interest
         </ion-label>
-        <ion-input type="text" placeholder="" formControlName="interest" class="form-controll" required></ion-input>
+        <ion-select name="" formControlName="interest" multiple required>
+            <ion-option value="non-smoker">
+              Non-smoker
+            </ion-option>
+            <ion-option value="same-gender"> 
+              Same Gender only
+            </ion-option>
+          </ion-select>
+        <!--<ion-input type="text" placeholder="" formControlName="interest" class="form-controll" required></ion-input>-->
       </ion-item>
       <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.interest">
-          <div class="error-message" *ngIf="validations_form.get('interest').hasError(validation.type) && (validations_form.get('interest').dirty || validations_form.get('emailhkustonly').touched)">
+          <div class="error-message" *ngIf="validations_form.get('interest').hasError(validation.type) && (validations_form.get('interest').dirty || validations_form.get('interest').touched)">
             {{ validation.message }}
           </div>
         </ng-container>

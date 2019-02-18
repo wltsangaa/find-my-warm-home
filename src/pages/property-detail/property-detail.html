@@ -14,39 +14,52 @@
   <img src="assets/img/p46wGlEQSiPv84HGHtlh_house.jpg" style="display:block;width:25%;height:auto;" />
   <div class="spacer" style="width:300px;height:19px;" id="propertyDetail-spacer6"></div>
 
- <ion-list id="propertyDetail-list15">
-    <ion-item color="none" id="propertyDetail-list-item39">
+ <ion-list id="propertyDetail-list15" >
+    <ion-item color="none" >
+        <ion-icon name="time" item-left></ion-icon>
+        {{value?.publicLocationNamesEn}}
+      </ion-item>
+      <ion-item color="none" >
+          <ion-icon name="time" item-left></ion-icon>
+          {{value?.address}}
+        </ion-item> 
+
+        <ion-item color="none" >
+            <ion-icon name="time" item-left></ion-icon>
+            Area: {{value?.area}}
+          </ion-item> 
+    <ion-item color="none" >
       <ion-icon name="time" item-left></ion-icon>
-      54 minutes ago by Ada
+      {{value?.dateCreated}}
     </ion-item>
-    <ion-item color="none" id="propertyDetail-list-item40">
+    <ion-item color="none" >
       <ion-icon name="pricetag" item-left></ion-icon>
-      HK $5600
+      HK ${{value?.price}}
     </ion-item>
-    <ion-item color="none" id="propertyDetail-list-item41">
+    <ion-item color="none" >
       <ion-icon name="information-circle" item-left></ion-icon>
-      4 people available
+      {{nooftenants - peoplelist.length + 1}} people available
     </ion-item>
   </ion-list>
   <div class="spacer" style="width:300px;height:19px;" id="propertyDetail-spacer7"></div>
   <h4 id="propertyDetail-heading10" style="color:#000000;font-weight:300;">
     Waiting List
   </h4>
-  <button id="propertyDetail-button19" ion-button clear color="dark" icon-left>
-    <ion-icon name="person"></ion-icon>
-    John
+  <ion-list *ngFor="let people of peoplelist | slice:1; let i = index;">
+    <!--show only the name-->
+    <button id="propertyDetail-button19" ion-button clear color="dark" icon-left>
+      <ion-icon name="person"></ion-icon>
+      {{people.who[1]}}
+    </button>
+      
+  </ion-list>
+
+  <div *ngIf="fromlandlord()&&isstudent()&&logged()&&enoughplace()"> 
+    <button id="propertyDetail-button23" ion-button clear color="dark" (click)="joinroom()">
+      Join this room
+    <ion-icon name="add-circle" ></ion-icon>
   </button>
-  <button id="propertyDetail-button21" ion-button clear color="dark" icon-left>
-    <ion-icon name="person"></ion-icon>
-    May
-  </button>
-  <button id="propertyDetail-button22" ion-button clear color="dark" icon-left>
-    <ion-icon name="person"></ion-icon>
-    Keith
-  </button>
-  <button id="propertyDetail-button23" ion-button clear color="dark">
-    <ion-icon name="add-circle"></ion-icon>
-  </button>
+</div>
   <div class="spacer" style="width:300px;height:22px;" id="propertyDetail-spacer8"></div>
   <h4 id="propertyDetail-heading11" style="color:#000000;font-weight:300;">
     The Landlord
@@ -57,38 +70,36 @@
         <img src="assets/img/NoACdG5eSqKzU5FL87en_Angela_Merkel_2008.jpg" />
       </ion-avatar>
       <h2>
-        Ada (Landlord)
+        {{value?.userName}} (Landlord)
       </h2>
     </ion-item>
   </ion-list>
   <ion-list id="propertyDetail-list20">
     <ion-item color="positive" id="propertyDetail-list-item51">
       <ion-icon name="paper-plane" item-left></ion-icon>
-      Message Ada (Landlord)
+      Message {{value?.userName}} (Landlord)
     </ion-item>
   </ion-list>
   <div class="spacer" style="width:300px;height:22px;" id="propertyDetail-spacer9"></div>
   <h4 id="propertyDetail-heading8" style="color:#000000;font-weight:300;">
     Comment
   </h4>
-  <ion-list id="propertyDetail-list17">
+  <ion-list id="propertyDetail-list17" *ngFor="let cc of comment | slice:1; let i = index;">
     <ion-item color="none" id="propertyDetail-list-item48">
       <ion-avatar item-left>
         <img src="assets/img/fiNuvFiRHGDYyyBtphyr_.jpg" />
       </ion-avatar>
       <h2>
-        Thomas
+        {{cc.who[1]}}
       </h2>
+      {{cc.message}}
     </ion-item>
-    <ion-item color="none" id="propertyDetail-list-item47">
-      <ion-avatar item-left>
-        <img src="assets/img/sKXG0gxSRayDTXPD8cCw_girl.jpg" />
-      </ion-avatar>
-      <h2>
-        Jenny
-      </h2>
-    </ion-item>
+
   </ion-list>
+  <div *ngIf="logged()">
+    <ion-input type="text" [(ngModel)] = "newmessage" placeholder ="Leave your comments here"></ion-input>
+    <button (click)="addcomment()">Add comment</button>
+    </div>
   
   </ng-container >
   <ion-slides  *ngIf="!fromlandlord()" autoplay="500" loop="true" speed="3000" pager = "true" paginationType="bullets">
@@ -114,27 +125,12 @@
 <ion-item color="none" ><h2>{{value.room"}}</h2></ion-item>
 <ion-item color="none" ><h2>{{value.postTags"}}</h2></ion-item>-->
 
-<div *ngIf="fromlandlord()"><!--not history record-->
-<ion-list *ngFor="let people of peoplelist | slice:1; let i = index;">
-  <!--show only the name-->
-    <ion-item>{{people.who[1]}}</ion-item>
-    
-</ion-list>
-</div>
-<div *ngIf="fromlandlord()&&logged()">
-<ion-label>Comment</ion-label>
-<ion-list *ngFor="let cc of comment | slice:1; let i = index;">
-    <!--show only the name and comment-->
-      <ion-item>{{cc.who[1]}}</ion-item>
-      <ion-item>{{cc.message}}</ion-item>
-  </ion-list>
-<ion-input type="text" [(ngModel)] = "newmessage" ></ion-input>
-<button (click)="addcomment()">add comment</button>
 
-</div>
-<div *ngIf="fromlandlord()&&isstudent()&&logged()"> 
-<button (click)="joinroom()">Join this room</button>
-</div>
+
+
+
+
+
 
 </ion-list>
   <h5 id="propertyDetail-heading9" style="color:#000000;font-weight:300;text-align:center;">

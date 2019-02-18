@@ -34,6 +34,7 @@ uid:string;
   propertyP: Observable<any>;
   comment: any;
   newmessage:string;
+  nooftenants: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public authService: AuthService,
@@ -51,6 +52,8 @@ uid:string;
 
     this.peoplelist = this.navParams.get('item').peoplelist;
     console.log(this.peoplelist);
+    
+    this.nooftenants = this.navParams.get('item').nooftenant;
 
     this.comment = this.navParams.get('item').comments;
     console.log(this.comment);
@@ -129,7 +132,7 @@ else{
   //this.propertyProfilename.update({peoplelist:this.peoplelist});
 
 }
-
+//check if that person is in the list
 inpeoplelist():boolean{
   if(this.peoplelist != null){
   this.inpeople = this.peoplelist.find(e=>{return e.who[0] == this.uemail;});
@@ -141,12 +144,28 @@ else{return false;}}
 else{return true;}
 
 }
+//check if there is enough place
+enoughplace():boolean{
+
+  if(this.peoplelist != null && this.nooftenants != null){
+    if(this.nooftenants>this.peoplelist.length-1)
+    return true;
+    else return false;
+}
+else{return false;}
+}
 
 addcomment(){
   this.comment.push({ who: [this.uemail,this.uname], when: new Date().getTime(), message: this.newmessage });
   console.log(this.comment);
   this.propertyProfilename.update({comments:this.comment});
   this.newmessage = null;
+}
+
+confirm(){
+  if(this.landornot == this.uid)
+  {return true;}
+  else return false;
 }
 ionViewWillLeave(){
   

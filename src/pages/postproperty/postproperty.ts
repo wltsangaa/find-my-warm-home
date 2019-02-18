@@ -16,7 +16,8 @@ import { AngularFireStorage, AngularFireUploadTask  } from '@angular/fire/storag
  */
 
 export interface User{email:string;
-uid:string;}
+uid:string;
+displayName:string;}
 
 @Component({
   selector: 'page-postproperty',
@@ -27,7 +28,7 @@ export class PostpropertyPage {
   propertyProfileCollection:any;
   validations_form: FormGroup;
   localprofile:User;
-  details=["price", "publicLocationNamesEn", "address", "area", "layout"];
+  details=["price", "publicLocationNamesEn", "address", "area", "layout", "nooftenant"];
   validation_messages = {
 
     'price':[
@@ -54,7 +55,12 @@ export class PostpropertyPage {
       { type: 'required', message: 'Layout is required.' },
       { type: 'pattern', message: 'The details of layout should be correct.' }
       
-    ]
+    ],
+    'arnooftenant':[
+      { type: 'required', message: 'Number of expected tenants is required.' },
+      { type: 'pattern', message: 'It should be a number.' }
+      
+    ],
   }
   userProfileCollectionemailname: any;
   profileUrl: Observable<any>;
@@ -82,7 +88,7 @@ export class PostpropertyPage {
       publicLocationNamesEn: new FormControl('', Validators.compose([
 
         //only accept character with number, delete (?+.* 0-9) if no require the number.
-        Validators.pattern('^[a-zA-Z0-9,.]+$'),
+        Validators.pattern('^[a-zA-Z0-9,._ ]+$'),
         Validators.required
       ])),
       
@@ -93,7 +99,7 @@ export class PostpropertyPage {
 
       address:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9,.]+$')
+        Validators.pattern('^[a-zA-Z0-9,._ ]+$')
       ])),
 
       area:new FormControl('', Validators.compose([
@@ -103,12 +109,17 @@ export class PostpropertyPage {
 
       layout:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9,.]+$')
+        Validators.pattern('^[a-zA-Z0-9,._ ]+$')
       ])),
       
       email:new FormControl(),
       uid:new FormControl(),
       agreementId:new FormControl(),
+
+      nooftenant:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[1-9][0-9]*$')
+      ])),
     });
     this.authService.user.subscribe(user=>{if(user){this.localprofile=user;}});
     
@@ -130,6 +141,9 @@ export class PostpropertyPage {
     //this.propertyProfileCollection.add(this.validations_form.value);
     this.propertyrofileCollectionemailname.set(this.validations_form.value);
     //this.peoplelist.push({ who: new String("add"), when: + new Date() });
+    //update data in firebase
+    this.propertyrofileCollectionemailname.update({userName: this.localprofile.displayName});
+    this.propertyrofileCollectionemailname.update({dateCreated: new Date().getTime()});
     this.propertyrofileCollectionemailname.update({peoplelist:[{ who: ["email", "name"], when: new Date().getTime() }] });
     this.propertyrofileCollectionemailname.update({comments:[{ who: ["email", "name"], when: new Date().getTime(), message:"message" }] }); 
   }

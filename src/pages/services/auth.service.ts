@@ -65,6 +65,9 @@ export class AuthService {
         this.userProfileCollectionemailname = this.fireStore.doc<any>('userProfile/'+ res.user.uid.toString());
         //saving to the database
         this.userProfileCollectionemailname.set(form.value);
+        if(form.value['email'].includes("@connect.ust.hk") == true)
+        this.userProfileCollectionemailname.update({isHKUST:true});
+        else{this.userProfileCollectionemailname.update({isHKUST:false});}
         //go back to where it was called(signup.ts)
         resolve(res);
       },
