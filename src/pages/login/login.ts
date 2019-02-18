@@ -22,6 +22,7 @@ export class LoginPage {
   items: Observable<any[]>;
   validations_form: FormGroup;
   errorMessage: string;
+  loading: boolean;
 
 
 
@@ -31,10 +32,29 @@ export class LoginPage {
   public authService: AuthService
  // ,public formBuilder: FormBuilder
   ) {
+    this.loading = false;
     //this.items = db.list('chatrooms').valueChanges();
   }
 
+  ionViewDidLoad() {
+    this.loading = true;
+    this.authService.user.subscribe(user=>{if(user)
+      {
+        this.navCtrl.setRoot(TabsPage);
+      }
+    else{this.loading = false;
+      console.log("not logined");}});
+    //this.userProfilename = this.fireStore.doc<User>('userProfile/'+ this.uid);
+    //this.register = this.userProfilename.valueChanges();
+    //   this.register.subscribe(res=>{
+    //this.role = res.house;
+    //this.uemail = res.email;
+    //this.uname = res.username;
+  //});
 
+  
+  
+  }
   
 gotoSignup() {
     //this.authService.signup(this.email, this.password);
