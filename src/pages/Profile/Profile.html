@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Profile
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+{{uname}}
+
+<button (click)="editname()">
+hrlloo
+</button>
+<ion-input type="text" [(ngModel)] = "newname" placeholder ="Leave your name here">{{uname}}</ion-input>
+</ion-content>

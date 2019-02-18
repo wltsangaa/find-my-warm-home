@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
+import { ProfilePage } from '../pages/Profile/Profile';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -30,7 +30,7 @@ import { FindPropertyPage } from '../pages/find-property/find-property';
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
+    ProfilePage,
     ContactPage,
     HomePage,
     TabsPage,
@@ -52,7 +52,7 @@ import { FindPropertyPage } from '../pages/find-property/find-property';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
+    ProfilePage,
     ContactPage,
     HomePage,
     TabsPage,
