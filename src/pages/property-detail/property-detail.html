@@ -38,27 +38,51 @@
     </ion-item>
     <ion-item color="none" >
       <ion-icon name="information-circle" item-left></ion-icon>
-      {{nooftenants - peoplelist.length + 1}} people available
+      {{nooftenants}} people available in each group
     </ion-item>
   </ion-list>
   <div class="spacer" style="width:300px;height:19px;" id="propertyDetail-spacer7"></div>
   <h4 id="propertyDetail-heading10" style="color:#000000;font-weight:300;">
     Waiting List
   </h4>
-  <ion-list *ngFor="let people of peoplelist | slice:1; let i = index;">
+  <ion-list *ngFor="let tt of teams  let j = index;">
     <!--show only the name-->
-    <button id="propertyDetail-button19" ion-button clear color="dark" icon-left>
+    Group{{j +1}}
+    <div class="row">
+    <div class= "col" *ngFor="let ttt of tt.teamname  let i = index;">
+      <button ion-button clear color="dark" icon-left>
       <ion-icon name="person"></ion-icon>
-      {{people.who[1]}}
+      {{ttt.who[1]}}
     </button>
-      
-  </ion-list>
-
-  <div *ngIf="fromlandlord()&&isstudent()&&logged()&&enoughplace()"> 
-    <button id="propertyDetail-button23" ion-button clear color="dark" (click)="joinroom()">
+  </div>
+  <div *ngIf="fromlandlord()&&isstudent()&&logged()&&checklock()"> 
+    <button id="propertyDetail-button23" ion-button clear color="dark" (click)="joinroom(j)">
       Join this room
     <ion-icon name="add-circle" ></ion-icon>
   </button>
+</div>
+<div *ngIf="fromlandlord()&&logged()&&showconfirm()"> 
+  <button  ion-button clear  (click)="chooseteam(j)">
+    
+  <ion-icon name="checkbox" [color]="showtick(j) ? 'secondary' : 'light'" ></ion-icon>
+</button>
+</div>
+</div>
+      <br/>
+  </ion-list>
+
+
+<div *ngIf="fromlandlord()&&isstudent()&&logged()&&checklock()"> 
+  <button id="propertyDetail-button23" ion-button clear color="dark" (click)="createroom()">
+   Or  Create a new room
+  <ion-icon name="add-circle" ></ion-icon>
+</button>
+</div>
+<div *ngIf="fromlandlord()&&logged()&&showconfirm()"> 
+  <button ion-button clear [color]="lock ? 'secondary' : 'light'" (click)="clickconfirm()">
+   Lock/Unlock the room from tenants
+  <ion-icon name="checkbox" ></ion-icon>
+</button>
 </div>
   <div class="spacer" style="width:300px;height:22px;" id="propertyDetail-spacer8"></div>
   <h4 id="propertyDetail-heading11" style="color:#000000;font-weight:300;">

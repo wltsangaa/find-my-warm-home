@@ -29,12 +29,15 @@ uid:string;
   pid: string;
   propertyProfilename: AngularFirestoreDocument<any>;
   uemail: string;
-  inpeople: any;
+  
   uname: any;
   propertyP: Observable<any>;
   comment: any;
   newmessage:string;
   nooftenants: any;
+  teams: any;
+  lock: any;
+  
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public authService: AuthService,
@@ -56,15 +59,17 @@ uid:string;
     this.nooftenants = this.navParams.get('item').nooftenant;
 
     this.comment = this.navParams.get('item').comments;
+    this.lock = this.navParams.get('item').lock;
+
     console.log(this.comment);
 
       //property id
     this.pid = this.navParams.get('item').agreementId;
 
-
+    this.teams = this.navParams.get('item').team;
     //get current user id
     
-    this.inpeople = null;
+    
    }
   
   ionViewDidLoad() {
@@ -116,28 +121,35 @@ if(this.role == "tenant"){
 }
 else{return false;}
 }
+createroom(){
 
-joinroom(){
-  if(this.inpeoplelist() == false){
-    
-  this.peoplelist.push({ who: [this.uemail,this.uname], when: new Date().getTime() });
-  console.log(this.peoplelist);
-    this.propertyProfilename.update({peoplelist:this.peoplelist});
+  if(this.teams != null)
+  this.teams.push({teamname:[{ who: [this.uemail,this.uname], when: new Date().getTime() }],select:false});
+  else this.teams = [{teamname:[{ who: [this.uemail,this.uname], when: new Date().getTime() }],select:false}];
+  this.propertyProfilename.update({team:this.teams});
+  console.log(this.teams);
+}
+joinroom(index :number){
+  if(this.inpeoplelist(this.teams[index].teamname) == true && this.enoughplace(this.teams[index].teamname.length) == true){
+    console.error(this.teams[index].teamname.length);
+  this.teams[index].teamname.push({ who: [this.uemail,this.uname], when: new Date().getTime() });
+  console.log(this.teams);
+    this.propertyProfilename.update({team:this.teams});
 }
 else{
   console.log("aleady added to the list");
-  console.log(this.peoplelist);
+  console.log(this.teams);
 }
 
   //this.propertyProfilename.update({peoplelist:this.peoplelist});
 
 }
 //check if that person is in the list
-inpeoplelist():boolean{
-  if(this.peoplelist != null){
-  this.inpeople = this.peoplelist.find(e=>{return e.who[0] == this.uemail;});
-console.log(this.inpeople);
-if(this.inpeople != null){
+inpeoplelist(list:any):boolean{
+  if(list != null){
+  let inpeople = list.find((e: { who: string[], when:  Date; })=>{return e.who[0] == this.uemail;});
+console.log(inpeople);
+if(inpeople != null){
   return true;
 }
 else{return false;}}
@@ -145,10 +157,10 @@ else{return true;}
 
 }
 //check if there is enough place
-enoughplace():boolean{
+enoughplace(length:number):boolean{
 
-  if(this.peoplelist != null && this.nooftenants != null){
-    if(this.nooftenants>this.peoplelist.length-1)
+  if(this.nooftenants != null){
+    if(this.nooftenants>length)
     return true;
     else return false;
 }
@@ -156,15 +168,47 @@ else{return false;}
 }
 
 addcomment(){
-  this.comment.push({ who: [this.uemail,this.uname], when: new Date().getTime(), message: this.newmessage });
-  console.log(this.comment);
+  if(this.comment != null)
+  {this.comment.push({ who: [this.uemail,this.uname], when: new Date().getTime(), message: this.newmessage });
+}
+else{this.comment = ({ who: [this.uemail,this.uname], when: new Date().getTime(), message: this.newmessage });}
+console.log(this.comment);
   this.propertyProfilename.update({comments:this.comment});
   this.newmessage = null;
 }
 
-confirm(){
-  if(this.landornot == this.uid)
-  {return true;}
+showconfirm(){
+  if(this.uid!=null || this.landornot != null)
+  {if(this.uid == this.landornot)
+    return true;
+    else return false;}
+
+  else return false;
+}
+clickconfirm(){
+  this.lock = !this.lock;
+  this.propertyProfilename.update({lock:this.lock});
+}
+checklock(){
+  if(this.lock == null)
+  return  true;
+else return this.lock;
+}
+
+chooseteam(index:number){
+  if(this.teams!=null){
+    
+  this.teams[index].select = !this.teams[index].select;
+    
+    this.propertyProfilename.update({team:this.teams});
+  }
+}
+showtick(index:number){
+  if(this.teams!=null){
+    
+  return this.teams[index].select;
+    
+  }
   else return false;
 }
 ionViewWillLeave(){
