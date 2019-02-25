@@ -34,9 +34,16 @@ export class PostpropertyPage {
   propertyProfileCollection:any;
   validations_form: FormGroup;
   localprofile:User;
-  details=["price", "publicLocationNamesEn", "address", "area", "layout", "nooftenant"];
+  //details=["price", "publicLocationNamesEn", "address", "area", "layout", "nooftenant"];
+  details = [
+    {key:"price", label:"Price"},
+    {key:"publicLocationNamesEn", label:"Location"},
+    {key:"address", label:"Address"},
+    {key:"area", label:"Area"},
+    {key:"layout", label:"Layout"},
+    {key:"nooftenant", label:"No. of Tenant"},
+  ];
   validation_messages = {
-
     'price':[
       { type: 'required', message: 'Excepted rent is required.' },
       { type: 'pattern', message: 'The rent should be a number' }
@@ -79,6 +86,7 @@ export class PostpropertyPage {
 
   //image picker
   photos : Array<any>;
+  photoLink: Array<any>;
 
   constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public authService: AuthService,
     public fireStore: AngularFirestore,
@@ -94,6 +102,7 @@ export class PostpropertyPage {
       this.pid = this.fireStore.createId();
       // image picker
       this.photos = new Array<any>();
+      this.photoLink = new Array<any>();
     }
 //using willlll herere
     ionViewWillLoad() {
@@ -142,7 +151,6 @@ export class PostpropertyPage {
 
   ionViewDidLoad() {
     console.log(this.localprofile);
-    
   }
   onSubmit(values){
     console.log(this.localprofile);
@@ -161,11 +169,11 @@ export class PostpropertyPage {
     this.propertyrofileCollectionemailname.update({userName: this.localprofile.displayName});
     this.propertyrofileCollectionemailname.update({dateCreated: new Date().getTime()});
     this.propertyrofileCollectionemailname.update({peoplelist:[{ who: ["email", "name"], when: new Date().getTime() }] });
-    this.propertyrofileCollectionemailname.update({comments:[{ who: ["email", "name"], when: new Date().getTime(), message:"message" }] }); 
+    this.propertyrofileCollectionemailname.update({comments:[{ who: ["email", "name"], when: new Date().getTime(), message:"message" }] });
+    
     // image-upload submit
-    console.log("image-upload submit: ");
-    console.log("this.photos[0]: " + this.photos.length);
-    this.uploadImageToFirebase2(this.photos[0]);
+    console.log("Total Photos: " + this.photos.length);
+    //this.uploadImageToFirebase2(this.photos[0]);
   }
   
 
@@ -210,33 +218,33 @@ export class PostpropertyPage {
 }
 
 // image picker
-openImagePickerCrop(){
-  this.imagePicker.hasReadPermission().then(
-    (result) => {
-      if(result == false){
-        // no callbacks required as this opens a popup which returns async
-        this.imagePicker.requestReadPermission();
-      }
-      else if(result == true){
-        this.imagePicker.getPictures({
-          maximumImagesCount: 1
-        }).then(
-          (results) => {
-            for (var i = 0; i < results.length; i++) {
-              this.cropService.crop(results[i], {quality: 75}).then(
-                newImage => {
-                  this.uploadImageToFirebase(newImage);
-                },
-                error => console.error("Error cropping image", error)
-              );
-            }
-          }, (err) => console.log(err)
-        );
-      }
-    }, (err) => {
-      console.log(err);
-    });
-}
+// openImagePickerCrop(){
+//   this.imagePicker.hasReadPermission().then(
+//     (result) => {
+//       if(result == false){
+//         // no callbacks required as this opens a popup which returns async
+//         this.imagePicker.requestReadPermission();
+//       }
+//       else if(result == true){
+//         this.imagePicker.getPictures({
+//           maximumImagesCount: 1
+//         }).then(
+//           (results) => {
+//             for (var i = 0; i < results.length; i++) {
+//               this.cropService.crop(results[i], {quality: 75}).then(
+//                 newImage => {
+//                   this.uploadImageToFirebase(newImage);
+//                 },
+//                 error => console.error("Error cropping image", error)
+//               );
+//             }
+//           }, (err) => console.log(err)
+//         );
+//       }
+//     }, (err) => {
+//       console.log(err);
+//     });
+// }
 
 openImagePicker(){
   this.imagePicker.hasReadPermission().then(
@@ -263,35 +271,62 @@ openImagePicker(){
     });
 }
 
-uploadImageToFirebase(image){
-  image = normalizeURL(image);
+// uploadImageToFirebase(image){
+//   image = normalizeURL(image);
 
-  //uploads img to firebase storage
-  this.firebaseService.uploadImage(image)
-  .then(photoURL => {
-    console.error("photoURL:" + photoURL);
-    let toast = this.toastCtrl.create({
-      message: 'Image was updated successfully: ' + photoURL,
-      duration: 3000
-    });
-    toast.present();
-    })
-}
+//   //uploads img to firebase storage
+//   this.firebaseService.uploadImage(image)
+//   .then(photoURL => {
+//     console.error("photoURL:" + photoURL);
+//     let toast = this.toastCtrl.create({
+//       message: 'Image was updated successfully: ' + photoURL,
+//       duration: 3000
+//     });
+//     toast.present();
+//     })
+// }
 
-uploadImageToFirebase2(image){
-  console.log("uploadImageToFirebase2(image): ");
+// uploadImageToFirebase2(image){
+//   console.log("uploadImageToFirebase2(image): ");
+//   //image = normalizeURL(image);
+
+//   //uploads img to firebase storage
+//   this.firebaseService.uploadImage(image)
+//   .then(photoURL => {
+//     console.error("photoURL:" + photoURL);
+//     let toast = this.toastCtrl.create({
+//       message: 'Image was updated successfully: ' + photoURL,
+//       duration: 3000
+//     });
+//     // upload link to db
+//     this.propertyrofileCollectionemailname.update({photos:photoURL});
+//     toast.present();
+//     })
+// }
+
+async uploadImageToFirebase3(images){
+  console.log("uploadImageToFirebase3");
   //image = normalizeURL(image);
 
   //uploads img to firebase storage
-  this.firebaseService.uploadImage(image)
+  for(let i = 0; i < images.length; i++){
+  await this.firebaseService.uploadImage(images[i])
   .then(photoURL => {
     console.error("photoURL:" + photoURL);
     let toast = this.toastCtrl.create({
       message: 'Image was updated successfully: ' + photoURL,
       duration: 3000
     });
+    this.photoLink.push(photoURL);
+    console.log("Photo" + i + ": " + photoURL);
     toast.present();
     })
+  }
+
+  // upload link to db
+  console.log("photoLink: " + this.photoLink);
+  this.propertyrofileCollectionemailname.update({photos:this.photoLink});
+  this.photoLink = null;
 }
 
 }

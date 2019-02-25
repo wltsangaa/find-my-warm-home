@@ -7,24 +7,24 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>postproperty</ion-title>
+    <ion-title>Post Home</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-    <form id="postform3" [formGroup]="validations_form"   (ngSubmit)="onSubmit(validations_form.value)">
-      <ion-list *ngFor="let detail of details">
-      <ion-item  >
-    <ion-label>
-      <!--uppercase the first character-->
-      {{detail.charAt(0).toUpperCase() + detail.slice(1)}}
-    </ion-label>
-    <ion-input type="text" placeholder="" formControlName="{{detail}}" required></ion-input>
-  </ion-item>
-</ion-list>
-  <!--
+  <form id="postform3" [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value); uploadImageToFirebase3(photos);">
+    <ion-list *ngFor="let detail of details">
+      <ion-item>
+        <ion-label>
+          <!--uppercase the first character-->
+          {{detail.label}}
+        </ion-label>
+        <ion-input type="text" placeholder="" formControlName="{{detail.key}}" required></ion-input>
+      </ion-item>
+    </ion-list>
+    <!--
   <div class="validation-errors">
     <ng-container >
       <div class="error-message" *ngIf="validations_form.get(detail).hasError(validation.type) && (validations_form.get({{detail}}).dirty || validations_form.get({{detail}}).touched)">
@@ -33,26 +33,26 @@
     </ng-container>
   </div>
 -->
-<button  ion-button color="stable" block type ="submit" [disabled]="!validations_form.valid">
-    Sign up
-  </button>
-  </form>
-
-  <!--image picker-->
-  <ion-grid>
-    <ion-row>
-      <ion-col col-md-4 offset-md-4>
-        <button ion-button (click)="openImagePicker()">Select Photo</button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
+    <!--image picker-->
+    <ion-grid>
+      <ion-row>
+        <ion-col col-md-4 offset-md-4>
+          <button ion-button type="button" (click)="openImagePicker()">Select Photo</button>
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row>
       <ion-col col-md-4 offset-md-4>
         <button ion-button (click)="openImagePickerCrop()">Select Photo (Crop)</button>
       </ion-col>
-    </ion-row>
-    <ion-card *ngFor="let photo of photos">
-      <img src="{{photo}}" />
-    </ion-card>
-  </ion-grid>
-  
+    </ion-row> -->
+      <ion-card *ngFor="let photo of photos">
+        <img src="{{photo}}" />
+      </ion-card>
+    </ion-grid>
+
+    <button ion-button color="stable" block type="submit" [disabled]="!validations_form.valid">
+      Post
+    </button>
+  </form>
+
 </ion-content>
