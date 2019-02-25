@@ -130,7 +130,7 @@
   <ng-container *ngFor="let pic of value?.attachments">
   
   <ion-slide>
-  <img src={{pic?.thumbnail.large.url}} />
+    <img src={{pic.thumbnail.large.url}} (click)="showImage(pic.thumbnail.large.url)" />
   </ion-slide>
    
   </ng-container>

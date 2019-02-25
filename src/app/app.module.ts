@@ -11,7 +11,6 @@ import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { PropertyDetailPage } from '../pages/property-detail/property-detail';
 
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -26,6 +25,11 @@ import { PostpropertyPage } from '../pages/postproperty/postproperty';
 //import { File } from '@ionic-native/file';
 import { AngularFireStorageModule  } from '@angular/fire/storage';
 import { FindPropertyPage } from '../pages/find-property/find-property';
+
+import { PhotoViewer } from '@ionic-native/photo-viewer/';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { Crop } from '@ionic-native/crop';
+import { FirebaseService } from '../pages/services/firebase.service';
 
 @NgModule({
   declarations: [
@@ -65,6 +69,10 @@ import { FindPropertyPage } from '../pages/find-property/find-property';
   providers: [
     StatusBar,
     SplashScreen,
+    PhotoViewer,
+    ImagePicker,
+    Crop,
+    FirebaseService,
 	AngularFireDatabase,
   AuthService,
   AngularFirestore,

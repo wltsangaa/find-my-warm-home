@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../services/auth.service';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { getSegmentsFromNavGroups } from 'ionic-angular/umd/navigation/url-serializer';
+import { PhotoViewer } from '@ionic-native/photo-viewer/';
+
 
 export interface User{
   username: any;email:string;
@@ -41,7 +42,8 @@ uid:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public authService: AuthService,
-    public fireStore: AngularFirestore,) {
+    public fireStore: AngularFirestore,
+    private photoViewer: PhotoViewer) {
 	  
 	  this.value = this.navParams.get('item');
 	  //showing we can get the values inside the observable
@@ -113,7 +115,9 @@ return false;
 else return true;
 }
 
-
+showImage(imgLink:string){
+  this.photoViewer.show(imgLink);
+}
 
 isstudent(){
 if(this.role == "tenant"){

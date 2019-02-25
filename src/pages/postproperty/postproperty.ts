@@ -7,7 +7,13 @@ import { Observable } from 'rxjs/Observable';
 //import { FileChooser } from '@ionic-native/file-chooser';
 //import { File } from '@ionic-native/file';
 import { AngularFireStorage, AngularFireUploadTask  } from '@angular/fire/storage';
-//import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { ActionSheetController} from 'ionic-angular';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { Crop } from '@ionic-native/crop';
+import { normalizeURL} from 'ionic-angular';
+import { FirebaseService } from '../services/firebase.service';
+import { ToastController } from 'ionic-angular';
+
 /**
  * Generated class for the PostpropertyPage page.
  *
@@ -71,14 +77,23 @@ export class PostpropertyPage {
   propertyrofileCollectionemailname: any;
   peoplelist:any[];
 
+  //image picker
+  photos : Array<any>;
+
   constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public authService: AuthService,
     public fireStore: AngularFirestore,
     //private fileChooser: FileChooser,private file:File,
     private storage: AngularFireStorage,
-   // private imagePicker: ImagePicker,
+    public actionSheetCtrl: ActionSheetController,
+    public imagePicker: ImagePicker,
+    public toastCtrl: ToastController,
+    public firebaseService: FirebaseService,
+    public cropService: Crop
     ) {
       this.propertyProfileCollection = this.fireStore.collection<any>('propertyProfile');
       this.pid = this.fireStore.createId();
+      // image picker
+      this.photos = new Array<any>();
     }
 //using willlll herere
     ionViewWillLoad() {
@@ -131,6 +146,7 @@ export class PostpropertyPage {
   }
   onSubmit(values){
     console.log(this.localprofile);
+    console.log("onSubmit!!!");
    // this.properityProfileCollection.add(values);
    this.validations_form.controls['email'].setValue(this.localprofile.email);
    this.validations_form.controls['uid'].setValue(this.localprofile.uid);
@@ -146,6 +162,10 @@ export class PostpropertyPage {
     this.propertyrofileCollectionemailname.update({dateCreated: new Date().getTime()});
     this.propertyrofileCollectionemailname.update({peoplelist:[{ who: ["email", "name"], when: new Date().getTime() }] });
     this.propertyrofileCollectionemailname.update({comments:[{ who: ["email", "name"], when: new Date().getTime(), message:"message" }] }); 
+    // image-upload submit
+    console.log("image-upload submit: ");
+    console.log("this.photos[0]: " + this.photos.length);
+    this.uploadImageToFirebase2(this.photos[0]);
   }
   
 
@@ -188,4 +208,90 @@ export class PostpropertyPage {
 
     this.progress = this.task.percentageChanges();
 }
+
+// image picker
+openImagePickerCrop(){
+  this.imagePicker.hasReadPermission().then(
+    (result) => {
+      if(result == false){
+        // no callbacks required as this opens a popup which returns async
+        this.imagePicker.requestReadPermission();
+      }
+      else if(result == true){
+        this.imagePicker.getPictures({
+          maximumImagesCount: 1
+        }).then(
+          (results) => {
+            for (var i = 0; i < results.length; i++) {
+              this.cropService.crop(results[i], {quality: 75}).then(
+                newImage => {
+                  this.uploadImageToFirebase(newImage);
+                },
+                error => console.error("Error cropping image", error)
+              );
+            }
+          }, (err) => console.log(err)
+        );
+      }
+    }, (err) => {
+      console.log(err);
+    });
+}
+
+openImagePicker(){
+  this.imagePicker.hasReadPermission().then(
+    (result) => {
+      if(result == false){
+        // no callbacks required as this opens a popup which returns async
+        this.imagePicker.requestReadPermission();
+      }
+      else if(result == true){
+        this.imagePicker.getPictures({
+          maximumImagesCount: 1
+        }).then(
+          (results) => {
+            for (var i = 0; i < results.length; i++) {
+              //this.uploadImageToFirebase(results[i]);
+              console.log("openImagePicker push to photos: " + results[i].toString());
+              this.photos.push(normalizeURL(results[i]));
+            }
+          }, (err) => console.log(err)
+        );
+      }
+    }, (err) => {
+      console.log(err);
+    });
+}
+
+uploadImageToFirebase(image){
+  image = normalizeURL(image);
+
+  //uploads img to firebase storage
+  this.firebaseService.uploadImage(image)
+  .then(photoURL => {
+    console.error("photoURL:" + photoURL);
+    let toast = this.toastCtrl.create({
+      message: 'Image was updated successfully: ' + photoURL,
+      duration: 3000
+    });
+    toast.present();
+    })
+}
+
+uploadImageToFirebase2(image){
+  console.log("uploadImageToFirebase2(image): ");
+  //image = normalizeURL(image);
+
+  //uploads img to firebase storage
+  this.firebaseService.uploadImage(image)
+  .then(photoURL => {
+    console.error("photoURL:" + photoURL);
+    let toast = this.toastCtrl.create({
+      message: 'Image was updated successfully: ' + photoURL,
+      duration: 3000
+    });
+    toast.present();
+    })
+}
+
 }
