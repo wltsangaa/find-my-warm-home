@@ -14,6 +14,7 @@ import { normalizeURL} from 'ionic-angular';
 import { FirebaseService } from '../services/firebase.service';
 import { ToastController } from 'ionic-angular';
 
+
 /**
  * Generated class for the PostpropertyPage page.
  *
@@ -96,7 +97,7 @@ export class PostpropertyPage {
     public imagePicker: ImagePicker,
     public toastCtrl: ToastController,
     public firebaseService: FirebaseService,
-    public cropService: Crop
+    public cropService: Crop,
     ) {
       this.propertyProfileCollection = this.fireStore.collection<any>('propertyProfile');
       this.pid = this.fireStore.createId();
@@ -260,8 +261,12 @@ openImagePicker(){
           (results) => {
             for (var i = 0; i < results.length; i++) {
               //this.uploadImageToFirebase(results[i]);
-              console.log("openImagePicker push to photos: " + results[i].toString());
-              this.photos.push(normalizeURL(results[i]));
+              console.log("Before convertFileSrc: " + results[i].toString());
+              let win: any = window; // hack compilator
+              let safeURL = win.Ionic.WebView.convertFileSrc(results[i].toString());
+              //this.photos.push(normalizeURL(results[i]));
+              this.photos.push(safeURL);
+              console.log("After convertFileSrc: " + safeURL);
             }
           }, (err) => console.log(err)
         );

@@ -16,6 +16,10 @@ import { DatePipe } from '@angular/common';
 import { PropertyDetailPage } from '../property-detail/property-detail';
 import { FindPropertyPage } from '../find-property/find-property';
 import { PostpropertyPage} from '../postproperty/postproperty';
+import { Platform } from 'ionic-angular';
+export interface User{
+  username: any;email:string;
+  house:string;}
 
 interface Property {
   displayText: string;
@@ -40,17 +44,64 @@ export class HomePage {
   properties: Observable<Property[]>;
   ownpropertys: AngularFirestoreCollection<{}>;
   ownproperties: Observable<{}>;
+  refprice: AngularFirestoreCollection<{}>;
+  getrefprice: Observable<{}[]>;
+  show: any;
+  screensize: string;
+  uid: string;
+  verified: boolean;
+  userProfilename: AngularFirestoreDocument<User>;
+  register: any;
+  role: any;
+  uemail: any;
+  uname: any;
+  showt: number;
+  userprofiles: AngularFirestoreCollection<{}>;
+  getuserprofiles: Observable<{}[]>;
+  ugender: any;
   
   constructor(
     //public db: AngularFireDatabase,
     public db: AngularFirestore,
     public navCtrl: NavController,
     public authService: AuthService,
+    public plt: Platform,
+    public fireStore: AngularFirestore,
   ) {
     //this.booksCollection = this.db.collection('historical_price');
-  }
+    this.show = 10;
+    this.showt = 10;
 
+  }
+  isstudent(){
+    if(this.role == "tenant"){
+      return true;
+    }
+    else{return false;}
+    }
   ionViewDidLoad(){
+    this.authService.user.subscribe(user=>{if(user)
+      {this.uid=user.uid;
+       this.verified =user.emailVerified;  
+
+    this.userProfilename = this.fireStore.doc<User>('userProfile/'+ this.uid);
+    this.register = this.userProfilename.valueChanges();
+       this.register.subscribe(res=>{
+    this.role = res.house;
+    this.uemail = res.email;
+    this.uname = res.username;
+    this.ugender = res.gender;
+    this.userprofiles = this.db.collection('userProfile', ref => ref.where('gender','==',this.ugender).limit(20));
+  this.getuserprofiles = this.userprofiles.valueChanges();
+  });}
+    else{console.log("not logined");}});
+
+    if (this.plt.is('android')||this.plt.is('cordova')||this.plt.is('ios')||this.plt.is('mobile')) {
+      // This will only print when on iOS
+      this.screensize = "1";
+      console.log('I am mobile');
+    }else {console.log('other platform')
+      this.screensize ="2";}
     // this.hisdata = this.db.collection('historical_price').valueChanges();
     // this.hisdata = this.db.collection<any>
     // ('historical_price', ref=>ref.where("totalFloors", "==", "1")).valueChanges();
@@ -66,11 +117,19 @@ export class HomePage {
     this.ownproperties = this.ownpropertys.valueChanges();
     
     // search filter -- timestamp(desc)
-    this.propertysCol = this.db.collection('historical_price', ref => ref.orderBy('dateCreated', 'desc').limit(5));
-
+    this.propertysCol = this.db.collection('historical_price', ref => ref.orderBy('dateCreated', 'desc').limit(20));
     this.properties = this.propertysCol.valueChanges();
-  }
 
+    this.refprice = this.db.collection('reference_price');
+    this.getrefprice = this.refprice.valueChanges();
+    
+
+  }
+  showmore(show){ return show+= 10;}
+colorup(badge:string, on:string="up", off:string="down"){
+  if(badge.includes("+") == true)
+  return on;
+else return off;}
 getPropertyList(){
   return this.hisdata = this.db.collection('historical_price', ref => ref.where("totalFloors", "==", "1")).valueChanges();
 }

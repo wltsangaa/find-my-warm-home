@@ -32,26 +32,39 @@
 
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
+    <!-- <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button>
-    
+    </button> -->
+
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page2" class="card-background-page">
-    <h1 *ngIf="authService.user | async">Welcome {{ (authService.user | async)?.displayName }}!</h1>
+    <ion-grid class="top">
+        <ion-row>
+          <ion-col  col-md-9>
+    <h5 class="sansserif" style="font-size: 120%;" *ngIf="authService.user | async">Welcome, {{ uname  }}.</h5>
+  </ion-col>
+  <ion-col  col-md-9 >
+    <ion-buttons right>
+      <button class="try" ion-button  color="dark" clear (click)="logout()" *ngIf="authService.user | async">
+        <ion-icon name="exit"></ion-icon>
+        LogOut
+      </button>
+      </ion-buttons>
+    </ion-col>
+    
+    </ion-row>
+    </ion-grid>
     <div *ngIf="!(authService.user | async)">
-        <button (click)="signup()" >
-            Signup
-          </button>
+      <!-- <button ion-button right (click)="login()" >
+        <ion-icon name="log-in"></ion-icon>
         
-          <button (click)="login()" >
-            Login
-          </button>
+      </button> -->
+      <h4 style="color:#000000;font-weight:300;" (click)="login()" class="my-button"> 
+          Not yet Login/SignUp? Click here.
+        </h4>
     </div>
-    <button (click)="logout()" *ngIf="authService.user | async">
-        Logout
-    </button>
+
 
   <ion-slides pager style="height: 150px">
       <ion-slide>
@@ -72,34 +85,75 @@
       Find Home
     </h4>
   </div>
-  <button id="home-button8" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;" (click)="gotoFindProperty()" ion-button block>
+  <button *ngIf="isstudent()" id="home-button8" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;" (click)="gotoFindProperty()" ion-button >
     <ion-icon name="create"></ion-icon>
     Find Home
   </button>
-  <button id="home-button18" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;" ion-button block (click)="gotopostproperty()">
+  <div *ngIf="isstudent()==false">
+  <button *ngIf="authService.user | async" id="home-button18" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;" ion-button  (click)="gotopostproperty()">
     <ion-icon name="create"></ion-icon>
     Post Home
   </button>
-  <button id="home-button6" ion-button color="light" icon-left style="font-weight:300;color:#EC1094;border-radius:46px 46px 46px 46px;" ion-button block>
+  </div>
+  <button id="home-button6" ion-button color="light" icon-left style="font-weight:300;color:#EC1094;border-radius:46px 46px 46px 46px;" ion-button >
     <ion-icon name="people"></ion-icon>
-    Find Roommate
+    Find Roommate/Tenants
   </button>
-  <button id="home-button7" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;" ion-button block>
-    <ion-icon name="people"></ion-icon>
-    Find Tenants
-  </button>
+
 
   <hr style="margin: 16px 0"/>
-
   <ion-grid>
+    <h4 id="home-heading4" style="color:#000000;font-weight:300;">
+      Average Renting Price (In Each District)
+    </h4>
+  <ion-row>
+      <ion-slides [slidesPerView]= 'screensize' spaceBetween="1" >
+        <ion-col *ngFor="let record of getrefprice | async" >
+            <!-- <div> -->
+              
+                <ion-slide >
+                <ion-card >
+                    
+                    <ion-card-content>
+                      <ion-item>
+                          <ion-icon name="home" item-start medium></ion-icon>
+                          <h2>{{record.district_name}}</h2>
+                          <p>No.of Posts: {{record.m_quantity}}</p>
+                      </ion-item>
+                      <ion-item>
+                        <ion-icon name="logo-usd" item-start medium></ion-icon>
+                        <h2>Avg. Price: {{record.m_avg_price}}<ion-badge class="badges" [color]="colorup(record.m_avg_price_change,'up','down')">{{record.m_avg_price_change}}</ion-badge></h2>
+                        <p>Avg. Net Price: {{record.m_avg_net_price}}<ion-badge [color]="colorup(record.m_avg_price_change,'up','down')" class="badges" >{{record.m_avg_net_price_change}}</ion-badge></p>
+                      </ion-item>
+                    <ion-row>
+                      <ion-col  text-center>
+                        <ion-note>
+                          Last Update: {{record.m_date}}
+                        </ion-note>
+                      </ion-col>
+                    </ion-row>
+                  </ion-card-content>
+                  </ion-card>
+                  </ion-slide>
+                  
+            <!-- </div> -->
+          </ion-col>
+        </ion-slides>
+  </ion-row>
+  <hr style="margin: 16px 0"/>
+</ion-grid>
+  <ion-grid *ngIf="isstudent()">
       <h4 id="home-heading4" style="color:#000000;font-weight:300;">
-        Recent Posts
+        Historical Price (For Ref.)
       </h4>
     <ion-row>
-          <ion-col *ngFor="let item of properties | async">
-              <div>
+        <ion-slides [slidesPerView]= 'screensize' spaceBetween="1">
+          <ion-col *ngFor="let item of (properties | async)| slice:0:show; let i=index;">
+              <!-- <div> -->
+
+                  <ion-slide >
                   <ion-card (click)="gotoPropertyDetail($event, item)">
-                      <img src="{{item.thumbnail}}">
+                      <img src="{{item.thumbnail}}" style="height:300px; width: 100%">
                       <ion-card-content>
                         <ion-item>
                             <ion-icon name="home" item-start medium></ion-icon>
@@ -118,17 +172,62 @@
                       <ion-row>
                         <ion-col center text-center>
                           <ion-note>
-                            Timestamp: {{convert2Date(item.dateCreated)}}
+                            Last Update: {{convert2Date(item.dateCreated)}}
                           </ion-note>
                         </ion-col>
                       </ion-row>
                     </ion-card-content>
                     </ion-card>
-              </div>
+                    <div *ngIf="i== show-1">
+                        <button  (click)="show = showmore(show)" ion-button  color="grey" full outline >Showmore</button>
+                        </div>
+                    </ion-slide>
+                    
+              <!-- </div> -->
             </ion-col>
+            
+          </ion-slides>
     </ion-row>
   </ion-grid>
 
+  <hr style="margin: 16px 0"/>
+  <ion-grid *ngIf="isstudent()">
+      <h4 id="home-heading4" style="color:#000000;font-weight:300;">
+        Tenants
+      </h4>
+    <ion-row>
+        <ion-slides [slidesPerView]= 'screensize' spaceBetween="1">
+          <ion-col *ngFor="let item of (getuserprofiles | async)| slice:0:show; let i=index;">
+              
+
+                  <ion-slide >
+                  <ion-card >
+                      <img src="{{item?.thumbnail}}" style="height:300px; width: 100%">
+                      <ion-card-content>
+                        <ion-item>
+                            <ion-icon name="home" item-start medium></ion-icon>
+                            <h2>{{item.username}}</h2>
+                            <p>{{item.gender}}</p>
+                        </ion-item>
+                        <ion-item>
+                          <ion-icon name="logo-usd" item-start medium></ion-icon>
+                          <h2>Rent at HKD: {{item.price}}</h2>
+                        </ion-item>
+
+                    </ion-card-content>
+                    </ion-card>
+                    <div *ngIf="i== showt-1">
+                        <button  (click)="showmore(showt)" ion-button  color="grey" full outline >Showmore</button>
+                        </div>
+                    </ion-slide>
+                    
+              
+            </ion-col>
+            
+          </ion-slides>
+    </ion-row>
+  </ion-grid> 
+  <hr style="margin: 16px 0"/>
   <ion-grid>
     <h4 id="home-heading4" style="color:#000000;font-weight:300;">
       Recent Posts
@@ -137,10 +236,28 @@
         <ion-col *ngFor="let item of ownproperties | async">
             <div>
                 <ion-card (click)="gotoPropertyDetail($event, item)">
+                    <img src="{{item?.photos[0]}}" style="height:300px; width: 100%">
                     <ion-card-content>
                         <ion-item>
+                            <ion-icon name="home" item-start medium></ion-icon>
                             <h2>{{item.publicLocationNamesEn}}</h2>
                           </ion-item>
+                          <ion-item>
+                              <ion-icon name="logo-usd" item-start medium></ion-icon>
+                              <h2>HKD: {{item.price}}</h2>
+                            </ion-item>
+                          <ion-row>
+                              <!-- <ion-col>
+                                <ion-badge *ngFor="let number of postTags(item.postTags)" color="light" class="badges">{{number}}</ion-badge>
+                              </ion-col> -->
+                          </ion-row>
+                          <ion-row>
+                            <ion-col center text-center>
+                              <ion-note>
+                                Last Update: {{convert2Date(item.dateCreated)}}
+                              </ion-note>
+                            </ion-col>
+                          </ion-row>
                     </ion-card-content>
                   </ion-card>  
                   </div>

@@ -1,8 +1,12 @@
 .card-background-page {
 
     ion-card {
+      
       position: relative;
       text-align: center;
+      -webkit-box-shadow: 1px 5px 19px -1px rgba(0,0,0,0.75);
+-moz-box-shadow: 1px 5px 19px -1px rgba(0,0,0,0.75);
+box-shadow: 1px 5px 19px -1px rgba(0,0,0,0.75);
     }
   
     .card-title {
@@ -12,6 +16,7 @@
       width: 100%;
       font-weight: bold;
       color: #fff;
+      
     }
   
     .card-subtitle {
@@ -26,8 +31,20 @@
         margin:5px;
     }
 
-    ion-slide{
+    ion-slides{
       height: 100%;
+      width:100%;
     }
   
   }
+  .my-button:hover{
+    color: orange !important;
+}
+.try{
+  .button-inner{
+  align-items:end;}
+}
+.top{
+  height: 40px;
+}
+//.swiper-slide { overflow-y: scroll; display: block; }

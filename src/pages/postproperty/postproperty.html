@@ -46,7 +46,7 @@
       </ion-col>
     </ion-row> -->
       <ion-card *ngFor="let photo of photos">
-        <img src="{{photo}}" />
+        <img [src]="photo" />
       </ion-card>
     </ion-grid>
 

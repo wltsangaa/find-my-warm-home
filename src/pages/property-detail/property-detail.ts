@@ -134,7 +134,7 @@ createroom(){
   console.log(this.teams);
 }
 joinroom(index :number){
-  if(this.inpeoplelist(this.teams[index].teamname) == true && this.enoughplace(this.teams[index].teamname.length) == true){
+  if(this.inpeoplelist(this.teams[index].teamname) == false && this.enoughplace(this.teams[index].teamname.length) == true){
     console.error(this.teams[index].teamname.length);
   this.teams[index].teamname.push({ who: [this.uemail,this.uname], when: new Date().getTime() });
   console.log(this.teams);
