@@ -30,6 +30,11 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Crop } from '@ionic-native/crop';
 import { FirebaseService } from '../pages/services/firebase.service';
+import { ChatsPage } from '../pages/chats/chats';
+import { ChatroomPage } from '../pages/chatroom/chatroom';
+import { ChatService } from './app.service';
+import { PipesModule } from '../pipes/pipes.module';
+import { IonicStorageModule } from "@ionic/storage";
 
 @NgModule({
   declarations: [
@@ -38,14 +43,19 @@ import { FirebaseService } from '../pages/services/firebase.service';
     ContactPage,
     HomePage,
     TabsPage,
-  LoginPage,
-  SignupPage,
-  PropertyDetailPage,
-  PostpropertyPage,
-  FindPropertyPage,
-  
+    LoginPage,
+    SignupPage,
+    PropertyDetailPage,
+    PostpropertyPage,
+    FindPropertyPage,
+    ChatsPage,
+    ChatroomPage,
   ],
   imports: [
+    PipesModule,
+    IonicStorageModule.forRoot({
+      name: "__ionfirechat"
+    }),
     BrowserModule,
     IonicModule.forRoot(MyApp),
 	AngularFireModule.initializeApp(firebaseConfig),
@@ -60,11 +70,13 @@ import { FirebaseService } from '../pages/services/firebase.service';
     ContactPage,
     HomePage,
     TabsPage,
-  LoginPage,
-  SignupPage,
-  PropertyDetailPage,
-  PostpropertyPage,
-  FindPropertyPage,
+    LoginPage,
+    SignupPage,
+    PropertyDetailPage,
+    PostpropertyPage,
+    FindPropertyPage,
+    ChatsPage,
+    ChatroomPage,
   ],
   providers: [
     StatusBar,
@@ -72,11 +84,13 @@ import { FirebaseService } from '../pages/services/firebase.service';
     PhotoViewer,
     ImagePicker,
     Crop,
+    ChatService,
+    Storage,
     FirebaseService,
-	AngularFireDatabase,
-  AuthService,
-  AngularFirestore,
-  //FileChooser,File,
+    AngularFireDatabase,
+    AuthService,
+    AngularFirestore,
+    //FileChooser,File,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

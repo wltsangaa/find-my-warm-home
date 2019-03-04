@@ -1,14 +1,130 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController } from 'ionic-angular';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AuthService } from '../services/auth.service';
+import { ChatService } from "../../app/app.service";
+import { ChatsPage } from "../chats/chats";
+import { Storage } from "@ionic/storage";
+
+export interface User{
+  username: any;email:string;
+  house:string;}
 
 @Component({
   selector: 'page-contact',
   templateUrl: 'contact.html'
 })
 export class ContactPage {
+  uid: string;
+  verified: boolean;
+  userProfilename: any;
+  register: any;
+  role: any;
+  uemail: any;
+  uname: any;
 
-  constructor(public navCtrl: NavController) {
+  loginForm: any = {};
 
+  constructor(public navCtrl: NavController,
+    public db: AngularFirestore,
+    public authService: AuthService,
+    public fireStore: AngularFirestore,
+    private chatservice: ChatService,
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,
+    private storage: Storage) {
+
+  }
+
+  ionViewDidLoad(){
+    this.authService.user.subscribe(user=>{if(user)
+      {this.uid=user.uid;
+       this.verified =user.emailVerified;  
+
+    this.userProfilename = this.fireStore.doc<User>('userProfile/'+ this.uid);
+    this.register = this.userProfilename.valueChanges();
+       this.register.subscribe(res=>{
+    this.role = res.house;
+    this.uemail = res.email;
+    this.uname = res.username;
+    });}
+    else{console.log("not logined");}});
+  }
+
+  ngOnInit() {
+    this.storage.get("chatuser").then(chatuser => {
+      if (chatuser && chatuser.email !== "") {
+        this.navCtrl.push(ChatsPage);
+      }
+    });
+  }
+
+  loginUser() {
+    if (this.loginForm.email != "") {
+      //Check if email already exists
+      let myLoader = this.loadingCtrl.create({
+        content: "Please wait..."
+      });
+      myLoader.present().then(() => {
+        this.db
+          .collection<User>("chatroomUsers", ref => {
+            return ref.where("email", "==", this.loginForm.email);
+          })
+          .valueChanges()
+          .subscribe(users => {
+
+            if (users.length === 0) {
+              //Register User
+
+              //Add the timestamp
+              this.loginForm.time = new Date().getTime();
+
+              this.chatservice
+                .addUser(this.loginForm)
+                .then(res => {
+                  //Registration successful
+                  
+                  this.storage.set("chatuser", this.loginForm);
+                  myLoader.dismiss();
+
+                  let toast = this.toastCtrl.create({
+                    message: "Login In Successful",
+                    duration: 3000,
+                    position: "top"
+                  });
+                  toast.present();
+
+                  this.navCtrl.push(ChatsPage);
+                })
+                .catch(err => {
+                  console.log(err);
+                  myLoader.dismiss();
+                });
+            } else {
+              //User already exists, move to chats page
+              
+              this.storage.set("chatuser", users[0]);
+
+              let toast = this.toastCtrl.create({
+                message: "Login In Successful",
+                duration: 3000,
+                position: "top"
+              });
+              toast.present();
+              myLoader.dismiss();
+
+              this.navCtrl.push(ChatsPage);
+            }
+          });
+      });
+    } else {
+      let toast = this.toastCtrl.create({
+        message: "Enter Email to log in",
+        duration: 3000,
+        position: "top"
+      });
+      toast.present();
+    }
   }
 
 }

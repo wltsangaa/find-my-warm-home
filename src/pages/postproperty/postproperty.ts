@@ -336,6 +336,7 @@ async uploadImageToFirebase3(images){
   console.log("photoLink: " + this.photoLink);
   this.propertyrofileCollectionemailname.update({photos:this.photoLink});
   this.photoLink = null;
+  this.navCtrl.pop();
 }
 
 async presentActionSheet() {
