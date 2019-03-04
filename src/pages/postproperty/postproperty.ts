@@ -22,6 +22,10 @@ import { ToastController } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
+/**
+ * 28hse: contact person (with phone no.)
+ *  */
+
 export interface User{email:string;
 uid:string;
 displayName:string;}
@@ -113,7 +117,7 @@ export class PostpropertyPage {
       publicLocationNamesEn: new FormControl('', Validators.compose([
 
         //only accept character with number, delete (?+.* 0-9) if no require the number.
-        Validators.pattern('^[a-zA-Z0-9,._ ]+$'),
+        //Validators.pattern('^[a-zA-Z0-9,._ ]+$'),
         Validators.required
       ])),
       
@@ -332,6 +336,30 @@ async uploadImageToFirebase3(images){
   console.log("photoLink: " + this.photoLink);
   this.propertyrofileCollectionemailname.update({photos:this.photoLink});
   this.photoLink = null;
+}
+
+async presentActionSheet() {
+  const actionSheet = await this.actionSheetCtrl.create({
+    buttons: [{
+      text: 'Camera',
+      handler: () => {
+        console.log('Camera clicked');
+      }
+    }, {
+      text: 'Photo Library',
+      handler: () => {
+        console.log('Photo Library clicked');
+        this.openImagePicker();
+      }
+    }, {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+        console.log('Cancel clicked');
+      }
+    }]
+  });
+  await actionSheet.present();
 }
 
 }

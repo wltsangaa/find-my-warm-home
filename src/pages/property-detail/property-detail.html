@@ -55,7 +55,7 @@
       {{ttt.who[1]}}
     </button>
   </div>
-  <div *ngIf="fromlandlord()&&isstudent()&&logged()&&checklock()"> 
+  <div *ngIf="fromlandlord()&&logged()&&checklock()"> 
     <button id="propertyDetail-button23" ion-button clear color="dark" (click)="joinroom(j)">
       Join this room
     <ion-icon name="add-circle" ></ion-icon>
@@ -72,7 +72,7 @@
   </ion-list>
 
 
-<div *ngIf="fromlandlord()&&isstudent()&&logged()&&checklock()"> 
+<div *ngIf="fromlandlord()&&logged()&&checklock()"> 
   <button id="propertyDetail-button23" ion-button clear color="dark" (click)="createroom()">
    Or  Create a new room
   <ion-icon name="add-circle" ></ion-icon>

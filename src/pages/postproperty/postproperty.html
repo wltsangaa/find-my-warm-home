@@ -12,16 +12,48 @@
 
 </ion-header>
 
-
 <ion-content padding>
-  <form id="postform3" [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value); uploadImageToFirebase3(photos);">
+  <ion-grid tappable type="button" (click)="presentActionSheet()">
+    <!--tappable makes div can be click-->
+    <ion-row justify-content-center>
+      <ion-col text-center>
+        <div *ngIf="photos.length == 0">
+          <button>
+            <ion-icon name="images" style="font-size:200px;"></ion-icon>
+          </button>
+          <ion-label>
+            Add some property photos
+          </ion-label>
+        </div>
+        <div *ngIf="photos.length > 0">
+          <ion-slides pager="true">
+            <ion-slide *ngFor="let photo of photos">
+              <img src="{{photo}}" />
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <form id="postform3" [formGroup]="validations_form"
+    (ngSubmit)="onSubmit(validations_form.value); uploadImageToFirebase3(photos);">
     <ion-list *ngFor="let detail of details">
-      <ion-item>
+      <ion-item *ngIf="detail.label != 'Location'">
         <ion-label>
           <!--uppercase the first character-->
           {{detail.label}}
         </ion-label>
         <ion-input type="text" placeholder="" formControlName="{{detail.key}}" required></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="detail.label == 'Location'">
+        <ion-label>{{detail.label}}</ion-label>
+        <ion-select name="" formControlName="{{detail.key}}" interface="popover">
+          <ion-option value="Tseung Kwan O">Tseung Kwan O</ion-option>
+          <ion-option value="Hang Hau">Hang Hau</ion-option>
+          <ion-option value="Sai Kung">Sai Kung</ion-option>
+        </ion-select>
       </ion-item>
     </ion-list>
     <!--
