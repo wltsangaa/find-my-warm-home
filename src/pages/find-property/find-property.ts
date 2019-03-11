@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { PropertyDetailPage } from '../property-detail/property-detail';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
+import { ScrollHideConfig } from '../services/scroll-hide';
 
 /**
  * Generated class for the FindPropertyPage page.
@@ -23,6 +24,9 @@ interface Property {
   templateUrl: 'find-property.html',
 })
 export class FindPropertyPage {
+
+  footerScrollConfig: ScrollHideConfig = { cssProperty: 'margin-bottom', maxValue: undefined };
+  headerScrollConfig: ScrollHideConfig = { cssProperty: 'margin-top', maxValue: 44 };
 
   propertysCol: AngularFirestoreCollection<Property>;
   properties: Observable<Property[]>;

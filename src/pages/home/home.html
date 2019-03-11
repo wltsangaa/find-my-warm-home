@@ -30,15 +30,17 @@
 </ion-content>
 -->
 
-<ion-header>
+<ion-header [scrollHide]="headerScrollConfig" [scrollContent]="pageContent">
   <ion-navbar>
-    <!-- <button ion-button menuToggle>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button> -->
-
+    </button>
+    <ion-title>
+      Home
+    </ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding id="page2" class="card-background-page">
+<ion-content #pageContent fullscreen padding id="page2" class="card-background-page">
     <ion-grid class="top">
         <ion-row>
           <ion-col  col-md-9>

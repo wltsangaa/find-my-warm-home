@@ -17,6 +17,9 @@ import { PropertyDetailPage } from '../property-detail/property-detail';
 import { FindPropertyPage } from '../find-property/find-property';
 import { PostpropertyPage} from '../postproperty/postproperty';
 import { Platform } from 'ionic-angular';
+import { ScrollHideConfig } from '../services/scroll-hide';
+
+
 export interface User{
   username: any;email:string;
   house:string;}
@@ -33,9 +36,12 @@ interface Property {
 })
 
 export class HomePage {
+
+  footerScrollConfig: ScrollHideConfig = { cssProperty: 'margin-bottom', maxValue: undefined };
+  headerScrollConfig: ScrollHideConfig = { cssProperty: 'margin-top', maxValue: 44 };
+
 	email:string;
   password:string;
-  
   
   //ref = firebase.database().ref('userp/');
   hisdata:Observable<any[]>;

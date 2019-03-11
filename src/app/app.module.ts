@@ -35,6 +35,7 @@ import { ChatroomPage } from '../pages/chatroom/chatroom';
 import { ChatService } from './app.service';
 import { PipesModule } from '../pipes/pipes.module';
 import { IonicStorageModule } from "@ionic/storage";
+import { ScrollHideDirective } from '../pages/services/scroll-hide';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { IonicStorageModule } from "@ionic/storage";
     FindPropertyPage,
     ChatsPage,
     ChatroomPage,
+    ScrollHideDirective,
   ],
   imports: [
     PipesModule,
