@@ -93,6 +93,8 @@ export class AuthService {
     this.firebaseAuth
       .auth
       .signOut();
+
+      window.location.reload();
   }
 
   update(email: string, password: string) {

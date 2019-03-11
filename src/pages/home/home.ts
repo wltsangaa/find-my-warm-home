@@ -169,7 +169,8 @@ signup() {
   }
 
   login() {
-    this.navCtrl.push(LoginPage);   
+    this.navCtrl.setRoot(LoginPage);   
+    window.location.reload();
   }
 
   logout() {

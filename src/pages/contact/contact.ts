@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { ChatService } from "../../app/app.service";
 import { ChatsPage } from "../chats/chats";
 import { Storage } from "@ionic/storage";
+import { TabsPage } from '../tabs/tabs';
 
 export interface User{
   username: any;email:string;
@@ -24,6 +25,7 @@ export class ContactPage {
   uname: any;
 
   loginForm: any = {};
+  logged: boolean;
 
   constructor(public navCtrl: NavController,
     public db: AngularFirestore,
@@ -33,7 +35,7 @@ export class ContactPage {
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private storage: Storage) {
-
+      this.logged = false;
   }
 
   ionViewDidLoad(){
@@ -47,28 +49,33 @@ export class ContactPage {
     this.role = res.house;
     this.uemail = res.email;
     this.uname = res.username;
-    });}
+    });
+    this.logged =true;
+
+    this.storage.get("chatuser").then(chatuser => {
+      if (chatuser && chatuser.email !== "" && chatuser.email == this.uemail) {
+        if(this.navCtrl!=null && ChatsPage != null)
+        this.navCtrl.setRoot(ChatsPage);
+      }else{this.loginUser();}
+    });
+  }
     else{console.log("not logined");}});
   }
 
   ngOnInit() {
-    this.storage.get("chatuser").then(chatuser => {
-      if (chatuser && chatuser.email !== "") {
-        this.navCtrl.push(ChatsPage);
-      }
-    });
+    
   }
 
   loginUser() {
-    if (this.loginForm.email != "") {
+    if (this.uemail != "") {
       //Check if email already exists
       let myLoader = this.loadingCtrl.create({
         content: "Please wait..."
       });
       myLoader.present().then(() => {
         this.db
-          .collection<User>("chatroomUsers", ref => {
-            return ref.where("email", "==", this.loginForm.email);
+          .collection<User>("userProfile", ref => {
+            return ref.where("email", "==", this.uemail);
           })
           .valueChanges()
           .subscribe(users => {
@@ -77,29 +84,29 @@ export class ContactPage {
               //Register User
 
               //Add the timestamp
-              this.loginForm.time = new Date().getTime();
+              // this.loginForm.time = new Date().getTime();
 
-              this.chatservice
-                .addUser(this.loginForm)
-                .then(res => {
-                  //Registration successful
+              // this.chatservice
+              //   .addUser(this.loginForm)
+              //   .then(res => {
+              //     //Registration successful
                   
-                  this.storage.set("chatuser", this.loginForm);
-                  myLoader.dismiss();
+              //     this.storage.set("chatuser", this.loginForm);
+              //     myLoader.dismiss();
 
-                  let toast = this.toastCtrl.create({
-                    message: "Login In Successful",
-                    duration: 3000,
-                    position: "top"
-                  });
-                  toast.present();
+              //     let toast = this.toastCtrl.create({
+              //       message: "Login In Successful",
+              //       duration: 3000,
+              //       position: "top"
+              //     });
+              //     toast.present();
 
-                  this.navCtrl.push(ChatsPage);
-                })
-                .catch(err => {
-                  console.log(err);
-                  myLoader.dismiss();
-                });
+              //     this.navCtrl.push(ChatsPage);
+              //   })
+              //   .catch(err => {
+              //     console.log(err);
+              //     myLoader.dismiss();
+              //   });
             } else {
               //User already exists, move to chats page
               
@@ -113,7 +120,7 @@ export class ContactPage {
               toast.present();
               myLoader.dismiss();
 
-              this.navCtrl.push(ChatsPage);
+              this.navCtrl.setRoot(ChatsPage);
             }
           });
       });
@@ -124,6 +131,7 @@ export class ContactPage {
         position: "top"
       });
       toast.present();
+      this.navCtrl.popToRoot();
     }
   }
 

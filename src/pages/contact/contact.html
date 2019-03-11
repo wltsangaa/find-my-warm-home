@@ -27,9 +27,9 @@
 </ion-header> -->
 
 <ion-content padding id="signInPage">
-  <h3>Sign In to IonFire Chat</h3>
+  <h3>Please Sign In to Use the Chat</h3>
 
-  <div id="signInForm">
+  <div id="signInForm" *ngIf="logged">
     <ion-list>
 
       <ion-item>
