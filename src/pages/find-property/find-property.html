@@ -16,7 +16,7 @@
   <ion-searchbar placeholder="Search Home" name="searchBar" id="home-search2" (ionInput)="findProperty($event)" autocomplete></ion-searchbar>
   <ion-list>
       <ion-item *ngFor="let item of items">
-        {{ item }}
+        {{ item }} 
       </ion-item>
     </ion-list>
   <ion-grid>
@@ -34,7 +34,7 @@
                             <h2>{{item.publicLocationNamesHk[4]}}</h2>
                             <p>{{item.publicLocationNamesHk[3]}}</p>
                         </ion-item>
-                        <ion-item>
+                        <ion-item> 
                           <ion-icon name="logo-usd" item-start medium></ion-icon>
                           <h2>HKD: {{item.price}}</h2>
                         </ion-item>

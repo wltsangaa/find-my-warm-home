@@ -87,7 +87,7 @@
   </div>
   <button *ngIf="isstudent()" id="home-button8" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;" (click)="gotoFindProperty()" ion-button >
     <ion-icon name="create"></ion-icon>
-    Find Home
+    Find Home  
   </button>
   <div *ngIf="isstudent()==false">
   <button *ngIf="authService.user | async" id="home-button18" ion-button color="light" icon-left style="font-weight:300;border-radius:46px 46px 46px 46px;" ion-button  (click)="gotopostproperty()">
@@ -109,15 +109,14 @@
   <ion-row>
       <ion-slides [slidesPerView]= 'screensize' spaceBetween="1" >
         <ion-col *ngFor="let record of getrefprice | async" >
-            <!-- <div> -->
-              
+            <!-- <div> --> 
+               
                 <ion-slide >
                 <ion-card >
-                    
-                    <ion-card-content>
-                      <ion-item>
+                    <ion-card-content> 
+                      <ion-item> 
                           <ion-icon name="home" item-start medium></ion-icon>
-                          <h2>{{record.district_name}}</h2>
+                          <h2>{{record.district_name}}</h2> 
                           <p>No.of Posts: {{record.m_quantity}}</p>
                       </ion-item>
                       <ion-item>
@@ -139,7 +138,7 @@
             <!-- </div> -->
           </ion-col>
         </ion-slides>
-  </ion-row>
+  </ion-row> 
   <hr style="margin: 16px 0"/>
 </ion-grid>
   <ion-grid *ngIf="isstudent()">

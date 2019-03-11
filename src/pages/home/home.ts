@@ -18,7 +18,8 @@ import { FindPropertyPage } from '../find-property/find-property';
 import { PostpropertyPage} from '../postproperty/postproperty';
 import { Platform } from 'ionic-angular';
 export interface User{
-  username: any;email:string;
+  username: any;
+  email:string;
   house:string;}
 
 interface Property {
@@ -92,9 +93,13 @@ export class HomePage {
     this.uname = res.username;
     this.ugender = res.gender;
     this.userprofiles = this.db.collection('userProfile', ref => ref.where('gender','==',this.ugender).limit(20));
-  this.getuserprofiles = this.userprofiles.valueChanges();
+    this.getuserprofiles = this.userprofiles.valueChanges();
   });}
     else{console.log("not logined");}});
+
+
+
+ 
 
     if (this.plt.is('android')||this.plt.is('cordova')||this.plt.is('ios')||this.plt.is('mobile')) {
       // This will only print when on iOS
@@ -121,7 +126,7 @@ export class HomePage {
     this.properties = this.propertysCol.valueChanges();
 
     this.refprice = this.db.collection('reference_price');
-    this.getrefprice = this.refprice.valueChanges();
+    this.getrefprice = this.refprice.valueChanges(); 
     
 
   }

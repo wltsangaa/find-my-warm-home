@@ -26,7 +26,7 @@ export class FindPropertyPage {
 
   propertysCol: AngularFirestoreCollection<Property>;
   properties: Observable<Property[]>;
-  items;
+  item;
   filtereditems:any;
   searchTerm: string = '';
   filterPropertyName = this.db.collection('historical_price').doc("publicLocationNamesHk");
@@ -71,7 +71,7 @@ export class FindPropertyPage {
       //   return item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
       // }); 
       this.propertysCol = this.db.collection('historical_price', ref => ref.where("displayText", ">=", val).orderBy("displayText").startAt(val).endAt(val + "\uf8ff"));
-      this.properties = this.propertysCol.valueChanges();
+      this.properties = this.propertysCol.valueChanges(); 
     }
   }
 

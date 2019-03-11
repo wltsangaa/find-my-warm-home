@@ -319,7 +319,7 @@ async uploadImageToFirebase3(images){
 
   //uploads img to firebase storage
   for(let i = 0; i < images.length; i++){
-  await this.firebaseService.uploadImage(images[i])
+  await this.firebaseService.uploadImage(images[i]) 
   .then(photoURL => {
     console.error("photoURL:" + photoURL);
     let toast = this.toastCtrl.create({

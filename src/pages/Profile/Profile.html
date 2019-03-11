@@ -7,11 +7,62 @@
 </ion-header>
 
 <ion-content padding>
-{{uname}}
 
-<button (click)="editname()">
-hrlloo
-</button>
-<ion-input type="text" [(ngModel)] = "newname" placeholder ="Leave your name here">{{uname}}</ion-input>
+    <ion-grid>
+        <!--tappable makes div can be click-->
+        <ion-row justify-content-center>
+          <ion-col text-center>
+              <div>
+                  <button (click)="presentActionSheet()">
+                    <ion-icon name="logo-github" style="font-size:100px;"  class="icon"></ion-icon>
+                  </button>
+                  <ion-label color="primary">
+                    Change profile picture
+                  </ion-label>
+                </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+      <form id="profile" [formGroup]="validations_form"  
+      (ngSubmit)="updateNewInfo(validations_form.value)">
+      <ion-list *ngFor="let detail of details"> 
+          <ion-item *ngIf="detail.label !='gender' && detail.label !='Description'">
+          <ion-label color="primary">
+            <!--uppercase the first character-->
+            {{detail.label}}
+          </ion-label>
+          <ion-input type="text" [(ngModel)]="detail.prefill" formControlName="{{detail.key}}" required></ion-input>
+        </ion-item>
+
+        <ion-item id="profile" *ngIf="detail.label =='gender'">
+            <ion-label color="primary">
+              {{detail.label}}
+            </ion-label>
+            <ion-select [(ngModel)]="detail.prefill" name="" formControlName="gender" required>
+              <ion-option value="male">
+                Male
+              </ion-option>
+              <ion-option value="female"> 
+                Female
+              </ion-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item id="profile" *ngIf="detail.label =='Description'">
+              <ion-label color="primary" position="floating">{{detail.label}}</ion-label>
+              <ion-textarea type="text" [(ngModel)]="detail.prefill" placeholder="{{detail.prefill}}" formControlName="Description" ></ion-textarea>
+          </ion-item>
+
+      </ion-list>
+
+     
+        <button ion-button color="stable" block type="submit" [disabled]="!validations_form.valid">
+            update
+          </button>
+
+      </form>
+
+
+
 </ion-content>
- #will changed 
