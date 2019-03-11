@@ -13,7 +13,7 @@ import { ChatroomPage } from "../chatroom/chatroom";
   selector: "page-chats",
   templateUrl: "chats.html"
 })
-export class ChatsPage implements OnInit {
+export class ChatsPage  {
   availableusers: any = [];
   chatuser;
   constructor(
@@ -24,7 +24,7 @@ export class ChatsPage implements OnInit {
     private chatService: ChatService
   ) {}
 
-  ngOnInit() {
+  ionViewDidLoad() {
     //Fetch other users
 
     this.storage.get("chatuser").then(chatuser => {

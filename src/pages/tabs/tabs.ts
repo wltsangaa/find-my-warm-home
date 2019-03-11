@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
 import { ProfilePage } from '../Profile/Profile';
+import { FindPropertyPage } from '../find-property/find-property';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -9,8 +10,10 @@ import { ProfilePage } from '../Profile/Profile';
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = ProfilePage;
-  tab3Root = ContactPage;
+  tab2Root = FindPropertyPage;
+  tab3Root = ProfilePage;
+  tab4Root = ContactPage;
+  tab5Root = ProfilePage;
 
   constructor() {
 

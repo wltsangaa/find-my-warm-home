@@ -38,9 +38,10 @@ export class LoginPage {
 
   ionViewDidLoad() {
     this.loading = true;
+    //window.location.reload();
     this.authService.user.subscribe(user=>{if(user)
       {
-        this.navCtrl.setRoot(TabsPage);
+        //this.navCtrl.setRoot(TabsPage);
       }
     else{this.loading = false;
       console.log("not logined");}});
