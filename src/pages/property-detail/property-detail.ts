@@ -100,8 +100,6 @@ uid:string;
   }
   ionViewWillLoad() {
     console.log(this.uid);
-
-
   }
 logged(){if(this.uname == null)
 return false;
