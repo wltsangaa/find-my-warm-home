@@ -4,7 +4,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { PropertyDetailPage } from '../property-detail/property-detail';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
-import { ScrollHideConfig } from '../services/scroll-hide';
 
 /**
  * Generated class for the FindPropertyPage page.
@@ -25,23 +24,34 @@ interface Property {
 })
 export class FindPropertyPage {
 
-  footerScrollConfig: ScrollHideConfig = { cssProperty: 'margin-bottom', maxValue: undefined };
-  headerScrollConfig: ScrollHideConfig = { cssProperty: 'margin-top', maxValue: 44 };
-
   propertysCol: AngularFirestoreCollection<Property>;
   properties: Observable<Property[]>;
-  item;
+  tenants:any;
+  items;
   filtereditems:any;
-  searchTerm: string = '';
-  filterPropertyName = this.db.collection('historical_price').doc("publicLocationNamesHk");
+  searchTerm: string ;
+  searchType: string;
+  choseother:boolean;
+  location:string;
+  price:number;
+  ourproperty: Observable<{}[]>;
+  interest: any;
+  gender: any;
+  //filterPropertyName = this.db.collection('historical_price').doc("publicLocationNamesHk");
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public db: AngularFirestore,
     ) {
+      this.searchType = "nowproperty";
+      this.choseother = true;
+      this.location = null;
+      this.price = 0;
   }
-
+showad(){
+  this.choseother = !this.choseother;
+}
   ionViewDidLoad() {
     console.log('ionViewDidLoad FindPropertyPage');
   }
@@ -54,8 +64,13 @@ export class FindPropertyPage {
   
   postTags(postTagsArray:any){
     for (let i = 0; i < postTagsArray.length; i++){
-      if(postTagsArray[i].includes("校網") || postTagsArray[i].includes("indoor") || postTagsArray[i].includes("私人住宅")){
-        postTagsArray.splice(i, 1);
+      if(postTagsArray[i].includes("校網") || postTagsArray[i].includes("indoor") 
+      || postTagsArray[i].includes("私人住宅") || postTagsArray[i].includes("floorplan")
+      || postTagsArray[i].includes("photo")
+      || postTagsArray[i].includes("有匙")
+      || postTagsArray[i].includes("vr360")
+      ){
+        postTagsArray.splice(i, 1,"");
       }
     }
     return postTagsArray;
@@ -65,7 +80,7 @@ export class FindPropertyPage {
     this.navCtrl.push(PropertyDetailPage,{item:item});
   }
 
-  findProperty(ev) {
+  findProperty(ev, tablename, fieldname, order) {
     // set val to the value of the ev target
     var val = ev.target.value;
 
@@ -74,9 +89,53 @@ export class FindPropertyPage {
       // this.filtereditems=this.items.filter((item) => {
       //   return item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
       // }); 
-      this.propertysCol = this.db.collection('historical_price', ref => ref.where("displayText", ">=", val).orderBy("displayText").startAt(val).endAt(val + "\uf8ff"));
-      this.properties = this.propertysCol.valueChanges(); 
+      if(tablename == "historical_price")
+      {this.propertysCol = this.db.collection(tablename, ref => ref.orderBy(fieldname).orderBy(order).startAt(val).endAt(val + "\uf8ff"));
+      this.properties = this.propertysCol.valueChanges();
+    }
+    else if(tablename == "userProfile"){
+      this.tenants = this.db.collection(tablename, ref => ref.orderBy(fieldname).orderBy(order).startAt(val).endAt(val + "\uf8ff")).valueChanges();
+    }
+    else if (tablename == "propertyProfile")
+    {
+      this.ourproperty = this.db.collection(tablename, ref => ref.orderBy(fieldname).orderBy(order).startAt(val).endAt(val + "\uf8ff")).valueChanges();
+    }
     }
   }
+  findProperty2() {
+    // set val to the value of the ev target
+    
 
+    // if the value is an empty string don't filter the items
+    if (this.price > 0 && this.location.trim() && this.location != ''  ) {
+      // this.filtereditems=this.items.filter((item) => {
+      //   return item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+      // }); 
+      this.propertysCol = this.db.collection('historical_price', ref => ref.limit(50).where("price", ">=", Number(this.price))
+      .where("publicLocationNamesEn","array-contains",this.location).orderBy("price").orderBy("dateCreated", 'desc'));
+      this.properties = this.propertysCol.valueChanges();
+    }
+  }
+  findOurproperty(){
+    if (this.price > 0 && this.location.trim() && this.location != ''  ) {
+      // this.filtereditems=this.items.filter((item) => {
+      //   return item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+      // }); 
+      this.ourproperty = this.db.collection('propertyProfile', ref => ref.limit(50).where("price", ">=", Number(this.price))
+      .where("publicLocationNamesEn","==",this.location).orderBy("price").orderBy("dateCreated", 'desc')).valueChanges();
+      
+    }
+
+  }
+  findMate(){
+    if (this.interest.trim() && this.interest != '' && this.gender.trim() && this.gender != '' ) {
+      // this.filtereditems=this.items.filter((item) => {
+      //   return item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+      // }); 
+      this.ourproperty = this.db.collection('userProfile', ref => ref.limit(50).where("interest","array-contains",this.interest)
+      .where("gender","==",this.gender).orderBy("price")).valueChanges();
+      
+    }
+
+  }
 }
