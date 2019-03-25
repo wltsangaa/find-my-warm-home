@@ -86,6 +86,12 @@ export class HomePage {
     }
     else{return false;}
     }
+
+    switchRole(){
+      if(this.role == "tenant"){
+        this.role = "houseowner";
+      }else{this.role = "tenant";}
+    }
   ionViewDidLoad(){
     this.authService.user.subscribe(user=>{if(user)
       {this.uid=user.uid;
