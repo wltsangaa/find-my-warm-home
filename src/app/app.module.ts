@@ -36,6 +36,7 @@ import { ChatService } from './app.service';
 import { PipesModule } from '../pipes/pipes.module';
 import { IonicStorageModule } from "@ionic/storage";
 import { ScrollHideDirective } from '../pages/services/scroll-hide';
+import { BookmarkPage } from '../pages/bookmark/bookmark';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { ScrollHideDirective } from '../pages/services/scroll-hide';
     FindPropertyPage,
     ChatsPage,
     ChatroomPage,
+    BookmarkPage,
     ScrollHideDirective,
   ],
   imports: [
@@ -79,6 +81,7 @@ import { ScrollHideDirective } from '../pages/services/scroll-hide';
     FindPropertyPage,
     ChatsPage,
     ChatroomPage,
+    BookmarkPage,
   ],
   providers: [
     StatusBar,
