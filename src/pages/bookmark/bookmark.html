@@ -1,0 +1,85 @@
+<!--
+  Generated template for the BookmarkPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Bookmark</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <!--Joined Room (verified)-->
+  <ion-grid>
+    <h4 id="home-heading4" style="color:#000000;font-weight:300;">
+      Joined Room
+    </h4>
+  <ion-row>
+    <div *ngFor="let i = index; let item of properties | async">
+        <ion-col *ngIf="joinedRoom[i] == true">
+            <div>
+                <ion-card (click)="gotoPropertyDetail($event, item)">
+                    <ion-card-content>
+                      <ion-item>
+                          <ion-icon name="home" item-start medium></ion-icon>
+                          <h2>{{item.publicLocationNamesEn}}</h2>
+                      </ion-item>
+                      <ion-item> 
+                        <ion-icon name="logo-usd" item-start medium></ion-icon>
+                        <h2>HKD: {{item.price}}</h2>
+                      </ion-item>
+                    <ion-row>
+                      <ion-col center text-center>
+                        <ion-note>
+                          Timestamp: {{convert2Date(item.dateCreated)}}
+                        </ion-note>
+                      </ion-col>
+                    </ion-row>
+                  </ion-card-content>
+                  </ion-card>
+            </div>
+          </ion-col>
+          </div> 
+  </ion-row>
+
+  <h4 id="home-heading4" style="color:#000000;font-weight:300;">
+      Commented Post
+    </h4>
+  <ion-row>
+    <div *ngFor="let i = index; let item of commented_properties | async">
+        <ion-col *ngIf="commentedPost[i] == true">
+            <div>
+                <ion-card (click)="gotoPropertyDetail($event, item)">
+                    <ion-card-content>
+                      <ion-item>
+                          <ion-icon name="home" item-start medium></ion-icon>
+                          <h2>{{item.publicLocationNamesEn}}</h2>
+                      </ion-item>
+                      <ion-item> 
+                        <ion-icon name="logo-usd" item-start medium></ion-icon>
+                        <h2>HKD: {{item.price}}</h2>
+                      </ion-item>
+                    <ion-row>
+                      <ion-col center text-center>
+                        <ion-note>
+                          Timestamp: {{convert2Date(item.dateCreated)}}
+                        </ion-note>
+                      </ion-col>
+                    </ion-row>
+                  </ion-card-content>
+                  </ion-card>
+            </div>
+          </ion-col>
+          </div>
+  </ion-row>
+</ion-grid>
+
+  <!--Bookmarked Room-->
+
+</ion-content>
