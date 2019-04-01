@@ -34,9 +34,10 @@ export class FindPropertyPage {
   choseother:boolean;
   location:string;
   price:number;
-  ourproperty: Observable<{}[]>;
+  ourproperty: any;
   interest: any;
   gender: any;
+  ourpropertyCol: any
   //filterPropertyName = this.db.collection('historical_price').doc("publicLocationNamesHk");
 
   constructor(
@@ -46,7 +47,7 @@ export class FindPropertyPage {
     ) {
       this.searchType = "nowproperty";
       this.choseother = true;
-      this.location = null;
+      this.location = "";
       this.price = 0;
   }
 showad(){
@@ -102,37 +103,52 @@ showad(){
     }
     }
   }
+  // findProperty2() {
+  //   // set val to the value of the ev target
+    
+
+  //   // if the value is an empty string don't filter the items
+  //   if (this.price > 0 && this.location.trim() && this.location != ''  ) {
+  //     // this.filtereditems=this.items.filter((item) => {
+  //     //   return item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+  //     // }); 
+  //     this.propertysCol = this.db.collection('historical_price', ref => ref.limit(50).where("price", ">=", Number(this.price))
+  //     .where("publicLocationNamesEn","array-contains",this.location).orderBy("price").orderBy("dateCreated", 'desc'));
+  //     this.properties = this.propertysCol.valueChanges();
+  //   }
+  // }
   findProperty2() {
     // set val to the value of the ev target
     
 
     // if the value is an empty string don't filter the items
-    if (this.price > 0 && this.location.trim() && this.location != ''  ) {
+    if (this.location.trim() && this.location != ''  ) {
       // this.filtereditems=this.items.filter((item) => {
       //   return item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
       // }); 
-      this.propertysCol = this.db.collection('historical_price', ref => ref.limit(50).where("price", ">=", Number(this.price))
-      .where("publicLocationNamesEn","array-contains",this.location).orderBy("price").orderBy("dateCreated", 'desc'));
+      this.propertysCol = this.db.collection('historical_price', ref => ref.limit(50)
+      .where("publicLocationNamesEn","array-contains",this.location).orderBy("dateCreated", 'desc'));
       this.properties = this.propertysCol.valueChanges();
     }
   }
   findOurproperty(){
-    if (this.price > 0 && this.location.trim() && this.location != ''  ) {
+    if (this.location.trim() && this.location != ''  ) {
       // this.filtereditems=this.items.filter((item) => {
       //   return item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
       // }); 
-      this.ourproperty = this.db.collection('propertyProfile', ref => ref.limit(50).where("price", ">=", Number(this.price))
-      .where("publicLocationNamesEn","==",this.location).orderBy("price").orderBy("dateCreated", 'desc')).valueChanges();
+      this.ourpropertyCol = this.db.collection('propertyProfile', ref => ref.where("price", ">=", Number(this.price))
+      .where("publicLocationNamesEn","array-contains",this.location).orderBy("price").orderBy("dateCreated", 'desc'));
       
+      this.ourproperty = this.ourpropertyCol.valueChanges();
     }
 
   }
   findMate(){
-    if (this.interest.trim() && this.interest != '' && this.gender.trim() && this.gender != '' ) {
+    if (this.interest != '' && this.gender.trim() && this.gender != '' ) {
       // this.filtereditems=this.items.filter((item) => {
       //   return item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
       // }); 
-      this.ourproperty = this.db.collection('userProfile', ref => ref.limit(50).where("interest","array-contains",this.interest)
+      this.tenants = this.db.collection('userProfile', ref => ref.limit(50).where("interest","array-contains",this.interest)
       .where("gender","==",this.gender).orderBy("price")).valueChanges();
       
     }

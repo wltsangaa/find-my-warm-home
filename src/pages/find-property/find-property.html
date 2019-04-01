@@ -44,7 +44,7 @@
               <ion-label col-3 col-md-2>
                Price
               </ion-label>
-              <ion-input col-6 type="number" [(ngModel)]="price" placeholder="$HKD" col-md-4></ion-input>
+              <ion-input col-6 type="number" [(ngModel)]="price" placeholder="$HKD" ></ion-input>
             </ion-item>
             <ion-item col-md-6>
                 <ion-label col-4 >
@@ -58,7 +58,7 @@
           </ion-item>
         <ion-row >
           <ion-col >
-          <button ion-button color="light" (click)="findProperty2()">
+          <button ion-button color="light" (click)="findOurproperty()">
               <ion-icon name="search"></ion-icon>Search</button>
           </ion-col>
          </ion-row>
@@ -74,6 +74,7 @@
         <h4 id="home-heading4" style="color:#000000;font-weight:300;">
           Result
         </h4>
+        
       <ion-row>
             <ion-col *ngFor="let item of ourproperty | async">
                 <div>
@@ -122,12 +123,12 @@
 </ion-row> 
 <ion-row *ngIf="!choseother">
   <ion-col  >
-      <ion-item col-9 col-md-6>
+      <!-- <ion-item col-9 col-md-6>
           <ion-label col-3 col-md-2>
            Price
           </ion-label>
           <ion-input col-6 type="number" [(ngModel)]="price" placeholder="$HKD" col-md-4></ion-input>
-        </ion-item>
+        </ion-item> -->
         <ion-item col-md-6>
             <ion-label col-4 >
                 Location
@@ -208,8 +209,9 @@
     <ion-label col-4 >
         Interest
        </ion-label>
-<ion-select [(ngModel)]="interest" interface="popover" col>
-    <ion-option value="nonsmoker">Non-smoker</ion-option>
+<ion-select [(ngModel)]="interest" interface="popover" col >
+    <ion-option value="non-smoker">Non-smoker</ion-option>
+    <ion-option value="same-gender">Same-gender</ion-option>
 </ion-select>
 </ion-item>
       <ion-item col-md-6>
@@ -217,18 +219,20 @@
               Gender
              </ion-label>
       <ion-select [(ngModel)]="gender" interface="popover" col>
-          <ion-option value="m">Male</ion-option>
-          <ion-option value="f">Female</ion-option>
+          <ion-option value="male">Male</ion-option>
+          <ion-option value="female">Female</ion-option>
       </ion-select>
     </ion-item>
   <ion-row >
     <ion-col >
-    <button ion-button color="light" (click)="findProperty2()">
+    <button ion-button color="light" (click)="findMate()">
         <ion-icon name="search"></ion-icon>Search</button>
     </ion-col>
    </ion-row>
   </ion-col>
+
   </ion-row>
+<br />
 </ion-grid>
 <!-- <ion-list>
   <ion-item *ngFor="let item of items">

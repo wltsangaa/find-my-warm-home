@@ -171,6 +171,8 @@ export class SignupPage {
     // {this.validations_form.controls['email'].setValue(this.validations_form.value['emailhkustonly']);}
     // else{
       this.validations_form.controls['email'].setValue(this.validations_form.value['emailother']);
+      //turning to number 
+      this.validations_form.controls['price'].setValue(Number(this.validations_form.value['price']));
       delete this.validations_form.value['emailother'];
     // }
     //using email as idd

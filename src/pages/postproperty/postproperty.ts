@@ -164,6 +164,8 @@ export class PostpropertyPage {
    this.validations_form.controls['email'].setValue(this.localprofile.email);
    this.validations_form.controls['uid'].setValue(this.localprofile.uid);
    this.validations_form.controls['agreementId'].setValue(this.pid);
+   this.validations_form.controls['price'].setValue(Number(this.validations_form.controls['price'].value));
+   this.validations_form.controls['publicLocationNamesEn'].setValue([this.validations_form.controls['publicLocationNamesEn'].value]);
    console.log(this.validations_form.value);
    this.propertyrofileCollectionemailname = this.fireStore.doc<any>('propertyProfile/'+ this.pid.toString());
    //this.userProfileCollectionemailname = this.fireStore.doc<any>('userProfile/'+ this.localprofile.uid.toString());
