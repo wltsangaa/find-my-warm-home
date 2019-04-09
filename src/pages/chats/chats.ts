@@ -28,7 +28,8 @@ export class ChatsPage  {
     //Fetch other users
 
     this.storage.get("chatuser").then(chatuser => {
-      this.chatuser = chatuser;
+      //this.chatuser = chatuser;
+
 
       this.db
         .collection<User>("chatroomUsers")
@@ -36,6 +37,14 @@ export class ChatsPage  {
         .subscribe(users => {
           //this.availableusers = users;
           console.log(users);
+          let tmpchatuser = users.filter(user => {
+            if (user.email == chatuser.email) {
+              return user;
+            }
+          });
+          this.chatuser = tmpchatuser[0];
+          console.log("in chatts");
+          console.log(this.chatuser);
           this.availableusers = users.filter(user => {
             if (user.email != chatuser.email) {
               return user;
@@ -52,7 +61,21 @@ export class ChatsPage  {
     );
 
     this.chatService.currentChatPartner = chatpartner;
-
     this.navCtrl.push(ChatroomPage);
+    // this.db
+    //       .collection<User>("chatroomUsers", ref => {
+    //         return ref.where("email", "==", this.chatuser.email);
+    //       })
+    //       .valueChanges()
+    //       .subscribe(users => {
+    //         console.log(users);
+    //         if (users == [] || users.length === 0) {
+    //           //Register User
+
+    //   this.chatService.addUser({email:this.chatuser.email, name: this.chatuser.username,  time: new Date().getTime() });
+    //   this.navCtrl.push(ChatroomPage);
+    // }
+    //         else{this.navCtrl.push(ChatroomPage);}});
+    
   } //goToChat
 }

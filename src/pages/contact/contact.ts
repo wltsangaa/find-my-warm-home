@@ -74,15 +74,22 @@ export class ContactPage {
       });
       myLoader.present().then(() => {
         this.db
-          .collection<User>("userProfile", ref => {
+          .collection<User>("chatroomUsers", ref => {
             return ref.where("email", "==", this.uemail);
           })
           .valueChanges()
           .subscribe(users => {
-
-            if (users.length === 0) {
+            console.log("contactts' user");
+            console.log(users);
+            if (users.length === 0) 
               //Register User
-
+              {
+                //Register User
+  
+        this.chatservice.addUser({email:this.uemail, name: this.uname,  time: new Date().getTime() });
+        this.navCtrl.push(ChatsPage);
+      }
+              
               //Add the timestamp
               // this.loginForm.time = new Date().getTime();
 
@@ -107,7 +114,7 @@ export class ContactPage {
               //     console.log(err);
               //     myLoader.dismiss();
               //   });
-            } else {
+             else {
               //User already exists, move to chats page
               
               this.storage.set("chatuser", users[0]);

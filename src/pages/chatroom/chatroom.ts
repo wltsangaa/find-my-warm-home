@@ -46,7 +46,7 @@ export class ChatroomPage implements OnInit {
       .subscribe(chats => {
         
         this.chats = chats;
-       
+       console.log(this.chats);
       });
   } //ngOnInit
 
