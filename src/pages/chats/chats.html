@@ -14,6 +14,9 @@
 
 
 <ion-content padding> 
+    <button ion-button round fab-left (click)="CreateGroupChat()">
+        Create Group
+      </button>
 
   <ion-list>
     <ion-list-header>
@@ -21,7 +24,7 @@
     </ion-list-header>
     <ion-item *ngFor="let user of availableusers" (click)="goToChat(user)">
       <ion-avatar item-start>
-        <img src="http://via.placeholder.com/16x16">
+        <img src="http://via.placeholder.com/16x16"> 
       </ion-avatar>
       <h2>{{user.name || "Anonymous"}}</h2>
 
