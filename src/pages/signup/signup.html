@@ -48,7 +48,14 @@
         <!--password will not save in database directly-->
         <ion-input type="password" placeholder="" formControlName="password"></ion-input>
       </ion-item>
-      
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.password">
+          <div class="error-message" *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+
       <ion-item id="signup-input5">
         <ion-label>
           Email
@@ -100,14 +107,14 @@
 
       <ion-item id="signup-input6" >
         <ion-label>
-          Interest
+          Details
         </ion-label>
-        <ion-select name="" formControlName="interest" multiple required>
+        <ion-select name="" formControlName="interest"  required>
             <ion-option value="non-smoker">
               Non-smoker
             </ion-option>
-            <ion-option value="same-gender"> 
-              Same Gender only
+            <ion-option value="smoker"> 
+              Smoker
             </ion-option>
           </ion-select>
         <!--<ion-input type="text" placeholder="" formControlName="interest" class="form-controll" required></ion-input>-->
@@ -125,7 +132,7 @@
       Sign up
     </button>
     <div *ngIf="errorMessage!= Null">
-      Hide thiss!!!!!
+      <!-- Hide thiss!!!!! -->
       {{errorMessage}}
     </div>
   </form>
