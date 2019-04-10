@@ -120,7 +120,7 @@ export class ContactPage {
               this.storage.set("chatuser", users[0]);
 
               let toast = this.toastCtrl.create({
-                message: "Login In Successful",
+                message: "Welcome to Our Chatroom",
                 duration: 3000,
                 position: "top"
               });

@@ -14,6 +14,19 @@
 
 
 <ion-content padding> 
+    <ion-list>
+        <ion-list-header>
+          Notices
+        </ion-list-header>
+        <div *ngFor="let not of notice let j = index;" (click) = offNotice(j)>
+        <ion-item *ngIf=not.new>
+          
+          <h2>{{not.email || "Anonymous"}} has told you something.</h2>
+          
+
+        </ion-item>
+      </div>
+      </ion-list>
 
   <ion-list>
     <ion-list-header>
