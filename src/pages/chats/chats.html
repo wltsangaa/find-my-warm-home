@@ -27,7 +27,21 @@
         </ion-item>
       </div>
       </ion-list>
+      <ion-item *ngIf=want>
+          
+        <h2>Do you want to contact him? </h2>
+        
 
+    
+      <ion-item *ngFor="let user of wanttocontact" (click)="goToChat(user)">
+        <ion-avatar item-start>
+          <img src="http://via.placeholder.com/16x16">
+        </ion-avatar>
+        <h2>{{user.name || "Anonymous"}}</h2>
+        
+        <p>{{user.email}}</p>
+      </ion-item>
+    </ion-item>  
   <ion-list>
     <ion-list-header>
       USERS

@@ -18,6 +18,8 @@ export class ChatsPage  {
   chatuser:any;
   chatted: any = [];
   notice: any;
+  wanttocontact: any = [];
+  want: boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -50,7 +52,9 @@ this.db.doc<any>('noticeUsers/'+ chatuser.email).valueChanges().subscribe(
 }
   ionViewDidLoad() {
     //Fetch other users
-    
+
+    this.chatService.createcontactme("gg@gmail.com");//hard codddddeeeee
+
     this.storage.get("chatuser").then(chatuser => {
       this.chatuser = chatuser;
 
@@ -74,6 +78,15 @@ this.db.doc<any>('noticeUsers/'+ chatuser.email).valueChanges().subscribe(
               return user;
             }
           });
+          if(this.chatService.contactme != '')
+          { this.want = true;
+            this.wanttocontact = users.filter(user => {
+            if (user.email == this.chatService.contactme) {
+              return user;
+            }
+          });}
+          console.log("want to contact");
+          console.log(this.wanttocontact);
         });
         // this.db
         // .collection<Chat>("chatroomRecord")
