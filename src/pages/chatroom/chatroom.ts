@@ -115,7 +115,8 @@ export class ChatroomPage implements OnInit {
     let newDate = new Date(+time);
     //const myFormattedDate = newDate.toDateString();
     let smDate:string = newDate.toString();
-    smDate = smDate.replace("GMT+0800 (Hong Kong Standard Time)","")
+    smDate = smDate.replace("GMT+0800 (Hong Kong Standard Time)","");
+    smDate = smDate.replace("2019","");
     return smDate; // JSON.stringify(newDate)
   }
 }

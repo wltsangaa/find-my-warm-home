@@ -19,9 +19,9 @@
           Notices
         </ion-list-header>
         <div *ngFor="let not of notice let j = index;" (click) = offNotice(j)>
-        <ion-item *ngIf=not.new>
+        <ion-item text-wrap *ngIf=not.new >
           
-          <h2>{{not.email || "Anonymous"}} has told you something.</h2>
+          <h3>{{not.email || "Anonymous"}} has told you something.</h3>
           
 
         </ion-item>
