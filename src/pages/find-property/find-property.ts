@@ -135,6 +135,7 @@ showad(){
       // }); 
       this.propertysCol = this.db.collection('historical_price', ref => ref.limit(50)
       .where("publicLocationNamesEn","array-contains",this.location).orderBy("dateCreated", 'desc'));
+      console.log(this.location);
       this.properties = this.propertysCol.valueChanges();
     }
   }

@@ -18,7 +18,13 @@
   <ion-list>
 
     <ion-item *ngFor="let chat of chats | sort:'time'" class="chat" text-wrap [ngClass]="{'chat-partner' : isChatPartner(chat.sender)}">
-      {{chat.message}}
+      <div *ngIf="isChatPartner(chat.sender)">
+      <h2 style="font-weight:100;">{{chatpartner.name}}</h2>
+    </div>
+      <h2>{{chat.message}}
+      </h2>
+      <ion-note item-end style="margin-bottom: 0px; font-size: small;" >{{convert2Date(chat.time)}}
+      </ion-note>
     </ion-item>
 
   </ion-list>
