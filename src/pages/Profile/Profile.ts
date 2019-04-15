@@ -276,8 +276,8 @@ export class ProfilePage {
 
     this.userProfilename.update({ username: this.details[0].prefill });
     //this.userProfilename.update({ EmailAddress: this.details[1].prefill });
-    this.userProfilename.update({ price: this.details[2].prefill });
-    this.userProfilename.update({ interest: [this.details[3].prefill] });
+    this.userProfilename.update({ price: Number(this.details[2].prefill) });
+    this.userProfilename.update({ interest: this.details[3].prefill });
     //this.userProfilename.update({ gender: this.details[4].prefill });
     this.userProfilename.update({ Description: this.details[5].prefill });
 

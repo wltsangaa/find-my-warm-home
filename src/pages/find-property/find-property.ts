@@ -156,7 +156,7 @@ showad(){
       // this.filtereditems=this.items.filter((item) => {
       //   return item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
       // }); 
-      this.tenants = this.db.collection('userProfile', ref => ref.limit(50).where("interest","array-contains",this.interest)
+      this.tenants = this.db.collection('userProfile', ref => ref.limit(50).where("interest","==",this.interest)
       .where("gender","==",this.gender).orderBy("price")).valueChanges();
       
     }
