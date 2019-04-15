@@ -1,50 +1,67 @@
-.card-background-page {
-
-    ion-card {
-      
-      position: relative;
-      text-align: center;
-      -webkit-box-shadow: 1px 5px 19px -1px rgba(0,0,0,0.75);
--moz-box-shadow: 1px 5px 19px -1px rgba(0,0,0,0.75);
-box-shadow: 1px 5px 19px -1px rgba(0,0,0,0.75);
-    }
-  
-    .card-title {
-      position: absolute;
-      top: 36%;
-      font-size: 2.0em;
-      width: 100%;
-      font-weight: bold;
-      color: #fff;
-      
-    }
-  
-    .card-subtitle {
-      font-size: 1.0em;
-      position: absolute;
-      top: 52%;
-      width: 100%;
-      color: #fff;
-    }
-    
-    .badges{
-        margin:5px;
-    }
-
-    ion-slides{
-      height: 100%;
-      width:100%;
-    }
-  
+  .card-background-page {
+  ion-card {
+    position: relative;
+    text-align: center;
+    -webkit-box-shadow: 1px 5px 19px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 5px 19px -1px rgba(0,0,0,0.75);
+    box-shadow: 1px 5px 19px -1px rgba(0,0,0,0.75);
   }
-  .my-button:hover{
-    color: orange !important;
+
+  .card-title {
+    position: absolute;
+    top: 36%;
+    font-size: 2.0em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
+  }
+  
+  .badges{
+      margin:5px;
+  }
+
+  ion-slides{
+    height: 100%;
+    width:100%;
+  }
+
+}
+.my-button:hover{
+  color: orange !important;
 }
 .try{
   .button-inner{
-  align-items:end;}
+    align-items:end;
+  }
+  label{
+    padding-left:5px;
+  }
 }
 .top{
   height: 40px;
 }
 //.swiper-slide { overflow-y: scroll; display: block; }
+
+.card {
+  border-radius: 1rem
+}
+
+.image-slide p {
+  //background-color: black;
+  color: white;
+  font-family: "Helvetica Neue";
+  font-size: 2em;
+  padding: 0.25em 0.75em;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
