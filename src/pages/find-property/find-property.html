@@ -114,7 +114,7 @@
   <div *ngSwitchCase="'oldproperty'">
     <ion-grid>
     <ion-row>
-<ion-searchbar *ngIf="choseother" placeholder="Search Estate Name" name="searchBar" id="home-search2" (ionInput)="findProperty($event, 'historical_price','displayText','price')" autocomplete></ion-searchbar>
+<ion-searchbar *ngIf="choseother" placeholder="Search Estate Name" name="searchBar" id="home-search2" (ionInput)="findProperty($event, 'historical_price2','displayText','dateCreated'); findProperty($event, 'historical_price1','displayTextHk','dateCreated');" autocomplete></ion-searchbar>
 </ion-row>
 <ion-row>
 <ion-col col-sm-3 >
@@ -134,9 +134,9 @@
                 Location
                </ion-label>
         <ion-select [(ngModel)]="location" interface="popover" col>
-            <ion-option value="HK">Hong Kong Island</ion-option>
-            <ion-option value="KL">Kownloon</ion-option>
-            <ion-option value="NT">New Terrace </ion-option>
+            <ion-option value="Hong Kong Island">Hong Kong Island</ion-option>
+            <ion-option value="Kowloon">Kowloon</ion-option>
+            <ion-option value="New Territories">New Terrace </ion-option>
         </ion-select>
       </ion-item>
     <ion-row >
@@ -157,15 +157,16 @@
     <h4 id="home-heading4" style="color:#000000;font-weight:300;">
       Result
     </h4>
+
   <ion-row>
-        <ion-col *ngFor="let item of properties | async">
+        <div *ngFor="let item of properties | async">
             <div>
                 <ion-card (click)="gotoPropertyDetail($event, item)">
                     <img src="{{item.thumbnail}}">
                     <ion-card-content>
                       <ion-item>
                           <ion-icon name="home" item-start medium></ion-icon>
-                          <h2>{{item.publicLocationNamesHk[4]}}</h2>
+                          <h2>{{item.displayText}}</h2>
                           <p>{{item.publicLocationNamesHk[3]}}</p>
                       </ion-item>
                       <ion-item>
@@ -187,8 +188,41 @@
                   </ion-card-content>
                   </ion-card>
             </div>
-          </ion-col>
+          </div>
   </ion-row>
+
+  <ion-row>
+    <ion-col *ngFor="let item of properties2 | async">
+        <div>
+            <ion-card (click)="gotoPropertyDetail($event, item)">
+                <img src="{{item.thumbnail}}">
+                <ion-card-content>
+                  <ion-item>
+                      <ion-icon name="home" item-start medium></ion-icon>
+                      <h2>{{item.displayText}}</h2>
+                      <p>{{item?.publicLocationNamesEn[3]}}</p>
+                  </ion-item>
+                  <ion-item>
+                    <ion-icon name="logo-usd" item-start medium></ion-icon>
+                    <h2>HKD: {{item.price}}</h2>
+                  </ion-item>
+                <ion-row>
+                    <ion-col>
+                      <ion-badge *ngFor="let number of postTags(item.postTags)" color="light" class="badges">{{number}}</ion-badge>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col center text-center>
+                    <ion-note>
+                      Timestamp: {{convert2Date(item.dateCreated)}}
+                    </ion-note>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+              </ion-card>
+        </div>
+      </ion-col>
+</ion-row>
 </ion-grid>
 
 </div>
@@ -211,7 +245,7 @@
        </ion-label>
 <ion-select [(ngModel)]="interest" interface="popover" col >
     <ion-option value="non-smoker">Non-smoker</ion-option>
-    <ion-option value="same-gender">Same-gender</ion-option>
+    <ion-option value="smoker">Smoker</ion-option>
 </ion-select>
 </ion-item>
       <ion-item col-md-6>

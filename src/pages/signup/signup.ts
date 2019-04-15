@@ -79,7 +79,7 @@ export class SignupPage {
       ])),
       
       password:new FormControl('', 
-      Validators.minLength(6)),
+      Validators.minLength(8)),
       
       // emailhkustonly: new FormControl('',
       //   Validators.pattern('^[a-zA-Z0-9_.+-]+@connect\.ust\.hk$')
@@ -147,7 +147,13 @@ export class SignupPage {
 
     'gender':[
       { type: 'required', message: 'Gender is required.' }
-    ]
+    ],
+
+    'password':[
+      { type: 'required', message: 'Password is required.' },
+      { type: 'minlength', message: 'Password should be at least 8 characters.' }
+
+    ],
 
 
 
@@ -170,6 +176,7 @@ export class SignupPage {
     // if(this.validations_form.value['house'] =="tenant")
     // {this.validations_form.controls['email'].setValue(this.validations_form.value['emailhkustonly']);}
     // else{
+      this.validations_form.controls['interest'].setValue([this.validations_form.value['interest']]);
       this.validations_form.controls['email'].setValue(this.validations_form.value['emailother']);
       //turning to number 
       this.validations_form.controls['price'].setValue(Number(this.validations_form.value['price']));

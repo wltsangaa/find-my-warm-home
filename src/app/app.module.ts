@@ -37,6 +37,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { IonicStorageModule } from "@ionic/storage";
 import { ScrollHideDirective } from '../pages/services/scroll-hide';
 import { BookmarkPage } from '../pages/bookmark/bookmark';
+import { UserDetailPage } from '../pages/user-detail/user-detail';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { BookmarkPage } from '../pages/bookmark/bookmark';
     ChatroomPage,
     BookmarkPage,
     ScrollHideDirective,
+    UserDetailPage,
   ],
   imports: [
     PipesModule,
@@ -82,6 +84,7 @@ import { BookmarkPage } from '../pages/bookmark/bookmark';
     ChatsPage,
     ChatroomPage,
     BookmarkPage,
+    UserDetailPage,
   ],
   providers: [
     StatusBar,
