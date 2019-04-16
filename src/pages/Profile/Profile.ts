@@ -40,7 +40,7 @@ export class ProfilePage {
     { key: "username", label: "Name", prefill: "" },
     { key: "EmailAddress", label: "Email", prefill: "" },
     { key: "price", label: "Expected price of renting", prefill: "" },
-    { key: "interest", label: "interest", prefill: "" },
+    { key: "interest", label: "Details", prefill: "" },
     { key: "gender", label: "gender", prefill: "gender" },
     { key: "Description", label: "Description", prefill: "" },
   ];
@@ -275,10 +275,10 @@ export class ProfilePage {
   updateNewInfo(values) {
 
     this.userProfilename.update({ username: this.details[0].prefill });
-    this.userProfilename.update({ EmailAddress: this.details[1].prefill });
-    this.userProfilename.update({ price: this.details[2].prefill });
+    //this.userProfilename.update({ EmailAddress: this.details[1].prefill });
+    this.userProfilename.update({ price: Number(this.details[2].prefill) });
     this.userProfilename.update({ interest: this.details[3].prefill });
-    this.userProfilename.update({ gender: this.details[4].prefill });
+    //this.userProfilename.update({ gender: this.details[4].prefill });
     this.userProfilename.update({ Description: this.details[5].prefill });
 
   }

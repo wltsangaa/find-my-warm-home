@@ -17,12 +17,19 @@ export class ChatService {
   userNotice: any;
   tmpemail:any;
   //userProfileCollectionemailname: any;
-
+  contactme:string = '';
+  //used to contact a particiliar person
+  
   constructor(private db: AngularFirestore) {
     
     this.users = db.collection<User>("chatroomUsers");
     this.chats = db.collection<Chat>("chatroomRecord");
     
+  }
+  createcontactme(email:string){
+    if(email!='' && email != null)
+    this.contactme = email;
+
   }
 
   addUser(payload) {

@@ -18,7 +18,17 @@
   <ion-list>
 
     <ion-item *ngFor="let chat of chats | sort:'time'" class="chat" text-wrap [ngClass]="{'chat-partner' : isChatPartner(chat.sender)}">
+<<<<<<< HEAD
       {{chat.message}} 
+=======
+      <div *ngIf="isChatPartner(chat.sender)">
+      <h2 style="font-weight:100;">{{chatpartner.name}}</h2>
+    </div>
+      <h2>{{chat.message}}
+      </h2>
+      <ion-badge item-end  color="light" style="margin: 0px; font-size: xx-small;" >{{convert2Date(chat.time)}}
+      </ion-badge>
+>>>>>>> 6cea25ee4a644a438ba7e27031e32439362a7fef
     </ion-item>
 
   </ion-list>

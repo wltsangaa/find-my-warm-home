@@ -87,9 +87,13 @@
     </plugin>
     <plugin name="cordova-plugin-crop" spec="0.4.0" />
     <plugin name="com-sarriaroman-photoviewer" spec="1.1.18" />
+<<<<<<< HEAD
     <engine name="android" spec="~7.1.4" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-filechooser" spec="^1.2.0" />
     <plugin name="cordova-plugin-chooser" spec="^1.2.5" />
     <plugin name="cordova-plugin-filepath" spec="^1.5.1" />
+=======
+    <engine name="android" spec="7.1.4" />
+>>>>>>> 6cea25ee4a644a438ba7e27031e32439362a7fef
 </widget>

@@ -57,6 +57,7 @@ import { ChatProvider } from '../pages/providers/chat/chat';
 
 
 
+import { UserDetailPage } from '../pages/user-detail/user-detail';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { ChatProvider } from '../pages/providers/chat/chat';
     
     
  
+    UserDetailPage,
   ],
   imports: [
     PipesModule,
@@ -119,6 +121,7 @@ import { ChatProvider } from '../pages/providers/chat/chat';
 
 
     
+    UserDetailPage,
   ],
   providers: [
     StatusBar,

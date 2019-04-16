@@ -84,7 +84,7 @@ showad(){
 
   findProperty(ev, tablename, fieldname, order) {
     // set val to the value of the ev target
-    var val = ev.target.value;
+    var val:string = ev.target.value;
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
@@ -98,7 +98,8 @@ showad(){
     }
     else if(tablename == "historical_price2"){
       let tname2 = tablename.slice(0, -1);
-      this.properties2 = this.db.collection(tname2, ref => ref.limit(50).orderBy(fieldname).orderBy(order,'desc').startAt(val).endAt(val + "\uf8ff")).valueChanges();
+      let val2 = val.toUpperCase();
+      this.properties2 = this.db.collection(tname2, ref => ref.limit(50).orderBy(fieldname).orderBy(order,'desc').startAt(val2).endAt(val2 + "\uf8ff")).valueChanges();
     }
     else if(tablename == "userProfile"){
       this.tenants = this.db.collection(tablename, ref => ref.orderBy(fieldname).orderBy(order).startAt(val).endAt(val + "\uf8ff")).valueChanges();
@@ -134,6 +135,7 @@ showad(){
       // }); 
       this.propertysCol = this.db.collection('historical_price', ref => ref.limit(50)
       .where("publicLocationNamesEn","array-contains",this.location).orderBy("dateCreated", 'desc'));
+      console.log(this.location);
       this.properties = this.propertysCol.valueChanges();
     }
   }
@@ -154,7 +156,7 @@ showad(){
       // this.filtereditems=this.items.filter((item) => {
       //   return item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
       // }); 
-      this.tenants = this.db.collection('userProfile', ref => ref.limit(50).where("interest","array-contains",this.interest)
+      this.tenants = this.db.collection('userProfile', ref => ref.limit(50).where("interest","==",this.interest)
       .where("gender","==",this.gender).orderBy("price")).valueChanges();
       
     }

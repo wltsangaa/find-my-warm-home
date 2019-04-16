@@ -27,15 +27,29 @@
           Notices
         </ion-list-header>
         <div *ngFor="let not of notice let j = index;" (click) = offNotice(j)>
-        <ion-item *ngIf=not.new>
+        <ion-item text-wrap *ngIf=not.new >
           
-          <h2>{{not.email || "Anonymous"}} has told you something.</h2>
+          <h3>{{not.email || "Anonymous"}} has told you something.</h3>
           
 
         </ion-item>
       </div>
       </ion-list>
+      <ion-item *ngIf=want>
+          
+        <h2>Do you want to contact him? </h2>
+        
 
+    
+      <ion-item *ngFor="let user of wanttocontact" (click)="goToChat(user)">
+        <ion-avatar item-start>
+          <img src="http://via.placeholder.com/16x16">
+        </ion-avatar>
+        <h2>{{user.name || "Anonymous"}}</h2>
+        
+        <p>{{user.email}}</p>
+      </ion-item>
+    </ion-item>  
   <ion-list>
     <ion-list-header>
       USERS

@@ -176,7 +176,7 @@ export class SignupPage {
     // if(this.validations_form.value['house'] =="tenant")
     // {this.validations_form.controls['email'].setValue(this.validations_form.value['emailhkustonly']);}
     // else{
-      this.validations_form.controls['interest'].setValue([this.validations_form.value['interest']]);
+      //this.validations_form.controls['interest'].setValue([this.validations_form.value['interest']]);
       this.validations_form.controls['email'].setValue(this.validations_form.value['emailother']);
       //turning to number 
       this.validations_form.controls['price'].setValue(Number(this.validations_form.value['price']));
