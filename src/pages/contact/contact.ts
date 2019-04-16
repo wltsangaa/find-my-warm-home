@@ -6,10 +6,11 @@ import { ChatService } from "../../app/app.service";
 import { ChatsPage } from "../chats/chats";
 import { Storage } from "@ionic/storage";
 import { TabsPage } from '../tabs/tabs';
-
+import firebase from 'firebase';
 export interface User{
   username: any;email:string;
-  house:string;}
+  house:string;
+  }
 
 @Component({
   selector: 'page-contact',
@@ -23,7 +24,7 @@ export class ContactPage {
   role: any;
   uemail: any;
   uname: any;
-
+  firegroup: any;
   loginForm: any = {};
   logged: boolean;
 
@@ -36,9 +37,11 @@ export class ContactPage {
     private toastCtrl: ToastController,
     private storage: Storage) {
       this.logged = false;
+      
   }
 
   ionViewDidLoad(){
+    this.firegroup=firebase.database().ref('/groups');
     this.authService.user.subscribe(user=>{if(user)
       {this.uid=user.uid;
        this.verified =user.emailVerified;  
@@ -120,13 +123,13 @@ export class ContactPage {
               this.storage.set("chatuser", users[0]);
 
               let toast = this.toastCtrl.create({
-                message: "Login In Successful",
+                message: "Welcome to Our Chatroom",
                 duration: 3000,
                 position: "top"
               });
               toast.present();
               myLoader.dismiss();
-
+              
               this.navCtrl.setRoot(ChatsPage);
             }
           });

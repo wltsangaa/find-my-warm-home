@@ -2,10 +2,12 @@ import { Component, OnInit } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { AngularFirestore } from "angularfire2/firestore";
 import { Storage } from "@ionic/storage";
-import { User } from "../../app/app.models";
+import { User, Chat } from "../../app/app.models";
 
 import { ChatService } from "../../app/app.service";
 import { ChatroomPage } from "../chatroom/chatroom";
+
+import { GroupsPage } from "../groups/groups";
 
 
 @IonicPage()
@@ -15,7 +17,9 @@ import { ChatroomPage } from "../chatroom/chatroom";
 })
 export class ChatsPage  {
   availableusers: any = [];
-  chatuser;
+  chatuser:any;
+  chatted: any = [];
+  notice: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -23,12 +27,34 @@ export class ChatsPage  {
     private storage: Storage,
     private chatService: ChatService
   ) {}
+ionViewDidEnter(){
+  this.storage.get("chatuser").then(chatuser => {
+    
 
+this.db.doc<any>('noticeUsers/'+ chatuser.email).valueChanges().subscribe(
+  record=>{
+    
+    if(record != undefined)
+    {this.notice = record.emails;
+   //this.tmpemail.push({email:this.chatuser.email, new:true});
+   console.log("in chat, if the notice exists");
+   console.log(this.notice);
+    }
+  
+    else{
+      //this.tmpemail.push({email:this.chatuser.email, new:true});
+      console.log("in chat, if the notice not exist");
+      console.log(this.notice);
+       }
+  }
+);
+  });
+}
   ionViewDidLoad() {
     //Fetch other users
-
+    
     this.storage.get("chatuser").then(chatuser => {
-      //this.chatuser = chatuser;
+      this.chatuser = chatuser;
 
 
       this.db
@@ -51,9 +77,37 @@ export class ChatsPage  {
             }
           });
         });
-    });
-  }
+        // this.db
+        // .collection<Chat>("chatroomRecord")
+        // .valueChanges()
+        // .subscribe(records => {
+        //   //this.availableusers = users;
+        //   console.log(records);
+        //   let tmprecord = records.filter(record => {
+        //     if (record.pair.includes(chatuser.email)) {
+              
+              
+        //       return record;
+        //     }
+        //   });
+        //   this.chatted = tmprecord;
+        //   console.log("in chatts");
+        //   //console.log(tmprecord);
+        //   console.log(this.chatted);
 
+        // });
+
+
+    });
+    this.notice = new Array;
+  }
+offNotice(index){
+if(this.notice != [])
+{this.notice[index].new = false;
+  this.chatService.addNotice(this.notice, this.chatuser.email).catch(err=>{console.log(err);});
+}
+
+}
   goToChat(chatpartner) {
     this.chatService.currentChatPairId = this.chatService.createPairId(
       this.chatuser,
@@ -78,4 +132,20 @@ export class ChatsPage  {
     //         else{this.navCtrl.push(ChatroomPage);}});
     
   } //goToChat
+
+  JoinGroupChat()
+  {
+    
+  }
+
+  myGroupChat()
+  {
+    this.navCtrl.push(GroupsPage);
+  }
+
+
+
+
+
+
 }

@@ -14,17 +14,39 @@ export class ChatService {
   //The pair string for the two users currently chatting
   currentChatPairId;
   currentChatPartner;
+  userNotice: any;
+  tmpemail:any;
+  //userProfileCollectionemailname: any;
 
   constructor(private db: AngularFirestore) {
     
     this.users = db.collection<User>("chatroomUsers");
     this.chats = db.collection<Chat>("chatroomRecord");
+    
   }
 
   addUser(payload) {
-    return this.users.add(payload);
-  } //addUser
 
+    // this.userProfileCollectionemailname = this.db.doc<any>('chatroomUsers/'+ payload.email.toString());
+    //     //saving to the database
+    //     this.userProfileCollectionemailname.set(payload);
+    
+      return this.users.add(payload);
+  } //addUser
+  addNotice(notices, user2) {
+
+     this.userNotice = this.db.doc<any>('noticeUsers/'+ user2.toString());
+    //     //saving to the database
+        
+
+        if(notices != [])
+       return  this.userNotice.set({emails:notices});
+        
+        
+       
+    
+      
+  } //addNoticeto user
   addChat(chat: Chat) {
     return this.chats.add(chat);
   } //addChat

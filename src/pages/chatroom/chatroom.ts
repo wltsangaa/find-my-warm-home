@@ -18,6 +18,8 @@ export class ChatroomPage implements OnInit {
   chatPayload: Chat;
   intervalScroll;
   @ViewChild("content") content: any;
+  tmpemail: any;
+  other: any;
 
   constructor(
     public navCtrl: NavController,
@@ -29,11 +31,34 @@ export class ChatroomPage implements OnInit {
 
   //scrolls to bottom whenever the page has loaded
   ionViewDidEnter() {
+
+    this.other = this.chatService.currentChatPairId.replace(this.chatuser.email, "");
+    this.other = this.other.replace("|","");
+    console.log("chatroomdidenter other email");
+    console.log(this.other);
+
+    this.db.doc<any>('noticeUsers/'+ this.other).valueChanges().subscribe(
+      record=>{
+        
+        if(record != undefined)
+        {this.tmpemail = record.emails;
+       //this.tmpemail.push({email:this.chatuser.email, new:true});
+       console.log("if the array exists");
+       console.log(this.tmpemail);
+        }
+      
+        else{
+          //this.tmpemail.push({email:this.chatuser.email, new:true});
+          console.log("if the notice array not exist");
+          console.log(this.tmpemail);
+           }
+      }
+    );
     this.content.scrollToBottom(300); //300ms animation speed
   }
 
   ngOnInit() {
-
+    this.tmpemail = new Array;
     this.storage.get("chatuser").then(chatuser => {
       this.chatuser = chatuser;
     });
@@ -48,6 +73,9 @@ export class ChatroomPage implements OnInit {
         this.chats = chats;
        console.log(this.chats);
       });
+      
+
+
   } //ngOnInit
 
   addChat() {
@@ -75,6 +103,11 @@ export class ChatroomPage implements OnInit {
     }
   } //addChat
 
+  addNotice(){
+    this.tmpemail.push({email:this.chatuser.email, new:true});
+    this.chatService.addNotice(this.tmpemail, this.other).catch(err=>{console.log(err);});
+}
+  
   isChatPartner(senderEmail) {
     return senderEmail == this.chatpartner.email;
   } //isChatPartner

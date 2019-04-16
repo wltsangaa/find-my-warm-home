@@ -11,12 +11,30 @@
   </ion-navbar>
 
 </ion-header>
-
+ 
 
 <ion-content padding> 
-    <button ion-button round fab-left (click)="CreateGroupChat()">
-        Create Group
-      </button>
+    <ion-buttons right >
+    <button ion-button round fab-left (click)="JoinGroupChat()">
+        join Group 
+    </button>
+    <button ion-button round fab-left (click)="myGroupChat()">
+        My Group
+    </button>
+    </ion-buttons>
+    <ion-list>
+        <ion-list-header>
+          Notices
+        </ion-list-header>
+        <div *ngFor="let not of notice let j = index;" (click) = offNotice(j)>
+        <ion-item *ngIf=not.new>
+          
+          <h2>{{not.email || "Anonymous"}} has told you something.</h2>
+          
+
+        </ion-item>
+      </div>
+      </ion-list>
 
   <ion-list>
     <ion-list-header>

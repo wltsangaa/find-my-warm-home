@@ -26,6 +26,7 @@ export class FindPropertyPage {
 
   propertysCol: AngularFirestoreCollection<Property>;
   properties: Observable<Property[]>;
+  properties2: any;
   tenants:any;
   items;
   filtereditems:any;
@@ -90,9 +91,14 @@ showad(){
       // this.filtereditems=this.items.filter((item) => {
       //   return item.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
       // }); 
-      if(tablename == "historical_price")
-      {this.propertysCol = this.db.collection(tablename, ref => ref.orderBy(fieldname).orderBy(order).startAt(val).endAt(val + "\uf8ff"));
+      if(tablename == "historical_price1")
+      {let tname = tablename.slice(0, -1);
+        this.propertysCol = this.db.collection(tname, ref => ref.limit(50).orderBy(fieldname).orderBy(order,'desc').startAt(val).endAt(val + "\uf8ff"));
       this.properties = this.propertysCol.valueChanges();
+    }
+    else if(tablename == "historical_price2"){
+      let tname2 = tablename.slice(0, -1);
+      this.properties2 = this.db.collection(tname2, ref => ref.limit(50).orderBy(fieldname).orderBy(order,'desc').startAt(val).endAt(val + "\uf8ff")).valueChanges();
     }
     else if(tablename == "userProfile"){
       this.tenants = this.db.collection(tablename, ref => ref.orderBy(fieldname).orderBy(order).startAt(val).endAt(val + "\uf8ff")).valueChanges();

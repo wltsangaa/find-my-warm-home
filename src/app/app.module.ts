@@ -1,6 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { ProfilePage } from '../pages/Profile/Profile';
@@ -16,13 +16,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
-import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireAuthModule, AngularFireAuth } from '@angular/fire/auth';
 import { firebaseConfig } from '../environment';
 import { AuthService } from '../pages/services/auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { PostpropertyPage } from '../pages/postproperty/postproperty';
-//import { FileChooser } from '@ionic-native/file-chooser';
-//import { File } from '@ionic-native/file';
+
+import { File } from '@ionic-native/file';
 import { AngularFireStorageModule  } from '@angular/fire/storage';
 import { FindPropertyPage } from '../pages/find-property/find-property';
 
@@ -37,6 +37,26 @@ import { PipesModule } from '../pipes/pipes.module';
 import { IonicStorageModule } from "@ionic/storage";
 import { ScrollHideDirective } from '../pages/services/scroll-hide';
 import { BookmarkPage } from '../pages/bookmark/bookmark';
+import { GroupsPage } from '../pages/groups/groups';
+
+
+import { HttpClientModule } from '@angular/common/http';
+import { ImghandlerProvider } from '../pages/providers/imghandler/imghandler';
+import { GroupsProvider } from '../pages/providers/groups/groups';
+import { FilePath } from '@ionic-native/file-path';
+import { FileChooser } from '@ionic-native/file-chooser';
+
+import { UserProvider } from '../pages/providers/user/user';
+import { RequestsProvider } from '../pages/providers/requests/requests';
+
+import { NewgroupPage } from '../pages/newgroup/newgroup';
+import { ChatProvider } from '../pages/providers/chat/chat';
+
+
+ 
+
+
+
 
 @NgModule({
   declarations: [
@@ -54,6 +74,13 @@ import { BookmarkPage } from '../pages/bookmark/bookmark';
     ChatroomPage,
     BookmarkPage,
     ScrollHideDirective,
+    GroupsPage,
+    
+   
+   
+    
+    
+ 
   ],
   imports: [
     PipesModule,
@@ -66,6 +93,9 @@ import { BookmarkPage } from '../pages/bookmark/bookmark';
 	AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireStorageModule, 
+    HttpClientModule,
+    
+  
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -82,6 +112,13 @@ import { BookmarkPage } from '../pages/bookmark/bookmark';
     ChatsPage,
     ChatroomPage,
     BookmarkPage,
+    GroupsPage,
+ 
+    
+   
+
+
+    
   ],
   providers: [
     StatusBar,
@@ -93,10 +130,28 @@ import { BookmarkPage } from '../pages/bookmark/bookmark';
     Storage,
     FirebaseService,
     AngularFireDatabase,
-    AuthService,
+    AuthService, 
     AngularFirestore,
-    //FileChooser,File,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    GroupsProvider,
+    ImghandlerProvider,
+    StatusBar,
+    SplashScreen,
+    
+    FileChooser,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    
+    AngularFireAuth,
+    
+    ImghandlerProvider,
+    
+    GroupsProvider,
+    RequestsProvider,
+    UserProvider,
+    ChatProvider
+    
   ]
 })
 export class AppModule {}
+
