@@ -35,6 +35,8 @@
     "angularfire2": "^5.0.2",
     "com-sarriaroman-photoviewer": "^1.2.1",
     "cordova-android": "7.1.4",
+    "cordova-ios": "4.5.5",
+    "cordova-plugin-add-swift-support": "^2.0.2",
     "cordova-plugin-chooser": "^1.2.5",
     "cordova-plugin-crop": "^0.4.0",
     "cordova-plugin-device": "^2.0.2",
@@ -83,7 +85,8 @@
       "cordova-plugin-filepath": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

@@ -66,6 +66,7 @@ export class HomePage {
   userprofiles: AngularFirestoreCollection<{}>;
   getuserprofiles: Observable<{}[]>;
   ugender: any;
+  uphotos: any;
   
   constructor(
     //public db: AngularFireDatabase,
@@ -106,6 +107,7 @@ export class HomePage {
     this.ugender = res.gender;
     this.userprofiles = this.db.collection('userProfile', ref => ref.where('gender','==',this.ugender).limit(20));
     this.getuserprofiles = this.userprofiles.valueChanges();
+    this.uphotos = res.photos;
   });}
     else{console.log("not logined");}});
 
@@ -167,6 +169,10 @@ postTags(postTagsArray:any){
 }
 
 gotoPropertyDetail(event, item:Observable<any[]>){
+  this.navCtrl.push(PropertyDetailPage,{item:item});
+}
+
+gotoUserDetail(event, item:Observable<any[]>){
   this.navCtrl.push(PropertyDetailPage,{item:item});
 }
 
