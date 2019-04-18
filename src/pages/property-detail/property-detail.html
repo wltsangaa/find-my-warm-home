@@ -4,162 +4,193 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      Property Detail
+      {{value?.publicLocationNamesEn[4] || "Detail"}}
     </ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page8">
-<ng-container *ngIf="fromlandlord()">
-  <img src="assets/img/p46wGlEQSiPv84HGHtlh_house.jpg" style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;" />
-  <img src="assets/img/p46wGlEQSiPv84HGHtlh_house.jpg" style="display:block;width:25%;height:auto;" />
-  <div class="spacer" style="width:300px;height:19px;" id="propertyDetail-spacer6"></div>
+  <ng-container *ngIf="fromlandlord()">
+    <img src="{{value?.photos[0]}}"
+      style="display:block;width:100%;height:auto;margin-left:auto;margin-right:auto;" />
+    <img src="{{value?.photos[0]}}" style="display:block;width:25%;height:auto;" />
+    <div class="spacer" style="width:300px;height:19px;" id="propertyDetail-spacer6"></div>
 
- <ion-list id="propertyDetail-list15" >
-    <ion-item color="none" >
+    <ion-list id="propertyDetail-list15">
+      <ion-item color="none">
         <ion-icon name="time" item-left></ion-icon>
         {{value?.publicLocationNamesEn}}
       </ion-item>
-      <ion-item color="none" >
-          <ion-icon name="time" item-left></ion-icon>
-          {{value?.address}}
-        </ion-item> 
+      <ion-item color="none">
+        <ion-icon name="time" item-left></ion-icon>
+        {{value?.address}}
+      </ion-item>
 
-        <ion-item color="none" >
-            <ion-icon name="time" item-left></ion-icon>
-            Area: {{value?.area}}
-          </ion-item> 
-    <ion-item color="none" >
-      <ion-icon name="time" item-left></ion-icon>
-      {{value?.dateCreated}}
-    </ion-item>
-    <ion-item color="none" >
-      <ion-icon name="pricetag" item-left></ion-icon>
-      HK ${{value?.price}}
-    </ion-item>
-    <ion-item color="none" >
-      <ion-icon name="information-circle" item-left></ion-icon>
-      {{nooftenants}} people available in each group
-    </ion-item>
-  </ion-list>
-  <div class="spacer" style="width:300px;height:19px;" id="propertyDetail-spacer7"></div>
-  <h4 id="propertyDetail-heading10" style="color:#000000;font-weight:300;">
-    Waiting List
-  </h4>
-  <ion-list *ngFor="let tt of teams  let j = index;">
-    <!--show only the name-->
-    Group{{j +1}}
-    <div class="row">
-    <div class= "col" *ngFor="let ttt of tt.teamname  let i = index;">
-      <button ion-button clear color="dark" icon-left>
-          <ion-icon name="logo-github" class="icon"></ion-icon>
-      {{ttt.who[1]}}
-    </button>
-  </div>
-  <div *ngIf="fromlandlord()&&logged()&&checklock()"> 
-    <button id="propertyDetail-button23" ion-button clear color="dark" (click)="joinroom(j)">
-      Join this room
-    <ion-icon name="add-circle" ></ion-icon>
-  </button>
-</div>
-<div *ngIf="fromlandlord()&&logged()&&showconfirm()"> 
-  <button  ion-button clear  (click)="chooseteam(j)">
-    
-  <ion-icon name="checkbox" [color]="showtick(j) ? 'secondary' : 'light'" ></ion-icon>
-</button>
-</div>
-</div>
-      <br/>
-  </ion-list>
+      <ion-item color="none">
+        <ion-icon name="time" item-left></ion-icon>
+        Area: {{value?.area}}
+      </ion-item>
+      <ion-item color="none">
+        <ion-icon name="time" item-left></ion-icon>
+        {{value?.dateCreated}}
+      </ion-item>
+      <ion-item color="none">
+        <ion-icon name="pricetag" item-left></ion-icon>
+        HK ${{value?.price}}
+      </ion-item>
+      <ion-item color="none">
+        <ion-icon name="information-circle" item-left></ion-icon>
+        {{nooftenants}} people available in each group
+      </ion-item>
+    </ion-list>
+    <div class="spacer" style="width:300px;height:19px;" id="propertyDetail-spacer7"></div>
+    <h4 id="propertyDetail-heading10" style="color:#000000;font-weight:300;">
+      Waiting List
+    </h4>
+    <ion-list *ngFor="let tt of teams  let j = index;">
+      <!--show only the name-->
+      Group{{j +1}}
+      <div class="row">
+        <div class="col" *ngFor="let ttt of tt.teamname  let i = index;">
+          <button ion-button clear color="dark" icon-left>
+            <ion-icon name="logo-github" class="icon"></ion-icon>
+            {{ttt.who[1]}}
+          </button>
+        </div>
+        <div *ngIf="fromlandlord()&&logged()&&checklock()">
+          <button id="propertyDetail-button23" ion-button clear color="dark" (click)="joinroom(j)">
+            Join this room
+            <ion-icon name="add-circle"></ion-icon>
+          </button>
+        </div>
+        <div *ngIf="fromlandlord()&&logged()&&showconfirm()">
+          <button ion-button clear (click)="chooseteam(j)">
+
+            <ion-icon name="checkbox" [color]="showtick(j) ? 'secondary' : 'light'"></ion-icon>
+          </button>
+        </div>
+      </div>
+      <br />
+    </ion-list>
 
 
-<div *ngIf="fromlandlord()&&logged()&&checklock()"> 
-  <button id="propertyDetail-button23" ion-button clear color="dark" (click)="createroom()">
-   Or  Create a new room
-  <ion-icon name="add-circle" ></ion-icon>
-</button>
-</div>
-<div *ngIf="fromlandlord()&&logged()&&showconfirm()"> 
-  <button ion-button clear [color]="lock ? 'secondary' : 'light'" (click)="clickconfirm()">
-   Lock/Unlock the room from tenants
-  <ion-icon name="checkbox" ></ion-icon>
-</button>
-</div>
-  <div class="spacer" style="width:300px;height:22px;" id="propertyDetail-spacer8"></div>
-  <h4 id="propertyDetail-heading11" style="color:#000000;font-weight:300;">
-    The Landlord
-  </h4>
-  <ion-list id="propertyDetail-list18">
-    <ion-item color="none" id="propertyDetail-list-item50">
-      <ion-avatar item-left>
-        <img src="assets/img/NoACdG5eSqKzU5FL87en_Angela_Merkel_2008.jpg" />
-      </ion-avatar>
-      <h2>
-        {{value?.userName}} (Landlord)
-      </h2>
-    </ion-item>
-  </ion-list>
-  <ion-list id="propertyDetail-list20">
-    <ion-item color="positive" id="propertyDetail-list-item51">
-      <ion-icon name="paper-plane" item-left></ion-icon>
-      Message {{value?.userName}} (Landlord)
-    </ion-item>
-  </ion-list>
-  <div class="spacer" style="width:300px;height:22px;" id="propertyDetail-spacer9"></div>
-  <h4 id="propertyDetail-heading8" style="color:#000000;font-weight:300;">
-    Comment
-  </h4>
-  <ion-list id="propertyDetail-list17" *ngFor="let cc of comment | slice:1; let i = index;">
-    <ion-item color="none" id="propertyDetail-list-item48">
-      <ion-avatar item-left>
-        <img src="assets/img/fiNuvFiRHGDYyyBtphyr_.jpg" />
-      </ion-avatar>
-      <h2>
-        {{cc.who[1]}}
-      </h2>
-      {{cc.message}}
-    </ion-item>
-
-  </ion-list>
-  <div *ngIf="logged()">
-    <ion-input type="text" [(ngModel)] = "newmessage" placeholder ="Leave your comments here"></ion-input>
-    <button (click)="addcomment()">Add comment</button>
+    <div *ngIf="fromlandlord()&&logged()&&checklock()">
+      <button id="propertyDetail-button23" ion-button clear color="dark" (click)="createroom()">
+        Or Create a new room
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
     </div>
-  
-  </ng-container >
-  <ion-slides  *ngIf="!fromlandlord()" autoplay="500" loop="true" speed="3000" pager = "true" paginationType="bullets">
-  <ng-container *ngFor="let pic of value?.attachments">
-  
-  <ion-slide>
-    <img src={{pic.thumbnail.large.url}} (click)="showImage(pic.thumbnail.large.url)" />
-  </ion-slide>
-   
-  </ng-container>
-   </ion-slides>
- <ion-list >
+    <div *ngIf="fromlandlord()&&logged()&&showconfirm()">
+      <button ion-button clear [color]="lock ? 'secondary' : 'light'" (click)="clickconfirm()">
+        Lock/Unlock the room from tenants
+        <ion-icon name="checkbox"></ion-icon>
+      </button>
+    </div>
+    <div class="spacer" style="width:300px;height:22px;" id="propertyDetail-spacer8"></div>
+    <h4 id="propertyDetail-heading11" style="color:#000000;font-weight:300;">
+      The Landlord
+    </h4>
+    <ion-list id="propertyDetail-list18">
+      <ion-item color="none" id="propertyDetail-list-item50">
+        <ion-avatar item-left>
+          <img src="assets/img/NoACdG5eSqKzU5FL87en_Angela_Merkel_2008.jpg" />
+        </ion-avatar>
+        <h2>
+          {{value?.userName}} (Landlord)
+        </h2>
+      </ion-item>
+    </ion-list>
+    <ion-list id="propertyDetail-list20">
+      <ion-item color="positive" id="propertyDetail-list-item51">
+        <ion-icon name="paper-plane" item-left></ion-icon>
+        Message {{value?.userName}} (Landlord)
+      </ion-item>
+    </ion-list>
+    <div class="spacer" style="width:300px;height:22px;" id="propertyDetail-spacer9"></div>
+    <h4 id="propertyDetail-heading8" style="color:#000000;font-weight:300;">
+      Comment
+    </h4>
+    <ion-list id="propertyDetail-list17" *ngFor="let cc of comment | slice:1; let i = index;">
+      <ion-item color="none" id="propertyDetail-list-item48">
+        <ion-avatar item-left>
+          <img src="assets/img/fiNuvFiRHGDYyyBtphyr_.jpg" />
+        </ion-avatar>
+        <h2>
+          {{cc.who[1]}}
+        </h2>
+        {{cc.message}}
+      </ion-item>
 
-<ion-item color="none" >{{value?.publicLocationNamesEn}}</ion-item>
-<ion-item color="none" >${{value?.price}}</ion-item>
-<ion-item *ngIf="!fromlandlord()" color="none" >no. of rooms: {{value?.room}}</ion-item>
-<ion-item *ngIf="!fromlandlord()" color="none" >{{value?.postTags[0]}}</ion-item>
-<ion-item *ngIf="!fromlandlord()" color="none" >{{value?.postTags[1]}}</ion-item>
-<ion-item *ngIf="!fromlandlord()" color="none" >{{value?.postTags[2]}}</ion-item>
-<!--
+    </ion-list>
+    <div *ngIf="logged()">
+      <ion-input type="text" [(ngModel)]="newmessage" placeholder="Leave your comments here"></ion-input>
+      <button (click)="addcomment()">Add comment</button>
+    </div>
+
+  </ng-container>
+
+  <!--historical property-->
+  <ion-slides *ngIf="!fromlandlord()" autoplay="500" loop="true" speed="3000" pager="true" paginationType="bullets">
+    <ng-container *ngFor="let pic of value?.attachments">
+
+      <ion-slide>
+        <img src={{pic.thumbnail.large.url}} (click)="showImage(pic.thumbnail.large.url)" />
+      </ion-slide>
+
+    </ng-container>
+  </ion-slides>
+
+  <hr style="margin: 16px 0" />
+
+  <ion-row>
+    <h2 id="home-heading4" style="color:#000000;font-weight:300;">Property Description</h2>
+  </ion-row>
+
+  <ion-list>
+    <!-- <ion-item color="none" >{{value?.publicLocationNamesEn}}</ion-item> -->
+    <ion-card>
+      <ion-item *ngIf="!fromlandlord()" color="none" text-wrap>
+        <div item-start style="padding-right: 20px;">
+          <ion-icon name="home" style="padding-right: 5px;"></ion-icon>Address
+        </div>
+        <h3 item-end>{{value?.publicLocationNamesEn[value?.publicLocationNamesEn.length-1]}},
+          {{value?.publicLocationNamesEn[value?.publicLocationNamesEn.length-2]}}, {{value?.publicLocationNamesEn[2]}}
+        </h3>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item color="none">
+        <ion-icon name="pricetag" style="padding-right: 5px;"></ion-icon>Price<h3 item-end>${{value?.price}}</h3>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item *ngIf="!fromlandlord()" color="none"># No. of rooms<h3 item-end>{{value?.room}}</h3>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item *ngIf="!fromlandlord()" color="none">
+        <ion-icon name="grid" style="padding-right: 5px;"></ion-icon>Saleable Area<h3 item-end>{{value?.saleableArea}}
+          sq ft</h3>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item *ngIf="!fromlandlord()" color="none">
+        <ion-icon name="time" style="padding-right: 5px;"></ion-icon>Last update<h3 item-end>
+          {{convert2Date(value?.dateCreated) | date: "yyyy/MM/dd HH:mm"}}</h3>
+      </ion-item>
+    </ion-card>
+    <!-- <ion-item *ngIf="!fromlandlord()" color="none"><ion-icon name="information" style="padding-right: 5px;"></ion-icon>Other Tags<h3 item-end>{{value?.postTags[0]}}</h3></ion-item> -->
+    <!--
 <ion-item color="none" ><h2>{{value.publicLocationNamesEn"}}</h2></ion-item>
 <ion-item color="none" ><h2>{{value.price"}}</h2></ion-item>
 <ion-item color="none" ><h2>{{value.room"}}</h2></ion-item>
 <ion-item color="none" ><h2>{{value.postTags"}}</h2></ion-item>-->
+  </ion-list>
 
-
-
-
-
-
-
-
-</ion-list>
-  <h5 id="propertyDetail-heading9" style="color:#000000;font-weight:300;text-align:center;">
-    Page Bottom
-  </h5>
-
+  <!-- <ion-row>
+  <ion-col>
+    <ion-badge *ngFor="let number of postTags(value?.postTags)" color="light" class="badges">{{number}}
+    </ion-badge>
+  </ion-col>
+</ion-row>  -->
 
 </ion-content>

@@ -71,7 +71,7 @@
   </div>
 
 
-  <ion-slides pager style="height: 150px; width: 100%;">
+  <ion-slides autoplay="500" loop="true" speed="3000" pager style="height: 150px; width: 100%;">
     <ion-slide class="image-slide">
       <img src="assets/imgs/slideC.jpg" />
       <p>FIND.</p>
@@ -179,9 +179,9 @@
             <ion-card (click)="gotoPropertyDetail($event, item)">
               <!-- <img src="{{item.thumbnail}}" style="height:300px; width: 100%"> -->
               <ion-card-content>
-                <ion-item>
+                <ion-item style="padding-left: 0px;">
                   <ion-thumbnail item-start>
-                      <img src="{{item.thumbnail}}">
+                      <img style="height: 100px; width: 100px;" src="{{item.thumbnail}}">
                     </ion-thumbnail>
                   <h3>{{item.publicLocationNamesHk[4]}}</h3>
                   <sub>{{item.publicLocationNamesHk[3]}}</sub>

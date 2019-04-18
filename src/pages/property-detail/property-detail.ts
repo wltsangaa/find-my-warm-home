@@ -213,6 +213,22 @@ showtick(index:number){
   }
   else return false;
 }
+
+postTags(postTagsArray:any){
+  for (let i = 0; i < postTagsArray.length; i++){
+    if(postTagsArray[i].includes("校網") || postTagsArray[i].includes("indoor") || postTagsArray[i].includes("私人住宅")){
+      postTagsArray.splice(i, 1);
+    }
+  }
+  return postTagsArray;
+}
+
+convert2Date(time:any){
+  let newDate = new Date(+time);
+  //const myFormattedDate = newDate.toDateString();
+  return newDate; // JSON.stringify(newDate)
+}
+
 ionViewWillLeave(){
   
 
