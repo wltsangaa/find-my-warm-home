@@ -92,8 +92,9 @@ export class PostpropertyPage {
   //image picker
   photos : Array<any>;
   photoLink: Array<any>;
+  interest: any;
 
-  constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public authService: AuthService,
+  constructor(public navCtrl: NavController, public navParams: NavParams,public formBuilder: FormBuilder, public authService: AuthService,
     public fireStore: AngularFirestore,
     //private fileChooser: FileChooser,private file:File,
     private storage: AngularFireStorage,
@@ -108,11 +109,14 @@ export class PostpropertyPage {
       // image picker
       this.photos = new Array<any>();
       this.photoLink = new Array<any>();
+      this.interest = this.navParams.get('item');
+      
     }
 //using willlll herere
     ionViewWillLoad() {
+  
     console.log('ionViewWillLoad PostpropertyPage');
-
+console.log(this.interest);
     this.validations_form = this.formBuilder.group({
       publicLocationNamesEn: new FormControl('', Validators.compose([
 
@@ -177,7 +181,7 @@ export class PostpropertyPage {
     this.propertyrofileCollectionemailname.update({dateCreated: new Date().getTime()});
     this.propertyrofileCollectionemailname.update({peoplelist:[{ who: ["email", "name"], when: new Date().getTime() }] });
     this.propertyrofileCollectionemailname.update({comments:[{ who: ["email", "name"], when: new Date().getTime(), message:"message" }] });
-    
+    this.propertyrofileCollectionemailname.update({interest: this.interest});
     // image-upload submit
     console.log("Total Photos: " + this.photos.length);
     //this.uploadImageToFirebase2(this.photos[0]);
