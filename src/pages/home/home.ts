@@ -67,6 +67,7 @@ export class HomePage {
   getuserprofiles: Observable<{}[]>;
   ugender: any;
   uphotos: any;
+  uinterest: any;
   
   constructor(
     //public db: AngularFireDatabase,
@@ -105,6 +106,7 @@ export class HomePage {
     this.uemail = res.email;
     this.uname = res.username;
     this.ugender = res.gender;
+    this.uinterest = res.interest;
     this.userprofiles = this.db.collection('userProfile', ref => ref.where('gender','==',this.ugender).limit(20));
     this.getuserprofiles = this.userprofiles.valueChanges();
     this.uphotos = res.photos;
@@ -195,7 +197,7 @@ signup() {
   }
 
   gotopostproperty(){
-    this.navCtrl.push(PostpropertyPage);
+    this.navCtrl.push(PostpropertyPage,{item:this.uinterest});
   }
   
   // this.router.navigate(['/detail/'+newInfo.key]);
