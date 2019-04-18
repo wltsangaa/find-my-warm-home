@@ -39,13 +39,14 @@ export class PostpropertyPage {
   propertyProfileCollection:any;
   validations_form: FormGroup;
   localprofile:User;
+  
   //details=["price", "publicLocationNamesEn", "address", "area", "layout", "nooftenant"];
   details = [
-    {key:"price", label:"Price"},
+    {key:"price", label:"Price (HKD)"},
     {key:"publicLocationNamesEn", label:"Location"},
-    {key:"address", label:"Address"},
-    {key:"area", label:"Area"},
-    {key:"layout", label:"Layout"},
+    {key:"address", label:"Estate Name"},
+    {key:"area", label:"Area (sq ft)"},
+    {key:"layout", label:"Layout (Room)"},
     {key:"nooftenant", label:"No. of Tenant"},
   ];
   validation_messages = {
@@ -93,6 +94,7 @@ export class PostpropertyPage {
   photos : Array<any>;
   photoLink: Array<any>;
   interest: any;
+  loading: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public formBuilder: FormBuilder, public authService: AuthService,
     public fireStore: AngularFirestore,
@@ -110,7 +112,7 @@ export class PostpropertyPage {
       this.photos = new Array<any>();
       this.photoLink = new Array<any>();
       this.interest = this.navParams.get('item');
-      
+      this.loading = false;
     }
 //using willlll herere
     ionViewWillLoad() {
@@ -162,6 +164,7 @@ console.log(this.interest);
     console.log(this.localprofile);
   }
   onSubmit(values){
+    this.loading = true;
     console.log(this.localprofile);
     console.log("onSubmit!!!");
    // this.properityProfileCollection.add(values);
@@ -266,7 +269,7 @@ openImagePicker(){
       }
       else if(result == true){
         this.imagePicker.getPictures({
-          maximumImagesCount: 1
+          maximumImagesCount: 3
         }).then(
           (results) => {
             for (var i = 0; i < results.length; i++) {

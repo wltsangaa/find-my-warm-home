@@ -55,7 +55,7 @@ this.db.doc<any>('noticeUsers/'+ chatuser.email).valueChanges().subscribe(
   ionViewDidLoad() {
     //Fetch other users
 
-    this.chatService.createcontactme("gg@gmail.com");//hard codddddeeeee
+    // this.chatService.createcontactme("gg@gmail.com");//hard codddddeeeee
 
     this.storage.get("chatuser").then(chatuser => {
       this.chatuser = chatuser;

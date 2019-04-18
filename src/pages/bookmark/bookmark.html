@@ -25,28 +25,36 @@
         <ion-col *ngIf="joinedRoom[i] == true">
             <div>
                 <ion-card (click)="gotoPropertyDetail($event, item)">
+                    <img src="{{item?.photos[0]}}" style="height:300px; width: 100%">
                     <ion-card-content>
                       <ion-item>
-                          <ion-icon name="home" item-start medium></ion-icon>
-                          <h2>{{item.publicLocationNamesEn}}</h2>
+                        <ion-icon name="home" item-start medium></ion-icon>
+                        <h2>{{item?.address}}</h2>
                       </ion-item>
-                      <ion-item> 
+                      <ion-item>
                         <ion-icon name="logo-usd" item-start medium></ion-icon>
-                        <h2>HKD: {{item.price}}</h2>
+                        <h2>HKD: {{item?.price}}</h2>
                       </ion-item>
-                    <ion-row>
-                      <ion-col center text-center>
-                        <ion-note>
-                          Timestamp: {{convert2Date(item.dateCreated)}}
-                        </ion-note>
-                      </ion-col>
-                    </ion-row>
-                  </ion-card-content>
+                      <ion-row>
+                        <!-- <ion-col>
+                                        <ion-badge *ngFor="let number of postTags(item.postTags)" color="light" class="badges">{{number}}</ion-badge>
+                                      </ion-col> -->
+                      </ion-row>
+                      <ion-row>
+                        <ion-col center text-center>
+                          <ion-note>
+                            Last Update: {{convert2Date(item?.dateCreated) | date: "yyyy/MM/dd HH:mm"}}
+                          </ion-note>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
                   </ion-card>
             </div>
           </ion-col>
           </div> 
   </ion-row>
+
+<hr style="margin: 16px 0" />
 
   <h4 id="home-heading4" style="color:#000000;font-weight:300;">
       Commented Post
@@ -56,23 +64,29 @@
         <ion-col *ngIf="commentedPost[i] == true">
             <div>
                 <ion-card (click)="gotoPropertyDetail($event, item)">
+                    <img src="{{item?.photos[0]}}" style="height:300px; width: 100%">
                     <ion-card-content>
                       <ion-item>
-                          <ion-icon name="home" item-start medium></ion-icon>
-                          <h2>{{item.publicLocationNamesEn}}</h2>
+                        <ion-icon name="home" item-start medium></ion-icon>
+                        <h2>{{item?.address}}</h2>
                       </ion-item>
-                      <ion-item> 
+                      <ion-item>
                         <ion-icon name="logo-usd" item-start medium></ion-icon>
-                        <h2>HKD: {{item.price}}</h2>
+                        <h2>HKD: {{item?.price}}</h2>
                       </ion-item>
-                    <ion-row>
-                      <ion-col center text-center>
-                        <ion-note>
-                          Timestamp: {{convert2Date(item.dateCreated)}}
-                        </ion-note>
-                      </ion-col>
-                    </ion-row>
-                  </ion-card-content>
+                      <ion-row>
+                        <!-- <ion-col>
+                                        <ion-badge *ngFor="let number of postTags(item.postTags)" color="light" class="badges">{{number}}</ion-badge>
+                                      </ion-col> -->
+                      </ion-row>
+                      <ion-row>
+                        <ion-col center text-center>
+                          <ion-note>
+                            Last Update: {{convert2Date(item?.dateCreated) | date: "yyyy/MM/dd HH:mm"}}
+                          </ion-note>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
                   </ion-card>
             </div>
           </ion-col>

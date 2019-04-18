@@ -100,15 +100,15 @@
     <ion-row>
       <ion-col text-center>
         <button *ngIf="isstudent()" id="home-button8" ion-button color="light" icon-left
-          style="font-weight:300;border-radius:46px 46px 46px 46px;" (click)="gotoFindProperty()" ion-button>
+          style="font-weight:300;border-radius:46px 46px 46px 46px;background-color: rgb(255, 212, 47)" (click)="gotoFindProperty()" ion-button>
           <ion-icon name="create"></ion-icon>
           Find Home
         </button>
         <div *ngIf="isstudent()==false">
           <button *ngIf="authService.user | async" id="home-button18" ion-button color="light" icon-left
-            style="font-weight:300;border-radius:46px 46px 46px 46px;" ion-button (click)="gotopostproperty()">
+            style="font-weight:300;border-radius:46px 46px 46px 46px;background-color: rgb(255, 212, 47)" ion-button (click)="gotopostproperty()">
             <ion-icon name="create"></ion-icon>
-            Post Home
+            Post Property
           </button>
         </div>
       </ion-col>
@@ -123,7 +123,7 @@
 
   <ion-grid padding>
     <h4 id="home-heading4" style="color:#000000;font-weight:300;">
-      Average Renting Price (In Each District)
+      Average Renting Price (per sq ft)
     </h4>
     <ion-row>
       <ion-slides [slidesPerView]='screensize' spaceBetween="1">
@@ -134,18 +134,17 @@
             <ion-card>
               <ion-card-content style="padding-left: 0px;">
                 <ion-item>
-                  <ion-icon name="home" item-start medium></ion-icon>
+                  <ion-icon name="home" item-start medium ></ion-icon>
                   <h3>{{record.district_name}}</h3>
                   <p>No.of Posts: {{record.m_quantity}}</p>
                 </ion-item>
                 <ion-item>
                   <ion-icon name="logo-usd" item-start medium></ion-icon>
                   <h3>Avg. Price: {{record.m_avg_price}}<ion-badge class="badges"
-                      [color]="grey">{{record.m_avg_price_change}}</ion-badge> <!--colorup(record.m_avg_price_change,'up','down')-->
+                      [color]="colorup(record.m_avg_price_change,'up','down')">{{record.m_avg_price_change}}</ion-badge> <!--colorup(record.m_avg_price_change,'up','down')-->
                   </h3>
                   <h3>Avg. Net Price: {{record.m_avg_net_price}}<ion-badge
-                      [color]="grey" class="badges">
-                      {{record.m_avg_net_price_change}}</ion-badge>
+                      [color]="colorup(record.m_avg_price_change,'up','down')" class="badges">{{record.m_avg_net_price_change}}</ion-badge>
                   </h3>
                 </ion-item>
                 <ion-row>
@@ -169,7 +168,7 @@
 
   <ion-grid *ngIf="isstudent()" padding>
     <h4 id="home-heading4" style="color:#000000;font-weight:300;">
-      Historical Price (For Ref.)
+      Historical Price
     </h4>
     <ion-row center>
       <ion-slides [slidesPerView]='screensize' spaceBetween="1">
@@ -181,11 +180,11 @@
               <ion-card-content>
                 <ion-item style="padding-left: 0px;">
                   <ion-thumbnail item-start>
-                      <img style="height: 100px; width: 100px;" src="{{item.thumbnail}}">
+                      <img style="height: 100px; width: 100px;" src="{{item?.thumbnail}}">
                     </ion-thumbnail>
-                  <h3>{{item.publicLocationNamesHk[4]}}</h3>
-                  <sub>{{item.publicLocationNamesHk[3]}}</sub>
-                  <h2 style="color:red">HKD: {{item.price}}</h2>
+                  <h3>{{item?.publicLocationNamesEn[4]}}</h3>
+                  <sub>{{item?.publicLocationNamesEn[3]}}</sub>
+                  <h2 style="color:red">HKD: {{item?.price}}</h2>
                 </ion-item>
                 <!-- <ion-row>
                   <ion-col>
@@ -196,7 +195,7 @@
                 <ion-row>
                   <ion-col center text-center>
                     <ion-note>
-                      Last Update: {{convert2Date(item.dateCreated) | date: "yyyy/MM/dd HH:mm"}}
+                      Last Update: {{convert2Date(item?.dateCreated) | date: "yyyy/MM/dd HH:mm"}}
                     </ion-note>
                   </ion-col>
                 </ion-row>
@@ -238,16 +237,16 @@
             <div *ngIf="i== showt-1">
               <button (click)="showmore(showt)" ion-button color="grey" full outline>Showmore</button>
             </div> -->
-            <ion-card> <!-- (click)="gotoUserDetail($event, item)" -->
+            <ion-card (click)="gotoUserDetail($event, item)">
               <ion-item>
                 <ion-avatar item-start>
                   <img *ngIf="item.photos != null" src="{{item.photos}}">
                   <img *ngIf="item.photos == null" src="assets/imgs/userIcon.png">
                 </ion-avatar>
-                <ion-label item-end>{{item.username}} <span style="font-weight:lighter; color:grey;">({{item.gender}})</span></ion-label>
+                <ion-label item-end>{{item?.username}} <span style="font-weight:lighter; color:grey;">({{item?.gender}})</span></ion-label>
               </ion-item>
               <ion-card-content>
-                <h2>Rent at HKD: <span style="color:red">${{item.price}}</span></h2>
+                <h2>Rent at HKD: <span style="color:red">${{item?.price}}</span></h2>
               </ion-card-content>
             </ion-card>
           </ion-slide>
@@ -261,18 +260,19 @@
       Recent Posts
     </h4>
     <ion-row>
+        <ion-slides [slidesPerView]='screensize' spaceBetween="1">
       <ion-col *ngFor="let item of ownproperties | async">
-        <div>
+        <ion-slide>
           <ion-card (click)="gotoPropertyDetail($event, item)">
             <img src="{{item?.photos[0]}}" style="height:300px; width: 100%">
             <ion-card-content>
               <ion-item>
                 <ion-icon name="home" item-start medium></ion-icon>
-                <h2>{{item.publicLocationNamesEn[0]}}</h2>
+                <h2>{{item?.address}}</h2>
               </ion-item>
               <ion-item>
                 <ion-icon name="logo-usd" item-start medium></ion-icon>
-                <h2>HKD: {{item.price}}</h2>
+                <h2>HKD: {{item?.price}}</h2>
               </ion-item>
               <ion-row>
                 <!-- <ion-col>
@@ -282,14 +282,15 @@
               <ion-row>
                 <ion-col center text-center>
                   <ion-note>
-                    Last Update: {{convert2Date(item.dateCreated) | date: "yyyy/MM/dd HH:mm"}}
+                    Last Update: {{convert2Date(item?.dateCreated) | date: "yyyy/MM/dd HH:mm"}}
                   </ion-note>
                 </ion-col>
               </ion-row>
             </ion-card-content>
           </ion-card>
-        </div>
+        </ion-slide>
       </ion-col>
+        </ion-slides>
     </ion-row>
   </ion-grid>
 </ion-content>

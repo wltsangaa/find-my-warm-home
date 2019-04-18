@@ -51,7 +51,11 @@
 //.swiper-slide { overflow-y: scroll; display: block; }
 
 .card {
-  border-radius: 1rem
+  border-radius: 1rem;
+  background-color: #FAFAEF;
+  .item{
+    background-color: #FAFAEF;
+  }
 }
 
 .image-slide p {
@@ -64,4 +68,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
+}
+
+.content{
+    // background-color: #FAFAEF;
+    hr{
+      //background-color: #EEE1CD;
+    }
 }

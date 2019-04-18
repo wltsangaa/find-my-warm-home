@@ -85,8 +85,8 @@
       "cordova-plugin-filepath": {}
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }
