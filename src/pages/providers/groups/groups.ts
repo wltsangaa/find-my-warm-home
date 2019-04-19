@@ -96,10 +96,12 @@ export class GroupsProvider {
   }
 
   addmember(newmember) {
+    console.log("newmember.uid "+newmember.uid);
+     
     this.firegroup.child(firebase.auth().currentUser.uid).child(this.currentgroupname).child('members').push(newmember).then(() => {
-      this.getgroupimage().then(() => {
+      this.getgroupimage().then(() => { 
         this.firegroup.child(newmember.uid).child(this.currentgroupname).set({
-          groupimage: this.grouppic,
+          groupimage: this.grouppic, 
           owner: firebase.auth().currentUser.uid,
           msgboard: ''
         }).catch((err) => {

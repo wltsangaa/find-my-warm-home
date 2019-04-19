@@ -57,7 +57,7 @@ this.db.doc<any>('noticeUsers/'+ chatuser.email).valueChanges().subscribe(
 
     this.chatService.createcontactme("gg@gmail.com");//hard codddddeeeee
 
-    this.storage.get("chatuser").then(chatuser => {
+    this.storage.get("chatuser").then(chatuser => { 
       this.chatuser = chatuser;
 
 
@@ -146,10 +146,6 @@ if(this.notice != [])
     
   } //goToChat
 
-  JoinGroupChat()
-  {
-    
-  }
 
   myGroupChat()
   {

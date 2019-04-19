@@ -6,30 +6,85 @@
 <ion-header>
 
   <ion-navbar color="hcolor">
-    <ion-title>Group Buddies</ion-title>
+    <ion-title>Add member</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <ion-searchbar [(ngModel)]="searchstring" (input)="searchuser($event)"
-                  placeholder="Search">
-  </ion-searchbar>
-<ion-list no-lines>
-  <ion-item-sliding *ngFor="let key of myfriends">
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="{{key.photoURL}}">
-      </ion-avatar>
-      <h2>{{key.displayName}}</h2>
-    </ion-item>
-    <ion-item-options slide="left">
-      <button ion-button color="primary" (click)="addbuddy(key)">
-        <ion-icon name="person-add"></ion-icon>
-        Add
-      </button>
-    </ion-item-options>
-  </ion-item-sliding>
-</ion-list>
+  <ion-grid>
+    <ion-row>
+  <ion-searchbar *ngIf="choseother" placeholder="Search Name" name="searchBar" (ionInput)="findProperty($event, 'userProfile', 'username','price')" autocomplete></ion-searchbar>
+  </ion-row>
+  <ion-row>
+  <ion-col col-sm-3 >
+    <span class="desc" (click) = "showad()">Advanced Search</span>
+  </ion-col>
+  </ion-row> 
+  <ion-row *ngIf="!choseother">
+  <ion-col  >
+    <ion-item col-md-6>
+      <ion-label col-4 >
+          Interest
+         </ion-label>
+  <ion-select [(ngModel)]="interest" interface="popover" col >
+      <ion-option value="non-smoker">Non-smoker</ion-option>
+      <ion-option value="smoker">Smoker</ion-option>
+  </ion-select>
+  </ion-item>
+        <ion-item col-md-6>
+            <ion-label col-4 >
+                Gender
+               </ion-label>
+        <ion-select [(ngModel)]="gender" interface="popover" col>
+            <ion-option value="male">Male</ion-option>
+            <ion-option value="female">Female</ion-option>
+        </ion-select>
+      </ion-item>
+    <ion-row >
+      <ion-col >
+      <button ion-button color="light" (click)="findMate()">
+          <ion-icon name="search"></ion-icon>Search</button>
+      </ion-col>
+     </ion-row>
+    </ion-col>
+  
+    </ion-row>
+  <br />
+  </ion-grid>
+
+
+  <ion-grid>
+    <h4 id="home-heading4" style="color:#000000;font-weight:300;">
+      Result
+    </h4>
+  <ion-row>
+        <ion-col *ngFor="let item of tenants | async"  (click)="addbuddy(item)"> 
+            <div>
+              <ion-card >
+                <img src="{{item?.thumbnail}}" style="width: 100%">
+                <ion-card-content>
+                  <ion-item>
+                      <ion-icon name="home" item-start medium></ion-icon>
+                      <h2>{{item.username}}</h2>
+                      <p>{{item.gender}}</p>
+                  </ion-item>
+                  <ion-item>
+                    <ion-icon name="logo-usd" item-start medium></ion-icon>
+                    <h2>Rent at HKD: {{item.price}}</h2>
+                  </ion-item>
+  
+              </ion-card-content>
+              </ion-card>
+            </div>
+          </ion-col>
+  </ion-row>
+  </ion-grid>
+
+
+
+
 </ion-content>
+
+

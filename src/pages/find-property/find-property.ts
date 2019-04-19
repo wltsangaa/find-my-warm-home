@@ -151,6 +151,7 @@ showad(){
     }
 
   }
+  
   findMate(){
     if (this.interest != '' && this.gender.trim() && this.gender != '' ) {
       // this.filtereditems=this.items.filter((item) => {

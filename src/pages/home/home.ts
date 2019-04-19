@@ -18,12 +18,19 @@ import { FindPropertyPage } from '../find-property/find-property';
 import { PostpropertyPage} from '../postproperty/postproperty';
 import { Platform } from 'ionic-angular';
 import { ScrollHideConfig } from '../services/scroll-hide';
+import firebase from 'firebase';
+import { User } from 'firebase';
+
+
 
 
 export interface User{
   username: any;
   email:string;
-  house:string;}
+  house:string;
+  
+
+}
 
 interface Property {
   displayText: string;
@@ -99,6 +106,7 @@ export class HomePage {
        this.verified =user.emailVerified;  
 
     this.userProfilename = this.fireStore.doc<User>('userProfile/'+ this.uid);
+    this.userProfilename.update({ uid: firebase.auth().currentUser.uid });
     this.register = this.userProfilename.valueChanges();
        this.register.subscribe(res=>{
     this.role = res.house;
