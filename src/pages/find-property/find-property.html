@@ -51,9 +51,12 @@
                     Location
                    </ion-label>
             <ion-select [(ngModel)]="location" interface="popover" col>
-                <ion-option value="HK">Hong Kong Island</ion-option>
-                <ion-option value="KL">Kownloon</ion-option>
-                <ion-option value="NT">New Terrace </ion-option>
+              <ion-option value="Tseung Kwan O">Tseung Kwan O</ion-option>
+              <ion-option value="Hang Hau">Hang Hau</ion-option>
+              <ion-option value="Sai Kung">Sai Kung</ion-option>
+              <ion-option value="Hong Kong Island">Hong Kong Island</ion-option>
+              <ion-option value="Kowloon">Kownloon</ion-option>
+              <ion-option value="New Territories">New Terrace</ion-option>
             </ion-select>
           </ion-item>
         <ion-row >
@@ -78,31 +81,31 @@
       <ion-row>
             <ion-col *ngFor="let item of ourproperty | async">
                 <div>
-                    <ion-card >
+                    <ion-card (click)="gotoPropertyDetail($event, item)">
                         <img src="{{item?.photos[0]}}" style="height:300px; width: 100%">
                         <ion-card-content>
-                            <ion-item>
-                                <ion-icon name="home" item-start medium></ion-icon>
-                                <h2>{{item.publicLocationNamesEn}}</h2>
-                              </ion-item>
-                              <ion-item>
-                                  <ion-icon name="logo-usd" item-start medium></ion-icon>
-                                  <h2>HKD: {{item.price}}</h2>
-                                </ion-item>
-                              <ion-row>
-                                  <!-- <ion-col>
-                                    <ion-badge *ngFor="let number of postTags(item.postTags)" color="light" class="badges">{{number}}</ion-badge>
-                                  </ion-col> -->
-                              </ion-row>
-                              <ion-row>
-                                <ion-col center text-center>
-                                  <ion-note>
-                                    Last Update: {{convert2Date(item.dateCreated)}}
-                                  </ion-note>
-                                </ion-col>
-                              </ion-row>
+                          <ion-item>
+                            <ion-icon name="home" item-start medium></ion-icon>
+                            <h2>{{item?.address}}</h2>
+                          </ion-item>
+                          <ion-item>
+                            <ion-icon name="logo-usd" item-start medium></ion-icon>
+                            <h2>HKD: {{item?.price}}</h2>
+                          </ion-item>
+                          <ion-row>
+                            <!-- <ion-col>
+                                            <ion-badge *ngFor="let number of postTags(item.postTags)" color="light" class="badges">{{number}}</ion-badge>
+                                          </ion-col> -->
+                          </ion-row>
+                          <ion-row>
+                            <ion-col center text-center>
+                              <ion-note>
+                                Last Update: {{convert2Date(item?.dateCreated) | date: "yyyy/MM/dd HH:mm"}}
+                              </ion-note>
+                            </ion-col>
+                          </ion-row>
                         </ion-card-content>
-                      </ion-card> 
+                      </ion-card>
                 </div>
               </ion-col>
       </ion-row>

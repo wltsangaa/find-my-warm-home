@@ -7,12 +7,15 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Post Home</ion-title>
+    <ion-title>Post Property</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
+
+  <!-- <ion-spinner *ngIf="loading" duration="600"></ion-spinner> -->
+
   <ion-grid tappable type="button" (click)="presentActionSheet()">
     <!--tappable makes div can be click-->
     <ion-row justify-content-center>
@@ -53,6 +56,9 @@
           <ion-option value="Tseung Kwan O">Tseung Kwan O</ion-option>
           <ion-option value="Hang Hau">Hang Hau</ion-option>
           <ion-option value="Sai Kung">Sai Kung</ion-option>
+          <ion-option value="Hong Kong Island">Hong Kong Island</ion-option>
+          <ion-option value="Kowloon">Kownloon</ion-option>
+          <ion-option value="New Territories">New Terrace </ion-option>
         </ion-select>
       </ion-item>
     </ion-list>

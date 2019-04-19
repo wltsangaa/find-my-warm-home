@@ -14,13 +14,13 @@
       <ion-col text-center>
         <div>
           <button (click)="presentActionSheet()">
-            <div *ngIf="uphotos == null">
+            <div *ngIf="uphotos == null || uphotos.length == 0">
               <ion-icon name="logo-github" style="font-size:100px;" class="icon"></ion-icon>
             </div>
-            <div *ngIf="uphotos != null && photos[0] == null"> <!--uphotos = db photo-->
+            <div *ngIf="uphotos != null && uphotos.length > 0"> <!--uphotos = db photo-->
                 <img style="vertical-align: middle;width: 300px;height: 300px;border-radius: 50%;" src="{{uphotos}}"/>
             </div>
-            <div *ngIf="photos[0] != null"> <!--photos = local-->
+            <div *ngIf="photos[0] != null && photo.length > 0"> <!--photos = local-->
                 <img style="vertical-align: middle;width: 300px;height: 300px;border-radius: 50%;" src="{{photos[0]}}"/>
             </div>
             <ion-label color="primary">

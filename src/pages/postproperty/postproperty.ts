@@ -39,13 +39,14 @@ export class PostpropertyPage {
   propertyProfileCollection:any;
   validations_form: FormGroup;
   localprofile:User;
+  
   //details=["price", "publicLocationNamesEn", "address", "area", "layout", "nooftenant"];
   details = [
-    {key:"price", label:"Price"},
+    {key:"price", label:"Price (HKD)"},
     {key:"publicLocationNamesEn", label:"Location"},
-    {key:"address", label:"Address"},
-    {key:"area", label:"Area"},
-    {key:"layout", label:"Layout"},
+    {key:"address", label:"Estate Name"},
+    {key:"area", label:"Area (sq ft)"},
+    {key:"layout", label:"Layout (Room)"},
     {key:"nooftenant", label:"No. of Tenant"},
   ];
   validation_messages = {
@@ -92,8 +93,10 @@ export class PostpropertyPage {
   //image picker
   photos : Array<any>;
   photoLink: Array<any>;
+  interest: any;
+  loading: boolean;
 
-  constructor(public navCtrl: NavController, public formBuilder: FormBuilder, public authService: AuthService,
+  constructor(public navCtrl: NavController, public navParams: NavParams,public formBuilder: FormBuilder, public authService: AuthService,
     public fireStore: AngularFirestore,
     //private fileChooser: FileChooser,private file:File,
     private storage: AngularFireStorage,
@@ -108,11 +111,14 @@ export class PostpropertyPage {
       // image picker
       this.photos = new Array<any>();
       this.photoLink = new Array<any>();
+      this.interest = this.navParams.get('item');
+      this.loading = false;
     }
 //using willlll herere
     ionViewWillLoad() {
+  
     console.log('ionViewWillLoad PostpropertyPage');
-
+console.log(this.interest);
     this.validations_form = this.formBuilder.group({
       publicLocationNamesEn: new FormControl('', Validators.compose([
 
@@ -158,6 +164,7 @@ export class PostpropertyPage {
     console.log(this.localprofile);
   }
   onSubmit(values){
+    this.loading = true;
     console.log(this.localprofile);
     console.log("onSubmit!!!");
    // this.properityProfileCollection.add(values);
@@ -177,7 +184,7 @@ export class PostpropertyPage {
     this.propertyrofileCollectionemailname.update({dateCreated: new Date().getTime()});
     this.propertyrofileCollectionemailname.update({peoplelist:[{ who: ["email", "name"], when: new Date().getTime() }] });
     this.propertyrofileCollectionemailname.update({comments:[{ who: ["email", "name"], when: new Date().getTime(), message:"message" }] });
-    
+    this.propertyrofileCollectionemailname.update({interest: this.interest});
     // image-upload submit
     console.log("Total Photos: " + this.photos.length);
     //this.uploadImageToFirebase2(this.photos[0]);
@@ -262,7 +269,7 @@ openImagePicker(){
       }
       else if(result == true){
         this.imagePicker.getPictures({
-          maximumImagesCount: 1
+          maximumImagesCount: 3
         }).then(
           (results) => {
             for (var i = 0; i < results.length; i++) {
