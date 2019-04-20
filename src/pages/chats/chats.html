@@ -15,9 +15,7 @@
 
 <ion-content padding> 
     <ion-buttons right >
-    <button ion-button round fab-left (click)="JoinGroupChat()">
-        join Group 
-    </button>
+    
     <button ion-button round fab-left (click)="myGroupChat()">
         My Group
     </button>
@@ -54,7 +52,7 @@
     <ion-list-header>
       USERS
     </ion-list-header>
-    <ion-item *ngFor="let user of availableusers" (click)="goToChat(user)">
+    <ion-item *ngFor="let user of availableusers" (click)="addbuddy(user)">
       <ion-avatar item-start>
         <img src="http://via.placeholder.com/16x16"> 
       </ion-avatar>

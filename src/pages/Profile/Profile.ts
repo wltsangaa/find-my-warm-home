@@ -10,6 +10,7 @@ import { User } from 'firebase';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { FirebaseService } from '../services/firebase.service';
 import { Crop } from '@ionic-native/crop';
+import firebase from 'firebase';
 
 
 
@@ -18,7 +19,7 @@ import { Crop } from '@ionic-native/crop';
   templateUrl: 'Profile.html'
 })
 export class ProfilePage {
-  uid: string;
+  uid: string; 
   userProfilename: AngularFirestoreDocument<any>;
   register: Observable<any>;
   role: any;
@@ -112,6 +113,7 @@ export class ProfilePage {
         this.verified = user.emailVerified;
 
         this.userProfilename = this.fireStore.doc<User>('userProfile/' + this.uid);
+        
         this.register = this.userProfilename.valueChanges();
 
         this.register.subscribe(res => {
@@ -123,7 +125,7 @@ export class ProfilePage {
           this.uinterest = res.interest;
           this.uDescription = res.Description;
           this.uphotos = res.photos;
-
+          
 
           //prefill
           this.details[0].prefill = this.uname;
@@ -138,7 +140,7 @@ export class ProfilePage {
       }
     })
 
-
+    
 
   }
 
