@@ -58,6 +58,10 @@ import { ChatProvider } from '../pages/providers/chat/chat';
 
 
 import { UserDetailPage } from '../pages/user-detail/user-detail';
+import { GroupinfoPage } from '../pages/groupinfo/groupinfo';
+import { GroupmembersPage } from '../pages/groupmembers/groupmembers';
+import { GroupbuddiesPage } from '../pages/groupbuddies/groupbuddies';
+import { GroupchatPage } from '../pages/groupchat/groupchat';
 
 @NgModule({
   declarations: [
@@ -76,6 +80,11 @@ import { UserDetailPage } from '../pages/user-detail/user-detail';
     BookmarkPage,
     ScrollHideDirective,
     GroupsPage,
+    GroupinfoPage,
+    GroupmembersPage,
+    GroupbuddiesPage,
+    GroupchatPage,
+    NewgroupPage,
     
    
    
@@ -115,6 +124,11 @@ import { UserDetailPage } from '../pages/user-detail/user-detail';
     ChatroomPage,
     BookmarkPage,
     GroupsPage,
+    GroupinfoPage,
+    GroupmembersPage,
+    GroupbuddiesPage,
+    GroupchatPage,
+    NewgroupPage,
  
     
    

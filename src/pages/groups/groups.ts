@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController } from 'ionic-angular';
 import { GroupsProvider } from '../providers/groups/groups';
+import { GroupchatPage } from '../groupchat/groupchat';
+import { NewgroupPage } from '../newgroup/newgroup';
 
 
 /**
@@ -37,12 +39,12 @@ export class GroupsPage {
   } 
 
   addgroup() {
-    this.navCtrl.push('NewgroupPage');
+    this.navCtrl.push(NewgroupPage);
   }
 
   openchat(group) {
     this.groupservice.getintogroup(group.groupName);
-    this.navCtrl.push('GroupchatPage', { groupName: group.groupName });
+    this.navCtrl.push(GroupchatPage, { groupName: group.groupName });
   }
 
 }

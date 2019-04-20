@@ -97,7 +97,7 @@ export class GroupsProvider {
 
   addmember(newmember) {
     console.log("newmember.uid "+newmember.uid);
-     
+    if(firebase.auth().currentUser !=null)
     this.firegroup.child(firebase.auth().currentUser.uid).child(this.currentgroupname).child('members').push(newmember).then(() => {
       this.getgroupimage().then(() => { 
         this.firegroup.child(newmember.uid).child(this.currentgroupname).set({
@@ -112,7 +112,8 @@ export class GroupsProvider {
     })
   }
 
-  deletemember(member) {           
+  deletemember(member) { 
+    if(firebase.auth().currentUser !=null)          
     this.firegroup.child(firebase.auth().currentUser.uid).child(this.currentgroupname)
       .child('members').orderByChild('uid').equalTo(member.uid).once('value', (snapshot) => {
         snapshot.ref.remove().then(() => {
@@ -124,6 +125,7 @@ export class GroupsProvider {
   }
 
   getgroupmembers() {
+    if(firebase.auth().currentUser !=null){
     this.firegroup.child(firebase.auth().currentUser.uid).child(this.currentgroupname).once('value', (snapshot) => {
       var tempdata = snapshot.val().owner;
       this.firegroup.child(tempdata).child(this.currentgroupname).child('members').once('value', (snapshot) => {
@@ -134,6 +136,7 @@ export class GroupsProvider {
       })
     })
     this.events.publish('gotmembers');
+  }
   }
 
   leavegroup() {
@@ -233,6 +236,7 @@ export class GroupsProvider {
   }
 
   getgroupmsgs(groupname) {
+    if(firebase.auth().currentUser !=null){
     this.firegroup.child(firebase.auth().currentUser.uid).child(groupname).child('msgboard').on('value', (snapshot) => {
       var tempmsgholder = snapshot.val();
       this.groupmsgs = [];
@@ -241,5 +245,5 @@ export class GroupsProvider {
       this.events.publish('newgroupmsg');
     })
   }
-
+  }
 }

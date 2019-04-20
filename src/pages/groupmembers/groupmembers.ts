@@ -41,7 +41,9 @@ export class GroupmembersPage {
     }
 
     tempmembers = tempmembers.filter((v) => {
-      if (v.displayName.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+      console.log("remove member")
+      console.log(v);
+      if (v.username.toLowerCase().indexOf(q.toLowerCase()) > -1) {
         return true;
       }
       return false;

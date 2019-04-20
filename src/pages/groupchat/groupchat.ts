@@ -4,7 +4,10 @@ import { IonicPage, NavController, NavParams, ActionSheetController, LoadingCont
 import firebase from 'firebase';
 import { ImghandlerProvider } from '../providers/imghandler/imghandler';
 import { GroupsProvider } from '../providers/groups/groups';
-
+import { AuthService } from '../services/auth.service';
+import { GroupbuddiesPage } from '../groupbuddies/groupbuddies';
+import { GroupmembersPage } from '../groupmembers/groupmembers';
+import { GroupinfoPage } from '../groupinfo/groupinfo';
 /**
  * Generated class for the GroupchatPage page.
  *
@@ -26,9 +29,16 @@ export class GroupchatPage {
   photoURL;
   imgornot;
   constructor(public navCtrl: NavController, public navParams: NavParams, public groupservice: GroupsProvider,
-    public actionSheet: ActionSheetController, public events: Events, public imgstore: ImghandlerProvider, public loadingCtrl: LoadingController) {
-    this.alignuid = firebase.auth().currentUser.uid;
-    this.photoURL = firebase.auth().currentUser.photoURL;
+    public actionSheet: ActionSheetController, public events: Events, public imgstore: ImghandlerProvider, 
+    public loadingCtrl: LoadingController,public authService: AuthService) {
+    //this.alignuid = firebase.auth().currentUser.uid;
+    //this.photoURL = firebase.auth().currentUser.photoURL;
+    this.authService.user.subscribe(user => {
+      if (user) {
+      this.alignuid = user.uid;
+      this.photoURL = user.photoURL;
+      }
+    });
     this.groupName = this.navParams.get('groupName');
     this.groupservice.getownership(this.groupName).then((res) => {
       if (res)
@@ -38,6 +48,7 @@ export class GroupchatPage {
       })
     this.groupservice.getgroupmsgs(this.groupName);
     this.events.subscribe('newgroupmsg', () => {
+      
       this.allgroupmsgs = [];
       this.imgornot = [];
       this.allgroupmsgs = this.groupservice.groupmsgs;
@@ -65,7 +76,10 @@ export class GroupchatPage {
     })
 
   }
-
+  ionViewDidEnter(){
+    console.log('ionViewDidenter GroupchatPage');
+    this.groupservice.getgroupmsgs(this.groupName);
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad GroupchatPage');
   }
@@ -95,21 +109,21 @@ export class GroupchatPage {
           text: 'Add member',
           icon: 'person-add',
           handler: () => {
-            this.navCtrl.push('GroupbuddiesPage');
+            this.navCtrl.push(GroupbuddiesPage);
           }
         },
          {
           text: 'Remove member',
           icon: 'remove-circle',
           handler: () => {
-            this.navCtrl.push('GroupmembersPage');
+            this.navCtrl.push(GroupmembersPage);
           }
         },
         {
           text: 'Group Info',
           icon: 'person',
           handler: () => {
-            this.navCtrl.push('GroupinfoPage', {groupName: this.groupName});
+            this.navCtrl.push(GroupinfoPage, {groupName: this.groupName});
           }
         },
         {
@@ -155,7 +169,7 @@ export class GroupchatPage {
           text: 'Group Info',
           icon: 'person',
           handler: () => {
-            this.navCtrl.push('GroupinfoPage', {groupName: this.groupName});
+            this.navCtrl.push(GroupinfoPage, {groupName: this.groupName});
           }
         },
         {

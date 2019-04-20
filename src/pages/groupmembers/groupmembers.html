@@ -1,7 +1,7 @@
 <ion-header>
 
     <ion-navbar color="hcolor">
-      <ion-title>Group Members</ion-title>
+      <ion-title>Remove Group Members</ion-title>
     </ion-navbar>
   
   </ion-header>
@@ -12,12 +12,13 @@
                     placeholder="Search">
     </ion-searchbar>
   <ion-list no-lines>
+    <h3>Slide Left to Remove.</h3>
     <ion-item-sliding *ngFor="let key of groupmembers">
       <ion-item>
         <ion-avatar item-left>
           <img src="{{key.photoURL}}">
         </ion-avatar>
-        <h2>{{key.displayName}}</h2>
+        <h2>{{key.username}}</h2>
       </ion-item>
       <ion-item-options slide="left">
         <button ion-button color="danger" (click)="removemember(key)">
